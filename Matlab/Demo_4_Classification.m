@@ -28,7 +28,8 @@
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 
 close all; clear; clc
-filepath = fileparts(pwd);
+filepath = 'D:\ISCTE\Thesis\DroneRF';   % [MR] Path for easier management
+%filepath = fileparts(pwd);
 filepath = [filepath '\Data\'];
 
 %% Parameters

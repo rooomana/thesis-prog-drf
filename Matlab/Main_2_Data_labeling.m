@@ -28,16 +28,14 @@
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 
 close all; clear; clc
-filepath = 'D:\ISCTE\Thesis\Program';               % [MR] Path for easier management
+filepath = 'D:\ISCTE\Thesis\DroneRF';               % [MR] Path for easier management
 load_filename = [filepath '\Data\'];                % Path of raw RF data % [MR]
 save_filename = load_filename;
-log_filename = [fileparts(pwd) '\DataArchive\'];    % [MR] Path of archived result data
 
+disp(['pwd           | ' pwd]);             % [MR] Print path
 disp(['filepath      | ' filepath]);        % [MR] Print path
 disp(['load_filename | ' load_filename]);   % [MR] Print path
 disp(['save_filename | ' save_filename]);   % [MR] Print path
-disp(['log_filename  | ' log_filename]);    % [MR] Print path
-disp(['pwd           | ' pwd]);             % [MR] Print path
 
 
 %% Parameters
@@ -64,8 +62,8 @@ for t = 1:T
     end
     disp(100*t/T)
 end
-disp(['Ended.', ' | Loading']); % [MR] Print for debugging
 elapsed_time_loading = toc; % [MR] Stop timer for loading phase
+disp(['Ended.', ' | Loading']); % [MR] Print for debugging
 
 %% Labeling
 tic; % [MR] Start timer for labeling
@@ -77,18 +75,18 @@ for i = 1:length(LN)
     temp = [temp (i-1)*ones(1,LN(i))];
 end
 Label(3,:) = temp;
-disp(['Ended.', ' | Labeling']); % [MR] Print for debugging
 elapsed_time_labeling = toc; % [MR] Stop timer for labeling phase
+disp(['Ended.', ' | Labeling']); % [MR] Print for debugging
 
 %% Saving
 tic; % [MR] Start timer for saving
 csvwrite([save_filename 'RF_Data.csv'],[DATA; Label]);
-csvwrite([log_filename 'RF_Data.csv'],[DATA; Label]);
-disp(['Ended.', ' | Saving']); % [MR] Print for debugging
 elapsed_time_saving = toc; % [MR] Stop timer for saving phase
+disp(['Ended.', ' | Saving']); % [MR] Print for debugging
 
 %% Elapsed time
 elapsed_time_total = toc; % [MR] Stop timer for total program
+disp(['Ended.', ' | Total']); % [MR] Print for debugging
 disp(['Elapsed time (Loading)  | ', num2str(elapsed_time_loading), ' seconds']);    % [MR] Print elapsed time for loading phase
 disp(['Elapsed time (Labeling) | ', num2str(elapsed_time_labeling), ' seconds']);   % [MR] Print elapsed time for labeling phase
 disp(['Elapsed time (Saving)   | ', num2str(elapsed_time_saving), ' seconds']);     % [MR] Print elapsed time for saving phase

@@ -57,7 +57,7 @@ show_inter_results   = 0
 ############################### Loading ##################################
 start_time = time.time() # [MR] Start timer
 print("Loading Data ...")
-filepath = 'D:\ISCTE\Thesis\Program'; # [MR] Path for easier management
+filepath = 'D:\ISCTE\Thesis\DroneRF'; # [MR] Path for easier management
 Data = np.loadtxt(filepath + "\Data\RF_Data.csv", delimiter=",") # [MR]
 ############################## Splitting #################################
 print("Preparing Data ...")

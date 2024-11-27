@@ -28,17 +28,16 @@
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 
 close all; clear; clc
-filepath = 'D:\ISCTE\Thesis\Program';               % [MR] Path for easier management
+filepath = 'D:\ISCTE\Thesis\DroneRF';               % [MR] Path for easier management
 load_filename = [filepath '\Data\'];                % Path of raw RF data % [MR]
-save_filename = fileparts(pwd);
-save_filename = [save_filename '\Data\'];           % Path of aggregated data
-log_filename = [fileparts(pwd) '\DataArchive\'];    % [MR] Path of archived result data
+save_filename = load_filename;                      % [MR] Path of aggregated data
+%save_filename = fileparts(pwd);
+%save_filename = [save_filename '\Data\'];           % Path of aggregated data
 
+disp(['pwd           | ' pwd]);             % [MR] Print path
 disp(['filepath      | ' filepath]);        % [MR] Print path
 disp(['load_filename | ' load_filename]);   % [MR] Print path
 disp(['save_filename | ' save_filename]);   % [MR] Print path
-disp(['log_filename  | ' log_filename]);    % [MR] Print path
-disp(['pwd           | ' pwd]);             % [MR] Print path
 
 %% Parameters
 BUI{1,1} = {'00000'};                         % BUI of RF background activities
@@ -86,7 +85,6 @@ for opt = 1:length(BUI)
         Data = data.^2;
         % Saving
         save([save_filename BUI{1,opt}{b} '.mat'],'Data');
-        save([log_filename BUI{1,opt}{b} '.mat'],'Data'); % [MR] Save for archival
     end
 end
 disp('Ended.'); % [MR] Print for debugging

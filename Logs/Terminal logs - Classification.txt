@@ -30,9 +30,19 @@ scores = 49.69162940979004
 Ended | 5 | Elapsed time: 6890.4679 seconds
 
 | cnt = 6
+scores = 51.85021758079529
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step 
+Ended | 6 | Elapsed time: 8397.8615 seconds
 
+| cnt = 7
+scores = 48.06167483329773
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 4ms/step 
+Ended | 7 | Elapsed time: 10096.1063 seconds
 
-
+| cnt = 8
+scores = 44.845813512802124
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 4ms/step 
+Ended | 8 | Elapsed time: 11522.7591 seconds
 
 
 

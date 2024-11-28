@@ -2,6 +2,22 @@
 
 Loading Data ...
 Preparing Data ...
+| cnt = 1
+scores = 44.22907531261444
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step 
+Ended | 1 | Elapsed time: 1230.8397 seconds
+
+| cnt = 2
+
+
+
+
+
+
+
+
+Loading Data ...
+Preparing Data ...
 1
 35.06608009338379
 71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step 

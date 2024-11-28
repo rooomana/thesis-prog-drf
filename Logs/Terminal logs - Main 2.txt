@@ -1,41 +1,55 @@
 ---------- Main_2_Data_labeling.m
 
-pwd           | D:\ISCTE\Thesis\DroneRF\DroneRF_Program
-filepath      | D:\ISCTE\Thesis\DroneRF
-load_filename | D:\ISCTE\Thesis\DroneRF\Data\
-save_filename | D:\ISCTE\Thesis\DroneRF\Data\
-1 | in for t 
-00000 | in for BUI 
-    25
+pwd            | D:\ISCTE\Thesis\DroneRF\DroneRF_Program 
+filepath       | D:\ISCTE\Thesis\DroneRF 
+load_filename  | D:\ISCTE\Thesis\DroneRF\Data\ 
+save_filename  | D:\ISCTE\Thesis\DroneRF\Data\ 
+
+    1 | in for t 
+00000 | in for b 
+| pct. =  25.00 % 
 
 
-2 | in for t 
-10000 | in for BUI 
-10001 | in for BUI 
-10010 | in for BUI 
-10011 | in for BUI 
-    50
+    2 | in for t 
+10000 | in for b 
+10001 | in for b 
+10010 | in for b 
+10011 | in for b 
+| pct. =  50.00 % 
 
 
-3 | in for t 
-10100 | in for BUI 
-10101 | in for BUI 
-10110 | in for BUI 
-10111 | in for BUI 
-    75
+    3 | in for t 
+10100 | in for b 
+10101 | in for b 
+10110 | in for b 
+10111 | in for b 
+| pct. =  75.00 % 
 
 
-4 | in for t 
-11000 | in for BUI 
-   100
+    4 | in for t 
+11000 | in for b 
+| pct. = 100.00 % 
 
 
-Ended. | Loading
-Ended. | Labeling
-Ended. | Saving
-Ended. | Total
-Elapsed time (Loading)  | 5.7764 seconds
-Elapsed time (Labeling) | 0.006827 seconds
-Elapsed time (Saving)   | 34.4687 seconds
-Elapsed time (Total)    | 34.469 seconds
+Ended | Loading 
+Elapsed time: 3.0125 seconds
+
+
+Ended | Labeling 
+Elapsed time: 0.0038 seconds
+
+
+Ended | Saving 
+Elapsed time: 36.5450 seconds
+
+
+Ended | Total 
+Elapsed time: 36.5454 seconds
+
+
+Running Time:
+| elapsed_time_loading  = 3.0125 seconds
+| elapsed_time_labeling = 0.0038 seconds
+| elapsed_time_saving   = 36.5450 seconds
+| elapsed_time_total    = 36.5454 seconds
 >> 

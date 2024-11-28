@@ -77,7 +77,7 @@ cnt         = 0
 kfold = StratifiedKFold(n_splits=K, shuffle=True, random_state=1)
 for train, test in kfold.split(x, decode(y)):
     cnt = cnt + 1
-    print(cnt)
+    print(f'| {cnt = }') # [MR]
     model = Sequential()
     for i in range(number_inner_layers):
         model.add(Dense(int(number_inner_neurons/2), input_dim = x.shape[1], activation = inner_activation_fun))
@@ -85,7 +85,7 @@ for train, test in kfold.split(x, decode(y)):
     model.compile(loss = optimizer_loss_fun, optimizer = optimizer_algorithm, metrics =         ['accuracy'])
     model.fit(x[train], y[train], epochs = number_epoch, batch_size = batch_length, verbose = show_inter_results)
     scores = model.evaluate(x[test], y[test], verbose = show_inter_results)
-    print(scores[1]*100)
+    print(f'scores = {scores[1]*100}') # [MR]
     cvscores.append(scores[1]*100)
     y_pred = model.predict(x[test])
     np.savetxt("Results_3%s.csv" % cnt, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s')

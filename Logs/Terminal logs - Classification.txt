@@ -44,6 +44,10 @@ scores = 44.845813512802124
 71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 4ms/step 
 Ended | 8 | Elapsed time: 11522.7591 seconds
 
+| cnt = 9
+scores = 51.58590078353882
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step 
+Ended | 9 | Elapsed time: 12848.0742 seconds
 
 
 

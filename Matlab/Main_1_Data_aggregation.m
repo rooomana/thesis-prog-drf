@@ -93,7 +93,7 @@ for opt = 1:length(BUI)
         Data = data.^2;
         % Saving
         save([save_filename BUI{1,opt}{b} '.mat'],'Data');
-        fprintf('Saved \n'); % [MR]
+        fprintf('Saved \n\n'); % [MR]
     end
 end
 

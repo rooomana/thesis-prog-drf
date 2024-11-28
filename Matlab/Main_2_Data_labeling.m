@@ -107,11 +107,14 @@ fprintf('Ended | Total \n');                                    % [MR]
 fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time_total);    % [MR]
 
 %% [MR] Print running time
-longest_key_length = max(cellfun(@length, keys(running_time)));
-fprintf('Running Time:\n');
-phases = keys(running_time); % [MR] Get keys in stored order
+longest_name_length = max(cellfun(@length, ...
+                            keys(running_time)));
+longest_time_length = max(cellfun(@(time) numel(sprintf('%.4f', time)),  ...
+                            num2cell(values(running_time))));    
+fprintf('\nRunning Time:');
+phases = keys(running_time);
 for phase = 1:length(phases)
     phase_name = phases{phase};
     phase_elapsed_time = running_time(phase_name);
-    fprintf('| %-*s = %.4f seconds\n', longest_key_length, phase_name, phase_elapsed_time);
+    fprintf('| %-*s = %*.4f seconds\n', longest_name_length, phase_name, longest_time_length, phase_elapsed_time);
 end

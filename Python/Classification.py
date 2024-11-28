@@ -71,7 +71,6 @@ Label_2 = np.transpose(Data[2049:2050,:]); Label_2 = Label_2.astype(int);
 Label_3 = np.transpose(Data[2050:2051,:]); Label_3 = Label_3.astype(int);
 y = encode(Label_3)
 ################################ Main ####################################
-running_times = [] # [MR] Timers
 cvscores    = []
 cnt         = 0
 kfold = StratifiedKFold(n_splits=K, shuffle=True, random_state=1)
@@ -91,21 +90,22 @@ for train, test in kfold.split(x, decode(y)):
     y_pred = model.predict(x[test])
     np.savetxt("Results_3%s.csv" % cnt, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s')
     ## [MR] Elapsed time
-    print('Ended' + ' | %s | ' % cnt, end="")
+    print('Ended | %s' % cnt)
     end_time_phase = time.time()
     elapsed_time_phase = end_time_phase - start_time_phase
     running_time[f'elapsed_time_{cnt}'] = elapsed_time_phase
     print("Elapsed time: %.4f seconds\n" % (elapsed_time_phase))
 #########################################################################
 ## [MR] Elapsed time
-print('Ended' + ' | Total')
+print('Ended | Total')
 end_time = time.time()
 elapsed_time_total = end_time - start_time
 running_time['elapsed_time_total'] = elapsed_time_total
 print("Elapsed time: %.4f seconds\n" % (elapsed_time_total))
 
 ## [MR] Print running time
-longest_key_length = max(len(key) for key in running_time)
-print('Running Time:')
+longest_name_length = max(len(name) for name in running_time.keys())
+longest_time_length = max(len(str(format(time, '.4f'))) for time in running_time.values())
+print('\nRunning Time:')
 for phase_name, phase_elapsed_time in running_time.items():
-    print(f'| {phase_name:<{longest_key_length}} = {phase_elapsed_time:.4f} seconds')
+    print(f'| {phase_name:<{longest_name_length}} = {phase_elapsed_time:>{longest_time_length}.4f} seconds')

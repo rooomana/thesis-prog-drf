@@ -55,10 +55,13 @@ tic; % [MR] Start timer
 
 %% Main
 for opt = 1:length(BUI)
-    fprintf('%5d | in for opt \n', opt); % [MR] Print for debugging
+    opt_length = length(BUI); % [MR]
+    bui_width = length(BUI{1,1}{1}); % [MR]
+    max_width = max([opt_length bui_width]); % [MR]
+    fprintf('%*s | in for %-*s \n', max_width, num2str(opt), 3, 'opt'); % [MR] Print for debugging
     % Loading and averaging
     for b = 1:length(BUI{1,opt})
-        fprintf('%s | in for BUI ', BUI{1,opt}{b}); % [MR] Print for debugging
+        fprintf('%*s | in for %-*s ', max_width, BUI{1,opt}{b}, 3, 'b'); % [MR] Print for debugging
         %%disp(BUI{1,opt}{b})
         if(strcmp(BUI{1,opt}{b},'00000'))
             N = 40; % Number of segments for RF background activities
@@ -71,7 +74,7 @@ for opt = 1:length(BUI)
         data = [];
         cnt = 1;
         for n = 0:N
-            fprintf('| n = %-2d | ', n); % [MR] Print for debugging
+            fprintf('| n = %-2d ', n); % [MR] Print for debugging
             % Loading raw csv files
             % Note: function must be 'csvread'
             x = csvread([load_filename BUI{1,opt}{b} 'L_' num2str(n) '.csv']);
@@ -85,7 +88,7 @@ for opt = 1:length(BUI)
                 data(:,cnt) = [xf ; (yf*mean(xf((end-Q+1):end))./mean(yf(1:Q)))];
                 cnt = cnt + 1; 
             end
-            fprintf('%6.2f %% \n', 100*n/N); % [MR]
+            fprintf('| pct. = %6.2f %% \n', 100*n/N); % [MR]
         end
         Data = data.^2;
         % Saving

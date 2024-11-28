@@ -55,16 +55,19 @@ T = length(BUI);
 DATA = [];
 LN   = [];
 for t = 1:T
-    fprintf('%d | in for t \n', t); % [MR] Print for debugging
+    T_width = length(num2str(T)); % [MR]
+    bui_width = length(BUI{1,1}{1}); % [MR]
+    max_width = max([T_width bui_width]); % [MR]
+    fprintf('%*s | in for %-*s \n', max_width, num2str(t), 1, 't'); % [MR] Print for debugging
     for b = 1:length(BUI{1,t})
-        fprintf('%s | in for BUI \n', BUI{1,t}{b}); % [MR] Print for debugging
+        fprintf('%*s | in for %-*s \n', max_width, BUI{1,t}{b}, 1, 'b'); % [MR] Print for debugging
         load([load_filename BUI{1,t}{b} '.mat']);
         Data = Data./max(max(Data));
         DATA = [DATA, Data];
         LN   = [LN size(Data,2)];
         clear Data;
     end
-    disp(100*t/T)
+    fprintf('| pct. = %6.2f %% \n\n', 100*t/T); % [MR]
 end
 
 elapsed_time_loading = toc; % [MR] Stop timer for loading phase

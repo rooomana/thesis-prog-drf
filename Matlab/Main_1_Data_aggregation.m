@@ -55,7 +55,7 @@ tic; % [MR] Start timer
 
 %% Main
 for opt = 1:length(BUI)
-    fprintf('%d | in for opt \n', opt); % [MR] Print for debugging
+    fprintf('%5d | in for opt \n', opt); % [MR] Print for debugging
     % Loading and averaging
     for b = 1:length(BUI{1,opt})
         fprintf('%s | in for BUI ', BUI{1,opt}{b}); % [MR] Print for debugging
@@ -67,12 +67,13 @@ for opt = 1:length(BUI)
         else
             N = 20; % Number of segments for drones RF activities
         end
-        fprintf('|| N = %d \n', N); % [MR] Print for debugging
+        fprintf('(N = %d)\n', N); % [MR] Print for debugging
         data = [];
         cnt = 1;
         for n = 0:N
-            fprintf('||| n = %d ', n); % [MR] Print for debugging
+            fprintf('| n = %-2d | ', n); % [MR] Print for debugging
             % Loading raw csv files
+            % Note: function must be 'csvread'
             x = csvread([load_filename BUI{1,opt}{b} 'L_' num2str(n) '.csv']);
             y = csvread([load_filename BUI{1,opt}{b} 'H_' num2str(n) '.csv']);
             % re-segmenting and signal transformation
@@ -84,13 +85,12 @@ for opt = 1:length(BUI)
                 data(:,cnt) = [xf ; (yf*mean(xf((end-Q+1):end))./mean(yf(1:Q)))];
                 cnt = cnt + 1; 
             end
-            disp(100*n/N)
+            fprintf('%6.2f %% \n', 100*n/N); % [MR]
         end
         Data = data.^2;
         % Saving
-        fprintf('Started | Saving \n');                     % [MR]
         save([save_filename BUI{1,opt}{b} '.mat'],'Data');
-        fprintf('Ended | Saving \n');                       % [MR]
+        fprintf('Saved \n'); % [MR]
     end
 end
 
@@ -103,7 +103,7 @@ fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time_total);  % [MR]
 %% [MR] Print running time
 longest_key_length = max(cellfun(@length, keys(running_time)));
 fprintf('Running Time:\n');
-phases = keys(running_time); % [MR] Get keys in stored order
+phases = keys(running_time);
 for phase = 1:length(phases)
     phase_name = phases{phase};
     phase_elapsed_time = running_time(phase_name);

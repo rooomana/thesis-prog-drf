@@ -61,6 +61,7 @@ for opt = 1:length(BUI)
     fprintf('%*s | in for %-*s \n', max_width, num2str(opt), 3, 'opt'); % [MR] Print for debugging
     % Loading and averaging
     for b = 1:length(BUI{1,opt})
+        tic; % [MR] Start timer for this phase
         fprintf('%*s | in for %-*s ', max_width, BUI{1,opt}{b}, 3, 'b'); % [MR] Print for debugging
         %%disp(BUI{1,opt}{b})
         if(strcmp(BUI{1,opt}{b},'00000'))
@@ -93,7 +94,11 @@ for opt = 1:length(BUI)
         Data = data.^2;
         % Saving
         save([save_filename BUI{1,opt}{b} '.mat'],'Data');
-        fprintf('Saved \n\n'); % [MR]
+        %% [MR] Elapsed time
+        elapsed_time_bui = toc; % [MR] Stop timer for this phase
+        running_time(['elapsed_time_' BUI{1,opt}{b}]) = elapsed_time_bui;   % [MR]
+        fprintf('Saved | %s\n\n', BUI{1,opt}{b});                       % [MR]
+        fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time_bui);        % [MR]
     end
 end
 

@@ -1,0 +1,60 @@
+---------- Classification.py
+
+Loading Data ...
+Preparing Data ...
+1
+35.06608009338379
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step 
+2
+49.64757561683655
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 5ms/step 
+3
+44.845813512802124
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step 
+4
+47.84140884876251
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step 
+5
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step
+6
+52.643173933029175
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step
+7
+58.722466230392456
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step
+8
+50.30837059020996
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step
+9
+57.268720865249634
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step
+10
+51.71806216239929
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step
+Ended.
+Elapsed time (Total): 11343.8080 seconds
+
+
+
+
+
+
+
+
+========== Warnings
+
+2024-11-27 18:34:44.326462: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn 
+them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+
+2024-11-27 18:34:48.231049: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn 
+them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+
+C:\Users\Migue\AppData\Local\Programs\Python\Python311\Lib\site-packages\keras\src\layers\core\dense.py:87: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+  super().__init__(activity_regularizer=activity_regularizer, **kwargs)
+
+2024-11-27 18:35:08.707812: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+PS D:\ISCTE\Thesis\DroneRF\DroneRF_Program> & C:/Users/Migue/AppData/Local/Programs/Python/Python311/python.exe   
+Python 3.11.2 (tags/v3.11.2:878ead1, Feb  7 2023, 16:38:35) [MSC v.1934 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.

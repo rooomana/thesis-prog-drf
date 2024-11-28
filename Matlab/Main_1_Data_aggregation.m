@@ -34,10 +34,12 @@ save_filename = load_filename;                      % [MR] Path of aggregated da
 %save_filename = fileparts(pwd);
 %save_filename = [save_filename '\Data\'];           % Path of aggregated data
 
-disp(['pwd           | ' pwd]);             % [MR] Print path
-disp(['filepath      | ' filepath]);        % [MR] Print path
-disp(['load_filename | ' load_filename]);   % [MR] Print path
-disp(['save_filename | ' save_filename]);   % [MR] Print path
+word_width = 14; % [MR]
+fprintf('%-*s | %s \n', word_width, 'pwd', pwd);                        % [MR] Print path
+fprintf('%-*s | %s \n', word_width, 'filepath', filepath);              % [MR] Print path
+fprintf('%-*s | %s \n', word_width, 'load_filename', load_filename);    % [MR] Print path
+fprintf('%-*s | %s \n', word_width, 'save_filename', save_filename);    % [MR] Print path
+fprintf('\n'); % [MR] Separation
 
 %% Parameters
 BUI{1,1} = {'00000'};                         % BUI of RF background activities
@@ -48,8 +50,10 @@ M = 2048; % Total number of frequency bins
 L = 1e5;  % Total number samples in a segment
 Q = 10;   % Number of returning points for spectral continuity
 
-%% Main
+running_time = containers.Map; % [MR] Timers
 tic; % [MR] Start timer
+
+%% Main
 for opt = 1:length(BUI)
     fprintf('%d | in for opt \n', opt); % [MR] Print for debugging
     % Loading and averaging
@@ -63,11 +67,11 @@ for opt = 1:length(BUI)
         else
             N = 20; % Number of segments for drones RF activities
         end
-        fprintf('|| N = %d \n', N); % [MR] Print N for debugging
+        fprintf('|| N = %d \n', N); % [MR] Print for debugging
         data = [];
         cnt = 1;
         for n = 0:N
-            fprintf('||| n = %d ', n); % [MR] Print n for debugging
+            fprintf('||| n = %d ', n); % [MR] Print for debugging
             % Loading raw csv files
             x = csvread([load_filename BUI{1,opt}{b} 'L_' num2str(n) '.csv']);
             y = csvread([load_filename BUI{1,opt}{b} 'H_' num2str(n) '.csv']);
@@ -84,9 +88,24 @@ for opt = 1:length(BUI)
         end
         Data = data.^2;
         % Saving
+        fprintf('Started | Saving \n');                     % [MR]
         save([save_filename BUI{1,opt}{b} '.mat'],'Data');
+        fprintf('Ended | Saving \n');                       % [MR]
     end
 end
-disp('Ended.'); % [MR] Print for debugging
-elapsed_time_total = toc; % [MR] Stop timer
-disp(['Elapsed time (Total): ', num2str(elapsed_time_total), ' seconds']); % [MR] Print elapsed time
+
+%% [MR] Elapsed time
+elapsed_time_total = toc; % [MR] Stop timer for total program
+running_time('elapsed_time_total') = elapsed_time_total;        % [MR]
+fprintf('Ended | Total \n');                                    % [MR]
+fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time_total);  % [MR]
+
+%% [MR] Print running time
+longest_key_length = max(cellfun(@length, keys(running_time)));
+fprintf('Running Time:\n');
+phases = keys(running_time); % [MR] Get keys in stored order
+for phase = 1:length(phases)
+    phase_name = phases{phase};
+    phase_elapsed_time = running_time(phase_name);
+    fprintf('| %-*s = %.4f seconds\n', longest_key_length, phase_name, phase_elapsed_time);
+end

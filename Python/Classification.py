@@ -76,6 +76,7 @@ cvscores    = []
 cnt         = 0
 kfold = StratifiedKFold(n_splits=K, shuffle=True, random_state=1)
 for train, test in kfold.split(x, decode(y)):
+    start_time_phase = time.time() # [MR] Start phase timer
     cnt = cnt + 1
     print(f'| {cnt = }') # [MR]
     model = Sequential()
@@ -90,11 +91,11 @@ for train, test in kfold.split(x, decode(y)):
     y_pred = model.predict(x[test])
     np.savetxt("Results_3%s.csv" % cnt, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s')
     ## [MR] Elapsed time
-    print('Ended' + ' | %s | ' % cnt, end="") # [MR] Print for debugging
-    end_time = time.time() # [MR] Flag timer
-    elapsed_time = end_time - start_time # [MR]
-    running_time[f'elapsed_time_{cnt}'] = elapsed_time # [MR]
-    print("Elapsed time: %.4f seconds\n" % (elapsed_time)) # [MR] Print elapsed time
+    print('Ended' + ' | %s | ' % cnt, end="")
+    end_time_phase = time.time()
+    elapsed_time_phase = end_time_phase - start_time_phase
+    running_time[f'elapsed_time_{cnt}'] = elapsed_time_phase
+    print("Elapsed time: %.4f seconds\n" % (elapsed_time_phase))
 #########################################################################
 ## [MR] Elapsed time
 print('Ended' + ' | Total')

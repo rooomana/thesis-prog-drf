@@ -1,5 +1,7 @@
 ---------- Classification.py
 
+========== Run 2
+
 Loading Data ...
 Preparing Data ...
 | cnt = 1
@@ -8,6 +10,26 @@ scores = 44.22907531261444
 Ended | 1 | Elapsed time: 1230.8397 seconds
 
 | cnt = 2
+scores = 50.969165563583374
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 8ms/step 
+Ended | 2 | Elapsed time: 2551.8329 seconds
+
+| cnt = 3
+scores = 48.193833231925964
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step 
+Ended | 3 | Elapsed time: 3841.5940 seconds
+
+| cnt = 4
+scores = 36.78414225578308
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step 
+Ended | 4 | Elapsed time: 5361.0870 seconds
+
+| cnt = 5
+scores = 49.69162940979004
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step  
+Ended | 5 | Elapsed time: 6890.4679 seconds
+
+| cnt = 6
 
 
 
@@ -15,6 +37,9 @@ Ended | 1 | Elapsed time: 1230.8397 seconds
 
 
 
+
+
+========== Run 1
 
 Loading Data ...
 Preparing Data ...

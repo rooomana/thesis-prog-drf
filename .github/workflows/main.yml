@@ -1,0 +1,29 @@
+name: Run scripts
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run_scripts:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run MATLAB script 1
+        working-directory: ./Matlab
+        run: |
+          start cmd /k "echo $(pwd) & matlab -nodisplay -r "run('Main_1_Data_aggregation.m'); exit""
+
+      - name: Run MATLAB script 2
+        working-directory: ./Matlab
+        run: |
+          start cmd /k "echo $(pwd) & matlab -nodisplay -r "run('Main_2_Data_labeling.m'); exit""
+
+      - name: Run Python script
+        working-directory: ./Python
+        run: |
+          start cmd /k "echo $(pwd) & python Classification.py"

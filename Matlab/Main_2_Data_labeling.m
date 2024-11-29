@@ -56,9 +56,9 @@ T = length(BUI);
 DATA = [];
 LN   = [];
 for t = 1:T
-    T_width = length(num2str(T)); % [MR]
-    bui_width = length(BUI{1,1}{1}); % [MR]
-    max_width = max([T_width bui_width]); % [MR]
+    T_width = length(num2str(T));           % [MR]
+    bui_width = length(BUI{1,1}{1});        % [MR]
+    max_width = max([T_width bui_width]);   % [MR]
     fprintf('%*s | in for %-*s \n', max_width, num2str(t), 1, 't'); % [MR] Print for debugging
     for b = 1:length(BUI{1,t})
         fprintf('%*s | in for %-*s \n', max_width, BUI{1,t}{b}, 1, 'b'); % [MR] Print for debugging

@@ -54,9 +54,9 @@ tic; % [MR] Start timer
 
 %% Main
 for opt = 1:length(BUI)
-    opt_length = length(BUI); % [MR]
-    bui_width = length(BUI{1,1}{1}); % [MR]
-    max_width = max([opt_length bui_width]); % [MR]
+    opt_length = length(BUI);                   % [MR]
+    bui_width = length(BUI{1,1}{1});            % [MR]
+    max_width = max([opt_length bui_width]);    % [MR]
     fprintf('%*s | in for %-*s \n', max_width, num2str(opt), 3, 'opt'); % [MR] Print for debugging
     % Loading and averaging
     for b = 1:length(BUI{1,opt})

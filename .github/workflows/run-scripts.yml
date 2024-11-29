@@ -13,17 +13,37 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+#      - name: Set MATLAB Path
+#        run: |
+#          $MATLAB_PATH = "C:\Program Files\MATLAB\R2024b\bin"
+#          $env:Path += ";$MATLAB_PATH"
+
+#      - name: Verify MATLAB Path
+#        run: |
+#          echo "Current working directory:"
+#          Get-Location
+#          matlab -help
+
+      - name: Set up MATLAB
+        uses: matlab-actions/setup-matlab@v1
+
       - name: Run MATLAB script 1
         working-directory: ./Matlab
         run: |
-          Invoke-Command -ScriptBlock { echo $(pwd); matlab -nodisplay -r "run('Main_1_Data_aggregation.m'); exit" }
+          echo "Current working directory:"
+          Get-Location
+          matlab -batch "run('Main_1_Data_aggregation.m')"
 
       - name: Run MATLAB script 2
         working-directory: ./Matlab
         run: |
-          Invoke-Command -ScriptBlock { echo $(pwd); matlab -nodisplay -r "run('Main_2_Data_labeling.m'); exit" }
+          echo "Current working directory:"
+          Get-Location
+          matlab -batch "run('Main_2_Data_labeling.m')"
 
       - name: Run Python script
         working-directory: ./Python
         run: |
-          Invoke-Command -ScriptBlock { echo $(pwd); python Classification.py; exit }
+          echo "Current working directory:"
+          Get-Location
+          python Classification.py

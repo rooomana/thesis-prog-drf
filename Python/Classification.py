@@ -28,6 +28,7 @@
 #########################################################################
 
 ############################## Libraries ################################
+import os # [MR]
 import time # [MR]
 import numpy as np
 from keras.utils import to_categorical
@@ -61,8 +62,9 @@ start_time = time.time() # [MR] Start timer
 
 ############################### Loading ##################################
 print("Loading Data ...")
-filepath = 'D:\ISCTE\Thesis\DroneRF'; # [MR] Path for easier management
-Data = np.loadtxt(filepath + "\Data\RF_Data.csv", delimiter=",") # [MR]
+current_directory_working = os.getcwd()                             # [MR] Current working directory
+filepath = os.path.dirname(current_directory_working)               # [MR] Path for easier management
+Data = np.loadtxt(filepath + "\Data\RF_Data.csv", delimiter=",")    # [MR]
 ############################## Splitting #################################
 print("Preparing Data ...")
 x = np.transpose(Data[0:2047,:])

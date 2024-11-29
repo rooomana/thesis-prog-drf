@@ -32,8 +32,6 @@ current_directory_working = pwd;                    % [MR] Current working direc
 filepath = fileparts(current_directory_working);    % [MR] Path for easier management
 load_filename = [filepath '\Data\'];                % Path of raw RF data % [MR]
 save_filename = load_filename;                      % [MR] Path of aggregated data
-%save_filename = fileparts(pwd);
-%save_filename = [save_filename '\Data\'];           % Path of aggregated data
 
 word_width = 14; % [MR]
 fprintf('%-*s | %s \n', word_width, 'pwd', pwd);                        % [MR] Print path

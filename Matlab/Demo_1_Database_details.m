@@ -28,9 +28,9 @@
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 
 close all; clear; clc
-filepath = 'D:\ISCTE\Thesis\DroneRF';   % [MR] Path for easier management
-%filename = 'G:\Data\';                  % Path of raw RF data
-filename = [filepath '\Data\'];         % Path of raw RF data % [MR]
+current_directory_working = pwd;                    % [MR] Current working directory
+filepath = fileparts(current_directory_working);    % [MR] Path for easier management
+filename = [filepath '\Data\'];                     % Path of raw RF data % [MR]
 format shortg
 
 %% Parameters

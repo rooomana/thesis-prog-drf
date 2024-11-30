@@ -49,18 +49,18 @@ M = 2048; % Total number of frequency bins
 L = 1e5;  % Total number samples in a segment
 Q = 10;   % Number of returning points for spectral continuity
 
-running_time = containers.Map; % [MR] Timers
-tic; % [MR] Start timer
+running_time = dictionary; % [MR] Timers
+timer_total = tic; % [MR] Start timer for total program
 
 %% Main
 for opt = 1:length(BUI)
-    opt_length = length(BUI);                   % [MR]
-    bui_width = length(BUI{1,1}{1});            % [MR]
-    max_width = max([opt_length bui_width]);    % [MR]
+    opt_length = length(BUI);                   % [MR] Help for printing
+    bui_width = length(BUI{1,1}{1});            % [MR] Help for printing
+    max_width = max([opt_length bui_width]);    % [MR] Help for printing
     fprintf('%*s | in for %-*s \n', max_width, num2str(opt), 3, 'opt'); % [MR] Print for debugging
     % Loading and averaging
     for b = 1:length(BUI{1,opt})
-        tic; % [MR] Start timer for this phase
+        timer_phase = tic; % [MR] Start timer for this phase
         fprintf('%*s | in for %-*s ', max_width, BUI{1,opt}{b}, 3, 'b'); % [MR] Print for debugging
         %%disp(BUI{1,opt}{b})
         if(strcmp(BUI{1,opt}{b},'00000'))
@@ -94,24 +94,24 @@ for opt = 1:length(BUI)
         % Saving
         save([save_filename BUI{1,opt}{b} '.mat'],'Data');
         %% [MR] Elapsed time
-        elapsed_time_bui = toc; % [MR] Stop timer for this phase
-        running_time(['elapsed_time_' BUI{1,opt}{b}]) = elapsed_time_bui;   % [MR]
-        fprintf('Saved | %s\n\n', BUI{1,opt}{b});                       % [MR]
-        fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time_bui);        % [MR]
+        elapsed_time = toc(timer_phase); % [MR] Stop timer for this phase
+        running_time(['elapsed_time_' BUI{1,opt}{b}]) = elapsed_time;   % [MR]
+        fprintf('Ended | Saved %s \n', BUI{1,opt}{b});                       % [MR]
+        fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);        % [MR]
     end
 end
 
 %% [MR] Elapsed time
-elapsed_time_total = toc; % [MR] Stop timer for total program
-running_time('elapsed_time_total') = elapsed_time_total;        % [MR]
-fprintf('Ended | Total \n');                                    % [MR]
-fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time_total);  % [MR]
+elapsed_time = toc(timer_total); % [MR] Stop timer for total program
+running_time('elapsed_time_total') = elapsed_time;          % [MR]
+fprintf('Ended | Total \n');                                % [MR]
+fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]
 
 %% [MR] Print running time
 longest_name_length = max(cellfun(@length, ...
                             keys(running_time)));
-longest_time_length = max(cellfun(@(time) numel(sprintf('%.4f', time)),  ...
-                            num2cell(values(running_time))));    
+longest_time_length = max(arrayfun(@(time) numel(num2str(time, '%.4f')), ...
+                            values(running_time)));
 fprintf('\nRunning Time:');
 phases = keys(running_time);
 for phase = 1:length(phases)

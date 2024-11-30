@@ -101,9 +101,9 @@ for train, test in kfold.split(x, decode(y)):
 ## [MR] Elapsed time
 print('Ended | Total')
 end_time = time.time()
-elapsed_time_total = end_time - start_time
-running_time['elapsed_time_total'] = elapsed_time_total
-print("Elapsed time: %.4f seconds\n" % (elapsed_time_total))
+elapsed_time = end_time - start_time
+running_time['elapsed_time_total'] = elapsed_time
+print("Elapsed time: %.4f seconds\n" % (elapsed_time))
 
 ## [MR] Print running time
 longest_name_length = max(len(name) for name in running_time.keys())

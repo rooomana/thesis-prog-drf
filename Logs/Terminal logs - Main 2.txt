@@ -1,9 +1,7 @@
----------- Main_2_Data_labeling.m
-
-pwd            | D:\ISCTE\Thesis\DroneRF\DroneRF_Program 
-filepath       | D:\ISCTE\Thesis\DroneRF 
-load_filename  | D:\ISCTE\Thesis\DroneRF\Data\ 
-save_filename  | D:\ISCTE\Thesis\DroneRF\Data\ 
+pwd            | C:\Miguel\Career\University\MSc\Thesis\Program\DroneRF\DroneRF_Program 
+filepath       | C:\Miguel\Career\University\MSc\Thesis\Program\DroneRF 
+load_filename  | C:\Miguel\Career\University\MSc\Thesis\Program\DroneRF\Data\ 
+save_filename  | C:\Miguel\Career\University\MSc\Thesis\Program\DroneRF\Data\ 
 
     1 | in for t 
 00000 | in for b 
@@ -32,24 +30,25 @@ save_filename  | D:\ISCTE\Thesis\DroneRF\Data\
 
 
 Ended | Loading 
-Elapsed time: 3.0125 seconds
+Elapsed time: 1.6264 seconds
 
 
 Ended | Labeling 
-Elapsed time: 0.0038 seconds
+Elapsed time: 0.0031 seconds
 
 
 Ended | Saving 
-Elapsed time: 36.5450 seconds
+Elapsed time: 14.4225 seconds
 
 
 Ended | Total 
-Elapsed time: 36.5454 seconds
+Elapsed time: 16.0526 seconds
+
 
 
 Running Time:
-| elapsed_time_loading  = 3.0125 seconds
-| elapsed_time_labeling = 0.0038 seconds
-| elapsed_time_saving   = 36.5450 seconds
-| elapsed_time_total    = 36.5454 seconds
+| elapsed_time_loading  =  1.6264 seconds
+| elapsed_time_labeling =  0.0031 seconds
+| elapsed_time_saving   = 14.4225 seconds
+| elapsed_time_total    = 16.0526 seconds
 >> 

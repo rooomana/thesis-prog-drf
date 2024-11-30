@@ -48,17 +48,17 @@ BUI{1,4} = {'11000'};                         % BUI of the Phantom drone RF acti
 
 running_time = dictionary; % [MR] Timers
 
-tic; % [MR] Start timer for total program
+timer_total = tic; % [MR] Start timer for total program
 
 %% Loading and concatenating RF data
-tic; % [MR] Start timer for loading phase
+timer_phase = tic; % [MR] Start timer for this phase
 T = length(BUI);
 DATA = [];
 LN   = [];
 for t = 1:T
-    T_width = length(num2str(T));           % [MR]
-    bui_width = length(BUI{1,1}{1});        % [MR]
-    max_width = max([T_width bui_width]);   % [MR]
+    T_width = length(num2str(T));           % [MR] Help for printing
+    bui_width = length(BUI{1,1}{1});        % [MR] Help for printing
+    max_width = max([T_width bui_width]);   % [MR] Help for printing
     fprintf('%*s | in for %-*s \n', max_width, num2str(t), 1, 't'); % [MR] Print for debugging
     for b = 1:length(BUI{1,t})
         fprintf('%*s | in for %-*s \n', max_width, BUI{1,t}{b}, 1, 'b'); % [MR] Print for debugging
@@ -71,13 +71,13 @@ for t = 1:T
     fprintf('| pct. = %6.2f %% \n\n', 100*t/T); % [MR]
 end
 
-elapsed_time_loading = toc; % [MR] Stop timer for loading phase
-running_time('elapsed_time_loading') = elapsed_time_loading;    % [MR]
-fprintf('Ended | Loading \n');                                  % [MR]
-fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time_loading);  % [MR]
+elapsed_time = toc(timer_phase); % [MR] Stop timer for this phase
+running_time('elapsed_time_loading') = elapsed_time;        % [MR]
+fprintf('Ended | Loading \n');                              % [MR]
+fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]
 
 %% Labeling
-tic; % [MR] Start timer for labeling phase
+timer_phase = tic; % [MR] Start timer for this phase
 zeros(3,sum(LN));
 Label(1,:) = [0*ones(1,LN(1)) 1*ones(1,sum(LN(2:end)))];
 Label(2,:) = [0*ones(1,LN(1)) 1*ones(1,sum(LN(2:5))) 2*ones(1,sum(LN(6:9))) 3*ones(1,LN(10))];
@@ -87,31 +87,31 @@ for i = 1:length(LN)
 end
 Label(3,:) = temp;
 
-elapsed_time_labeling = toc; % [MR] Stop timer for labeling phase
-running_time('elapsed_time_labeling') = elapsed_time_labeling;  % [MR]
-fprintf('Ended | Labeling \n');                                 % [MR]
-fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time_labeling); % [MR]
+elapsed_time = toc(timer_phase); % [MR] Stop timer for this phase
+running_time('elapsed_time_labeling') = elapsed_time;       % [MR]
+fprintf('Ended | Labeling \n');                             % [MR]
+fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]
 
 %% Saving
-tic; % [MR] Start timer for saving phase
+timer_phase = tic; % [MR] Start timer for this phase
 csvwrite([save_filename 'RF_Data.csv'],[DATA; Label]);
 
-elapsed_time_saving = toc; % [MR] Stop timer for saving phase
-running_time('elapsed_time_saving') = elapsed_time_saving;      % [MR]
-fprintf('Ended | Saving \n');                                   % [MR]
-fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time_saving);   % [MR]
+elapsed_time = toc(timer_phase); % [MR] Stop timer for this phase
+running_time('elapsed_time_saving') = elapsed_time;         % [MR]
+fprintf('Ended | Saving \n');                               % [MR]
+fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]
 
 %% [MR] Elapsed time
-elapsed_time_total = toc; % [MR] Stop timer for total program
-running_time('elapsed_time_total') = elapsed_time_total;        % [MR]
-fprintf('Ended | Total \n');                                    % [MR]
-fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time_total);    % [MR]
+elapsed_time = toc(timer_total); % [MR] Stop timer for total program
+running_time('elapsed_time_total') = elapsed_time;          % [MR]
+fprintf('Ended | Total \n');                                % [MR]
+fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]
 
 %% [MR] Print running time
 longest_name_length = max(cellfun(@length, ...
                             keys(running_time)));
-longest_time_length = max(cellfun(@(time) numel(sprintf('%.4f', time)),  ...
-                            num2cell(values(running_time))));    
+longest_time_length = max(arrayfun(@(time) numel(num2str(time, '%.4f')), ...
+                            values(running_time)));
 fprintf('\nRunning Time:');
 phases = keys(running_time);
 for phase = 1:length(phases)

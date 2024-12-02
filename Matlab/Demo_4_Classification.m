@@ -36,8 +36,7 @@ filepath = [filepath '\Data\'];
 %opt = 1;  % Change to 1, 2, or 3 to alternate between the 1st, 2nd, and 3rd DNN results respectively.
 opt = 3;
 
-experiment_number = 3; % [MR] Number of script execution
-results_path = [pwd '\Results_ex' num2str(experiment_number) '\']; % [MR] 
+results_path = [pwd '\Results_' num2str(opt) '\']; % [MR] 
 
 running_time = dictionary; % [MR] Timers
 

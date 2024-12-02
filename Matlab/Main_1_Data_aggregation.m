@@ -96,7 +96,7 @@ for opt = 1:length(BUI)
         %% [MR] Elapsed time
         elapsed_time = toc(timer_phase); % [MR] Stop timer for this phase
         running_time(['elapsed_time_' BUI{1,opt}{b}]) = elapsed_time;   % [MR]
-        fprintf('Ended | Saved %s \n', BUI{1,opt}{b});                       % [MR]
+        fprintf('Ended | Saved %s \n', BUI{1,opt}{b});                  % [MR]
         fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);        % [MR]
     end
 end

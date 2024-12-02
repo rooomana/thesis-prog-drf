@@ -37,6 +37,10 @@ format shortg
 BUI = {'00000','10000','10001','10010','10011','10100','10101','10110','10111','11000'};
 N_seg = 1e7;
 
+running_time = dictionary; % [MR] Timers
+
+timer_total = tic; % [MR] Start timer for total program
+
 %% Counting
 c = zeros(1,length(BUI));
 for i = 1:length(BUI)
@@ -75,3 +79,22 @@ P3     = 100.*L3./sum(L3);
 disp([L1/N_seg/2 L1 P1]);
 disp([L2/N_seg/2 L2 P2]);
 disp([L3/N_seg/2 L3 P3]);
+
+%% [MR] Elapsed time
+elapsed_time = toc(timer_total); % [MR] Stop timer for total program
+running_time('elapsed_time_total') = elapsed_time;          % [MR]
+fprintf('Ended | Total \n');                                % [MR]
+fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]
+
+%% [MR] Print running time
+longest_name_length = max(cellfun(@length, ...
+                            keys(running_time)));
+longest_time_length = max(arrayfun(@(time) numel(num2str(time, '%.4f')), ...
+                            values(running_time)));
+fprintf('\nRunning Time:');
+phases = keys(running_time);
+for phase = 1:length(phases)
+    phase_name = phases{phase};
+    phase_elapsed_time = running_time(phase_name);
+    fprintf('| %-*s = %*.4f seconds\n', longest_name_length, phase_name, longest_time_length, phase_elapsed_time);
+end

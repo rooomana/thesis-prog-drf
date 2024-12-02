@@ -45,7 +45,13 @@ c   = [0 0 1 ; 1 0 0 ; 0 1 0 ; 0 0 0.1724 ;...
     0.5172 0.5172 1 ; 0.6207 0.3103 0.2759 ;...
     0 1 0.7586];                              % 10 distinct colours for plotting       
 
+running_time = dictionary; % [MR] Timers
+
+timer_total = tic; % [MR] Start timer for total program
+    
 %% Averaging spectra
+timer_phase = tic; % [MR] Start timer for this phase
+
 s = zeros(length(BUI),M);
 for i = 1:length(BUI)
     x = load([filepath BUI{1,i} '.mat']);
@@ -53,7 +59,14 @@ for i = 1:length(BUI)
     s(i,:) = mean(x.Data,2);
 end
 
+elapsed_time = toc(timer_phase); % [MR] Stop timer for this phase
+running_time('elapsed_time_averaging') = elapsed_time;      % [MR]
+fprintf('Ended | Averaging \n');                            % [MR]
+fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]
+
 %% Aggregating and smoothing RF spectra
+timer_phase = tic; % [MR] Start timer for this phase
+
 if(opt == 1)
     sig             = zeros(2,M);
     sig_smooth      = zeros(2,M);
@@ -87,7 +100,14 @@ elseif(opt == 3)
     sig_smooth(10,:) = smooth(sig(10,:),S);
 end
 
+elapsed_time = toc(timer_phase); % [MR] Stop timer for this phase
+running_time('elapsed_time_smoothing') = elapsed_time;      % [MR]
+fprintf('Ended | Smoothing \n');                            % [MR]
+fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]
+
 %% Plotting
+timer_phase = tic; % [MR] Start timer for this phase
+
 figure('Color',[1,1,1],'position',[100, 60, 840, 600]);
 a = [];
 for i = 1:size(sig,1)
@@ -116,11 +136,42 @@ ylim([-100 5]);
 set(gcf,'Units','inches'); screenposition = get(gcf,'Position');
 set(gcf,'PaperPosition',[0 0 screenposition(3:4)],'PaperSize',screenposition(3:4));
 
+elapsed_time = toc(timer_phase); % [MR] Stop timer for this phase
+running_time('elapsed_time_plotting') = elapsed_time;       % [MR]
+fprintf('Ended | Plotting \n');                             % [MR]
+fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]
+
 %% Saving
 Q = input('Do you want to save the results (Y/N)\n','s');
 if(Q == 'y' || Q == 'Y')
+    timer_phase = tic;                  % [MR] Start timer for this phase
+
     print(1,['Spectrum_' num2str(opt)],'-dpdf','-r512');
     print(2,['Box_' num2str(opt)],'-dpdf','-r512');
+
+    elapsed_time = toc(timer_phase);    % [MR] Stop timer for this phase
+    running_time('elapsed_time_saving') = elapsed_time;         % [MR]
+    fprintf('Ended | Saved results \n');                        % [MR]
+    fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]    
 else
     return
+end
+
+%% [MR] Elapsed time
+elapsed_time = toc(timer_total); % [MR] Stop timer for total program
+running_time('elapsed_time_total') = elapsed_time;          % [MR]
+fprintf('Ended | Total \n');                                % [MR]
+fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]
+
+%% [MR] Print running time
+longest_name_length = max(cellfun(@length, ...
+                            keys(running_time)));
+longest_time_length = max(arrayfun(@(time) numel(num2str(time, '%.4f')), ...
+                            values(running_time)));
+fprintf('\nRunning Time:');
+phases = keys(running_time);
+for phase = 1:length(phases)
+    phase_name = phases{phase};
+    phase_elapsed_time = running_time(phase_name);
+    fprintf('| %-*s = %*.4f seconds\n', longest_name_length, phase_name, longest_time_length, phase_elapsed_time);
 end

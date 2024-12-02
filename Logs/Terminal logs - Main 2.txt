@@ -30,25 +30,25 @@ save_filename  | C:\Miguel\Career\University\MSc\Thesis\Program\DroneRF\Data\
 
 
 Ended | Loading 
-Elapsed time: 1.6264 seconds
+Elapsed time: 1.5969 seconds
 
 
 Ended | Labeling 
-Elapsed time: 0.0031 seconds
+Elapsed time: 0.0059 seconds
 
 
 Ended | Saving 
-Elapsed time: 14.4225 seconds
+Elapsed time: 14.2987 seconds
 
 
 Ended | Total 
-Elapsed time: 16.0526 seconds
+Elapsed time: 15.9021 seconds
 
 
 
 Running Time:
-| elapsed_time_loading  =  1.6264 seconds
-| elapsed_time_labeling =  0.0031 seconds
-| elapsed_time_saving   = 14.4225 seconds
-| elapsed_time_total    = 16.0526 seconds
+| elapsed_time_loading  =  1.5969 seconds
+| elapsed_time_labeling =  0.0059 seconds
+| elapsed_time_saving   = 14.2987 seconds
+| elapsed_time_total    = 15.9021 seconds
 >> 

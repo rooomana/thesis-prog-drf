@@ -92,6 +92,7 @@ for train, test in kfold.split(x, decode(y)):
     print(f'scores = {scores[1]*100}') # [MR]
     cvscores.append(scores[1]*100)
     y_pred = model.predict(x[test])
+    # [MR] (Results_{1,2,3} - Demo_4) - Only saving results for the 3rd NN (?)
     np.savetxt("Results_3%s.csv" % cnt, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s')
     ## [MR] Elapsed time
     print('Ended | %s' % cnt)

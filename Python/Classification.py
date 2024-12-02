@@ -65,7 +65,7 @@ print("Loading Data ...")
 current_directory_working = os.getcwd()                             # [MR] Current working directory
 filepath = os.path.dirname(current_directory_working)               # [MR] Path for easier management
 Data = np.loadtxt(rf"{filepath}\Data\RF_Data.csv", delimiter=",")   # [MR]
-print("Loaded data.")                                               # [MR]
+print("Loaded data.\n")                                               # [MR]
 ############################## Splitting #################################
 print("Preparing Data ...")
 x = np.transpose(Data[0:2047,:])
@@ -73,7 +73,7 @@ Label_1 = np.transpose(Data[2048:2049,:]); Label_1 = Label_1.astype(int);
 Label_2 = np.transpose(Data[2049:2050,:]); Label_2 = Label_2.astype(int);
 Label_3 = np.transpose(Data[2050:2051,:]); Label_3 = Label_3.astype(int);
 y = encode(Label_3)
-print("Prepared data.")                                             # [MR]
+print("Prepared data.\n")                                             # [MR]
 ################################ Main ####################################
 cvscores    = []
 cnt         = 0

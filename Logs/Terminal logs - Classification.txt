@@ -1,144 +1,80 @@
----------- Classification.py
-
-========== Run 3
-
-.
-
-.
-
-
-
-
-========== Run 2
-
 Loading Data ...
+Loaded data.
 Preparing Data ...
+Prepared data.
 | cnt = 1
-scores = 44.22907531261444
-71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step 
-Ended | 1 | Elapsed time: 1230.8397 seconds
+scores = 43.259912729263306
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 848us/step
+Ended | 1
+Elapsed time: 357.4698 seconds
 
 | cnt = 2
-scores = 50.969165563583374
-71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 8ms/step 
-Ended | 2 | Elapsed time: 2551.8329 seconds
+scores = 56.12334609031677
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 850us/step
+Ended | 2
+Elapsed time: 367.5661 seconds
 
 | cnt = 3
-scores = 48.193833231925964
-71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step 
-Ended | 3 | Elapsed time: 3841.5940 seconds
+scores = 50.8370041847229
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 866us/step
+Ended | 3
+Elapsed time: 365.8643 seconds
 
 | cnt = 4
-scores = 36.78414225578308
-71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step 
-Ended | 4 | Elapsed time: 5361.0870 seconds
+scores = 44.052863121032715
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 879us/step
+Ended | 4
+Elapsed time: 370.5286 seconds
 
 | cnt = 5
-scores = 49.69162940979004
-71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step
-Ended | 5 | Elapsed time: 6890.4679 seconds
+scores = 50.79295039176941
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 866us/step
+Ended | 5
+Elapsed time: 367.2699 seconds
 
 | cnt = 6
-scores = 51.85021758079529
-71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step
-Ended | 6 | Elapsed time: 8397.8615 seconds
+scores = 37.533038854599
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 965us/step
+Ended | 6
+Elapsed time: 365.3991 seconds
 
 | cnt = 7
-scores = 48.06167483329773
-71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 4ms/step 
-Ended | 7 | Elapsed time: 10096.1063 seconds
+scores = 48.94272983074188
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 858us/step
+Ended | 7
+Elapsed time: 371.5001 seconds
 
 | cnt = 8
-scores = 44.845813512802124
-71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 4ms/step 
-Ended | 8 | Elapsed time: 11522.7591 seconds
+scores = 51.18942856788635
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 873us/step
+Ended | 8
+Elapsed time: 395.2596 seconds
 
 | cnt = 9
-scores = 51.58590078353882
-71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step 
-Ended | 9 | Elapsed time: 12848.0742 seconds
+scores = 48.3259916305542
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 846us/step
+Ended | 9
+Elapsed time: 371.4186 seconds
 
 | cnt = 10
-scores = 50.0
-71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 4ms/step  
-Ended | 10 | Elapsed time: 14387.3085 seconds
+scores = 47.356829047203064
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 861us/step
+Ended | 10
+Elapsed time: 375.8126 seconds
 
 Ended | Total
-Elapsed time: 14387.3105 seconds
+Elapsed time: 3712.5975 seconds
+
 
 Running Time:
-| elapsed_time_1     = 1230.8397 seconds
-| elapsed_time_2     = 2551.8329 seconds
-| elapsed_time_3     = 3841.5940 seconds
-| elapsed_time_4     = 5361.0870 seconds
-| elapsed_time_5     = 6890.4679 seconds
-| elapsed_time_6     = 8397.8615 seconds
-| elapsed_time_7     = 10096.1063 seconds
-| elapsed_time_8     = 11522.7591 seconds
-| elapsed_time_9     = 12848.0742 seconds
-| elapsed_time_10    = 14387.3085 seconds
-| elapsed_time_total = 14387.3105 seconds
-
-
-
-
-========== Run 1
-
-Loading Data ...
-Preparing Data ...
-1
-35.06608009338379
-71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step 
-2
-49.64757561683655
-71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 5ms/step 
-3
-44.845813512802124
-71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step 
-4
-47.84140884876251
-71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step 
-5
-71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step
-6
-52.643173933029175
-71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step
-7
-58.722466230392456
-71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step
-8
-50.30837059020996
-71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step
-9
-57.268720865249634
-71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step
-10
-51.71806216239929
-71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step
-Ended.
-Elapsed time (Total): 11343.8080 seconds
-
-
-
-
-
-
-
-
-========== Warnings
-
-2024-11-27 18:34:44.326462: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn 
-them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
-
-2024-11-27 18:34:48.231049: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn 
-them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
-
-C:\Users\Migue\AppData\Local\Programs\Python\Python311\Lib\site-packages\keras\src\layers\core\dense.py:87: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
-  super().__init__(activity_regularizer=activity_regularizer, **kwargs)
-
-2024-11-27 18:35:08.707812: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
-To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
-
-PS D:\ISCTE\Thesis\DroneRF\DroneRF_Program> & C:/Users/Migue/AppData/Local/Programs/Python/Python311/python.exe   
-Python 3.11.2 (tags/v3.11.2:878ead1, Feb  7 2023, 16:38:35) [MSC v.1934 64 bit (AMD64)] on win32
-Type "help", "copyright", "credits" or "license" for more information.
+| elapsed_time_1     =  357.4698 seconds
+| elapsed_time_2     =  367.5661 seconds
+| elapsed_time_3     =  365.8643 seconds
+| elapsed_time_4     =  370.5286 seconds
+| elapsed_time_5     =  367.2699 seconds
+| elapsed_time_6     =  365.3991 seconds
+| elapsed_time_7     =  371.5001 seconds
+| elapsed_time_8     =  395.2596 seconds
+| elapsed_time_9     =  371.4186 seconds
+| elapsed_time_10    =  375.8126 seconds
+| elapsed_time_total = 3712.5975 seconds

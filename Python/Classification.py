@@ -56,24 +56,28 @@ number_epoch         = 200
 batch_length         = 10
 show_inter_results   = 0
 
+opt = 1;  # [MR] Change to 1, 2, or 3 to alternate between the 1st, 2nd, and 3rd DNN results respectively.
+current_directory_working = os.getcwd() # [MR] Current working directory
+results_path = rf"{current_directory_working}\Results_{opt}" # [MR] 
+
 running_time = {} # [MR] Timers
 
 start_time = time.time() # [MR] Start timer
 
 ############################### Loading ##################################
 print("Loading Data ...")
-current_directory_working = os.getcwd()                             # [MR] Current working directory
 filepath = os.path.dirname(current_directory_working)               # [MR] Path for easier management
 Data = np.loadtxt(rf"{filepath}\Data\RF_Data.csv", delimiter=",")   # [MR]
-print("Loaded data.\n")                                               # [MR]
+print("Loaded data.\n")                                             # [MR]
 ############################## Splitting #################################
 print("Preparing Data ...")
 x = np.transpose(Data[0:2047,:])
 Label_1 = np.transpose(Data[2048:2049,:]); Label_1 = Label_1.astype(int);
 Label_2 = np.transpose(Data[2049:2050,:]); Label_2 = Label_2.astype(int);
 Label_3 = np.transpose(Data[2050:2051,:]); Label_3 = Label_3.astype(int);
+# [MR] TODO: Understand if Label is related to the NN
 y = encode(Label_3)
-print("Prepared data.\n")                                             # [MR]
+print("Prepared data.\n")                                           # [MR]
 ################################ Main ####################################
 cvscores    = []
 cnt         = 0
@@ -93,7 +97,9 @@ for train, test in kfold.split(x, decode(y)):
     cvscores.append(scores[1]*100)
     y_pred = model.predict(x[test])
     # [MR] (Results_{1,2,3} - Demo_4) - Only saving results for the 3rd NN (?)
-    np.savetxt("Results_3%s.csv" % cnt, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s')
+    # np.savetxt("Results_3%s.csv" % cnt, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s')
+    np.savetxt(rf"{results_path}\Results_{opt}{cnt}", \
+        np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s') # [MR]
     ## [MR] Elapsed time
     print('Ended | %s' % cnt)
     end_time_phase = time.time()

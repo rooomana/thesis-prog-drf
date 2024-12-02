@@ -1,9 +1,7 @@
 name: Run scripts
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   run_scripts:

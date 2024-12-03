@@ -65,12 +65,12 @@ running_time = {} # [MR] Timers
 start_time = time.time() # [MR] Start timer
 
 ############################### Loading ##################################
-print("Loading Data ...")
+print("\nLoading Data ...")                                         # [MR]
 filepath = os.path.dirname(current_directory_working)               # [MR] Path for easier management
 Data = np.loadtxt(rf"{filepath}\Data\RF_Data.csv", delimiter=",")   # [MR]
 print("Loaded data.\n")                                             # [MR]
 ############################## Splitting #################################
-print("Preparing Data ...")
+print("\nPreparing Data ...")                                       # [MR]
 x = np.transpose(Data[0:2047,:])
 Label_1 = np.transpose(Data[2048:2049,:]); Label_1 = Label_1.astype(int);
 Label_2 = np.transpose(Data[2049:2050,:]); Label_2 = Label_2.astype(int);

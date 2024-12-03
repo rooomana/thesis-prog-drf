@@ -112,7 +112,7 @@ longest_name_length = max(cellfun(@length, ...
                             keys(running_time)));
 longest_time_length = max(arrayfun(@(time) numel(num2str(time, '%.4f')), ...
                             values(running_time)));
-fprintf('\nRunning Time:');
+fprintf('\nRunning Time:\n');
 phases = keys(running_time);
 for phase = 1:length(phases)
     phase_name = phases{phase};

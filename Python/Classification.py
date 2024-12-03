@@ -117,6 +117,6 @@ print("Elapsed time: %.4f seconds\n" % (elapsed_time))
 ## [MR] Print running time
 longest_name_length = max(len(name) for name in running_time.keys())
 longest_time_length = max(len(str(format(time, '.4f'))) for time in running_time.values())
-print('\nRunning Time:')
+print('\nRunning Time:\n')
 for phase_name, phase_elapsed_time in running_time.items():
     print(f'| {phase_name:<{longest_name_length}} = {phase_elapsed_time:>{longest_time_length}.4f} seconds')

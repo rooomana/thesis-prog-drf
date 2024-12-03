@@ -98,7 +98,7 @@ for train, test in kfold.split(x, decode(y)):
     y_pred = model.predict(x[test])
     # [MR] (Results_{1,2,3} - Demo_4) - Only saving results for the 3rd NN (?)
     # np.savetxt("Results_3%s.csv" % cnt, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s')
-    np.savetxt(rf"{results_path}\Results_{opt}{cnt}", \
+    np.savetxt(rf"{results_path}\Results_{opt}{cnt}.csv", \
         np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s') # [MR]
     ## [MR] Elapsed time
     print('Ended | %s' % cnt)

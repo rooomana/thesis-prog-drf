@@ -58,7 +58,7 @@ show_inter_results   = 0
 
 opt = 1;  # [MR] Change to 1, 2, or 3 to alternate between the 1st, 2nd, and 3rd DNN results respectively.
 current_directory_working = os.getcwd() # [MR] Current working directory
-results_path = rf"{current_directory_working}\Results_{opt}" # [MR] 
+results_path = rf"{current_directory_working}\Results_{opt}" # [MR]
 
 running_time = {} # [MR] Timers
 

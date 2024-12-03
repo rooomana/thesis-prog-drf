@@ -65,9 +65,8 @@ for i = 1:3
 
     elapsed_time = toc(timer_phase);    % [MR] Stop timer for this phase
     running_time(['elapsed_time_' num2str(i)]) = elapsed_time;  % [MR]
-    fprintf('Ended | Plotted snippets | %s\n', num2str(i));       % [MR]
-    fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]    
-
+    fprintf('Ended | Plotted snippets | %s\n', num2str(i));     % [MR]
+    fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]
 end
 
 %% Saving
@@ -82,8 +81,7 @@ if(Q == 'y' || Q == 'Y')
     elapsed_time = toc(timer_phase);    % [MR] Stop timer for this phase
     running_time('elapsed_time_saving') = elapsed_time;         % [MR]
     fprintf('Ended | Saved results \n');                        % [MR]
-    fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]    
-
+    fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]
 else
     return
 end

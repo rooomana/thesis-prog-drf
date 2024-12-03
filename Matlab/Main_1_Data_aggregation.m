@@ -86,7 +86,7 @@ for opt = 1:length(BUI)
                 xf = abs(fftshift(fft(x(st:fi)-mean(x(st:fi)),M))); xf = xf(end/2+1:end);
                 yf = abs(fftshift(fft(y(st:fi)-mean(y(st:fi)),M))); yf = yf(end/2+1:end);
                 data(:,cnt) = [xf ; (yf*mean(xf((end-Q+1):end))./mean(yf(1:Q)))];
-                cnt = cnt + 1; 
+                cnt = cnt + 1;
             end
             fprintf('| pct. = %6.2f %% \n', 100*n/N); % [MR]
         end

@@ -39,16 +39,16 @@ BUI = {'00000','10000','10001','10010','10011',...
 M   = 2048;                                   % Total number of frequency bins
 fs  = 80;                                     % Sampling frequency in MHz
 f   = 2400+(0:fs/(M-1):fs);                   % Frequency array for plotting
-S   = 10;                                     % Number of points in the moving average filter for smoothing 
+S   = 10;                                     % Number of points in the moving average filter for smoothing
 c   = [0 0 1 ; 1 0 0 ; 0 1 0 ; 0 0 0.1724 ;...
     1 0.1034 0.7241 ; 1 0.8276 0 ; 0 0.3448 0 ;...
     0.5172 0.5172 1 ; 0.6207 0.3103 0.2759 ;...
-    0 1 0.7586];                              % 10 distinct colours for plotting       
+    0 1 0.7586];                              % 10 distinct colours for plotting
 
 running_time = dictionary; % [MR] Timers
 
 timer_total = tic; % [MR] Start timer for total program
-    
+
 %% Averaging spectra
 timer_phase = tic; % [MR] Start timer for this phase
 
@@ -152,7 +152,7 @@ if(Q == 'y' || Q == 'Y')
     elapsed_time = toc(timer_phase);    % [MR] Stop timer for this phase
     running_time('elapsed_time_saving') = elapsed_time;         % [MR]
     fprintf('Ended | Saved results \n');                        % [MR]
-    fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]    
+    fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]
 else
     return
 end

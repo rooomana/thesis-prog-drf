@@ -34,9 +34,9 @@ filepath = [filepath '\Data\'];
 
 %% Parameters
 %opt = 1;  % Change to 1, 2, or 3 to alternate between the 1st, 2nd, and 3rd DNN results respectively.
-opt = 3;
+opt = 3; % [MR] DNN Results number
 
-results_path = [pwd '\Results_' num2str(opt) '\']; % [MR] 
+results_path = [pwd '\Results_' num2str(opt) '\']; % [MR]
 
 running_time = dictionary; % [MR] Timers
 
@@ -54,7 +54,7 @@ end
 elapsed_time = toc(timer_phase);    % [MR] Stop timer for this phase
 running_time('elapsed_time_reading') = elapsed_time;        % [MR]
 fprintf('Ended | Reading \n');                              % [MR]
-fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]    
+fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]
 
 %% Plotting confusion matrix
 timer_phase = tic;                  % [MR] Start timer for this phase
@@ -85,7 +85,7 @@ if(Q == 'y' || Q == 'Y')
     elapsed_time = toc(timer_phase);    % [MR] Stop timer for this phase
     running_time('elapsed_time_saving') = elapsed_time;         % [MR]
     fprintf('Ended | Saved results \n');                        % [MR]
-    fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]    
+    fprintf('Elapsed time: %.4f seconds\n\n', elapsed_time);    % [MR]
 else
     return
 end

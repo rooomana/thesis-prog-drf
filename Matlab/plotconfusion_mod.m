@@ -126,7 +126,7 @@ else
 end
 hAxes = gca;     %Axis handle
 %Changing 'LineStyle' to 'none'
-hAxes.XRuler.Axle.LineStyle = 'none';  
+hAxes.XRuler.Axle.LineStyle = 'none';
 hAxes.YRuler.Axle.LineStyle = 'none';
 end
 

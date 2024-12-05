@@ -56,7 +56,7 @@ number_epoch         = 200
 batch_length         = 10
 show_inter_results   = 0
 
-opt = 3;  # [MR] Change to 1, 2, or 3 to alternate between the 1st, 2nd, and 3rd DNN results respectively.
+opt = 3;  # [MR] DNN Results number
 current_directory_working = os.getcwd() # [MR] Current working directory
 results_path = rf"{current_directory_working}\Results_{opt}" # [MR]
 
@@ -76,7 +76,9 @@ Label_1 = np.transpose(Data[2048:2049,:]); Label_1 = Label_1.astype(int);
 Label_2 = np.transpose(Data[2049:2050,:]); Label_2 = Label_2.astype(int);
 Label_3 = np.transpose(Data[2050:2051,:]); Label_3 = Label_3.astype(int);
 # [MR] TODO: Understand if Label is related to the NN
-y = encode(Label_3)
+Label_opt = globals()[f'Label_{opt}'] # [MR]
+#y = encode(Label_3)
+y = encode(Label_opt) # [MR]
 print("Prepared data.\n")                                           # [MR]
 ################################ Main ####################################
 cvscores    = []

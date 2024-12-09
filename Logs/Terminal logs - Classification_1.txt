@@ -1,0 +1,84 @@
+Loading Data ...
+Loaded data.
+
+
+Preparing Data ...
+Prepared data.
+
+| cnt = 1
+scores = 99.77973699569702
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 757us/step
+Ended | 1
+Elapsed time: 341.4328 seconds
+
+| cnt = 2
+scores = 99.69162940979004
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 791us/step
+Ended | 2
+Elapsed time: 339.5891 seconds
+
+| cnt = 3
+scores = 99.77973699569702
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 780us/step
+Ended | 3
+Elapsed time: 339.7751 seconds
+
+| cnt = 4
+scores = 99.69162940979004
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 799us/step
+Ended | 4
+Elapsed time: 333.7826 seconds
+
+| cnt = 5
+scores = 99.77973699569702
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 810us/step
+Ended | 5
+Elapsed time: 335.2680 seconds
+
+| cnt = 6
+scores = 99.64757561683655
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 795us/step
+Ended | 6
+Elapsed time: 335.6343 seconds
+
+| cnt = 7
+scores = 100.0
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 761us/step
+Ended | 7
+Elapsed time: 336.2726 seconds
+
+| cnt = 8
+scores = 99.95594620704651
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 801us/step
+Ended | 8
+Elapsed time: 361.2111 seconds
+
+| cnt = 9
+scores = 100.0
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 780us/step
+Ended | 9
+Elapsed time: 350.0663 seconds
+
+| cnt = 10
+scores = 99.82379078865051
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 836us/step
+Ended | 10
+Elapsed time: 343.2881 seconds
+
+Ended | Total
+Elapsed time: 3421.1553 seconds
+
+
+Running Time:
+
+| elapsed_time_1     =  341.4328 seconds
+| elapsed_time_2     =  339.5891 seconds
+| elapsed_time_3     =  339.7751 seconds
+| elapsed_time_4     =  333.7826 seconds
+| elapsed_time_5     =  335.2680 seconds
+| elapsed_time_6     =  335.6343 seconds
+| elapsed_time_7     =  336.2726 seconds
+| elapsed_time_8     =  361.2111 seconds
+| elapsed_time_9     =  350.0663 seconds
+| elapsed_time_10    =  343.2881 seconds
+| elapsed_time_total = 3421.1553 seconds

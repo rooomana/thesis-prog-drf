@@ -56,7 +56,7 @@ number_epoch         = 200
 batch_length         = 10
 show_inter_results   = 0
 
-opt = 3;  # [MR] DNN Results number
+opt = 2; # [MR] DNN Results number
 current_directory_working = os.getcwd() # [MR] Current working directory
 results_path = rf"{current_directory_working}\Results_{opt}" # [MR]
 

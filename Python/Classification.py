@@ -34,6 +34,8 @@ import numpy as np
 from tensorflow.keras.utils import to_categorical   # [MR]
 from tensorflow.keras.models import Sequential      # [MR]
 from tensorflow.keras.layers import Dense           # [MR]
+from tensorflow.keras.layers import Conv1D          # [MR]
+#from tensorflow.keras.layers import layers          # [MR]
 from sklearn.model_selection import StratifiedKFold
 ############################## Functions ###############################
 def decode(datum):
@@ -56,7 +58,7 @@ number_epoch         = 200
 batch_length         = 10
 show_inter_results   = 0
 
-opt = 2; # [MR] DNN Results number
+opt = 1; # [MR] DNN Results number
 current_directory_working = os.getcwd() # [MR] Current working directory
 results_path = rf"{current_directory_working}\Results_{opt}" # [MR]
 
@@ -90,7 +92,9 @@ for train, test in kfold.split(x, decode(y)):
     print(f'| {cnt = }') # [MR]
     model = Sequential()
     for i in range(number_inner_layers):
-        model.add(Dense(int(number_inner_neurons/2), input_dim = x.shape[1], activation = inner_activation_fun))
+        # TODO: Compare different types of layers
+        #model.add(Dense(int(number_inner_neurons/2), input_dim = x.shape[1], activation = inner_activation_fun))
+        model.add(Conv1D(int(number_inner_neurons/2), kernel_size=3, input_shape=(x.shape[1], 1), activation=inner_activation_fun))
     model.add(Dense(y.shape[1], activation = outer_activation_fun))
     model.compile(loss = optimizer_loss_fun, optimizer = optimizer_algorithm, metrics =         ['accuracy'])
     model.fit(x[train], y[train], epochs = number_epoch, batch_size = batch_length, verbose = show_inter_results)

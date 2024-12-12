@@ -90,12 +90,18 @@ for train, test in kfold.split(x, decode(y)):
     start_time_phase = time.time() # [MR] Start phase timer
     cnt = cnt + 1
     print(f'| {cnt = }') # [MR]
+    x = x.reshape(x.shape[0], x.shape[1], 1)    # [MR] Reshape input (add channel dimension)
     model = Sequential()
     for i in range(number_inner_layers):
         # TODO: Compare different types of layers
-        model.add(layers.Dense(int(number_inner_neurons/2), input_dim = x.shape[1], activation = inner_activation_fun))
-        #model.add(layers.Conv1D(int(number_inner_neurons/2), kernel_size=3, input_shape=(x.shape[1], 1), activation=inner_activation_fun))
-        #model.add(layers.Conv2D(int(number_inner_neurons/2), kernel_size=(3, 3), input_shape=(x.shape[1], 1, 1), activation=inner_activation_fun))
+        #model.add(layers.Dense(int(number_inner_neurons/2), 
+        #                       input_dim = x.shape[1], 
+        #                       activation = inner_activation_fun))
+        model.add(layers.Conv1D(filters = int(number_inner_neurons/2), 
+                                kernel_size = 3, 
+                                activation = inner_activation_fun, 
+                                input_shape = (x.shape[1], 1) if i == 0 else None)) # [MR] Convolutional layer
+    model.add(layers.Flatten()) # [MR] Flatten before output
     model.add(layers.Dense(y.shape[1], activation = outer_activation_fun))
     model.compile(loss = optimizer_loss_fun, optimizer = optimizer_algorithm, metrics =         ['accuracy'])
     model.fit(x[train], y[train], epochs = number_epoch, batch_size = batch_length, verbose = show_inter_results)

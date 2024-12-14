@@ -1,0 +1,38 @@
+Loading Data ...
+Loaded data.
+
+
+Preparing Data ...
+Prepared data.
+
+| cnt = 1
+scores = 81.93832635879517
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 20ms/step
+Ended | 1
+Elapsed time: 7249.1865 seconds
+
+| cnt = 2
+scores = 81.93832635879517
+71/71 ━━━━━━━━━━━━━━━━━━━━ 2s 19ms/step
+Ended | 2
+Elapsed time: 7275.5121 seconds
+
+| cnt = 3
+scores = 81.93832635879517
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+Ended | 3
+Elapsed time: 6193.5676 seconds
+
+| cnt = 4
+scores = 81.93832635879517
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+Ended | 4
+Elapsed time: 6152.0832 seconds
+
+| cnt = 5
+scores = 81.93832635879517
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 16ms/step
+Ended | 5
+Elapsed time: 6111.9669 seconds
+
+| cnt = 6

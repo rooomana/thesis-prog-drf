@@ -6,33 +6,79 @@ Preparing Data ...
 Prepared data.
 
 | cnt = 1
-scores = 81.93832635879517
-71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 20ms/step
+scores = 81.98238015174866
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
 Ended | 1
-Elapsed time: 7249.1865 seconds
+Elapsed time: 6065.1269 seconds
 
 | cnt = 2
 scores = 81.93832635879517
-71/71 ━━━━━━━━━━━━━━━━━━━━ 2s 19ms/step
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step  
 Ended | 2
-Elapsed time: 7275.5121 seconds
+Elapsed time: 5690.6153 seconds
 
 | cnt = 3
 scores = 81.93832635879517
 71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
 Ended | 3
-Elapsed time: 6193.5676 seconds
+Elapsed time: 5663.9785 seconds
 
 | cnt = 4
 scores = 81.93832635879517
-71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
 Ended | 4
-Elapsed time: 6152.0832 seconds
+Elapsed time: 5674.5024 seconds
 
 | cnt = 5
 scores = 81.93832635879517
-71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 16ms/step
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
 Ended | 5
-Elapsed time: 6111.9669 seconds
+Elapsed time: 5680.5275 seconds
 
 | cnt = 6
+scores = 81.93832635879517
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+Ended | 6
+Elapsed time: 5654.4183 seconds
+
+| cnt = 7
+scores = 81.93832635879517
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+Ended | 7
+Elapsed time: 5641.5460 seconds
+
+| cnt = 8
+scores = 18.061673641204834
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 19ms/step
+Ended | 8
+Elapsed time: 5641.2803 seconds
+
+| cnt = 9
+scores = 81.93832635879517
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+Ended | 9
+Elapsed time: 5913.0748 seconds
+
+| cnt = 10
+scores = 81.93832635879517
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+Ended | 10
+Elapsed time: 6067.7421 seconds
+
+Ended | Total
+Elapsed time: 57697.6716 seconds
+
+
+Running Time:
+
+| elapsed_time_1     =  6065.1269 seconds
+| elapsed_time_2     =  5690.6153 seconds
+| elapsed_time_3     =  5663.9785 seconds
+| elapsed_time_4     =  5674.5024 seconds
+| elapsed_time_5     =  5680.5275 seconds
+| elapsed_time_6     =  5654.4183 seconds
+| elapsed_time_7     =  5641.5460 seconds
+| elapsed_time_8     =  5641.2803 seconds
+| elapsed_time_9     =  5913.0748 seconds
+| elapsed_time_10    =  6067.7421 seconds
+| elapsed_time_total = 57697.6716 seconds

@@ -47,7 +47,7 @@ save_filename  | C:\Miguel\Career\University\MSc\Thesis\Program\DroneRF\Data\
 | n = 39 | pct. =  97.50 % 
 | n = 40 | pct. = 100.00 % 
 Ended | Saved 00000 
-Elapsed time: 85.1046 seconds
+Elapsed time: 85.0571 seconds
 
 
     2 | in for opt 
@@ -74,7 +74,7 @@ Elapsed time: 85.1046 seconds
 | n = 19 | pct. =  95.00 % 
 | n = 20 | pct. = 100.00 % 
 Ended | Saved 10000 
-Elapsed time: 43.3761 seconds
+Elapsed time: 43.7343 seconds
 
 
 10001 | in for b   (N = 20)
@@ -100,7 +100,7 @@ Elapsed time: 43.3761 seconds
 | n = 19 | pct. =  95.00 % 
 | n = 20 | pct. = 100.00 % 
 Ended | Saved 10001 
-Elapsed time: 43.2686 seconds
+Elapsed time: 43.4018 seconds
 
 
 10010 | in for b   (N = 20)
@@ -126,7 +126,7 @@ Elapsed time: 43.2686 seconds
 | n = 19 | pct. =  95.00 % 
 | n = 20 | pct. = 100.00 % 
 Ended | Saved 10010 
-Elapsed time: 43.7811 seconds
+Elapsed time: 43.4778 seconds
 
 
 10011 | in for b   (N = 20)
@@ -152,7 +152,7 @@ Elapsed time: 43.7811 seconds
 | n = 19 | pct. =  95.00 % 
 | n = 20 | pct. = 100.00 % 
 Ended | Saved 10011 
-Elapsed time: 43.9437 seconds
+Elapsed time: 43.4489 seconds
 
 
     3 | in for opt 
@@ -179,7 +179,7 @@ Elapsed time: 43.9437 seconds
 | n = 19 | pct. =  95.00 % 
 | n = 20 | pct. = 100.00 % 
 Ended | Saved 10100 
-Elapsed time: 43.3306 seconds
+Elapsed time: 45.6230 seconds
 
 
 10101 | in for b   (N = 20)
@@ -205,7 +205,7 @@ Elapsed time: 43.3306 seconds
 | n = 19 | pct. =  95.00 % 
 | n = 20 | pct. = 100.00 % 
 Ended | Saved 10101 
-Elapsed time: 43.7302 seconds
+Elapsed time: 43.3264 seconds
 
 
 10110 | in for b   (N = 20)
@@ -231,7 +231,7 @@ Elapsed time: 43.7302 seconds
 | n = 19 | pct. =  95.00 % 
 | n = 20 | pct. = 100.00 % 
 Ended | Saved 10110 
-Elapsed time: 43.6075 seconds
+Elapsed time: 43.2233 seconds
 
 
 10111 | in for b   (N = 17)
@@ -254,7 +254,7 @@ Elapsed time: 43.6075 seconds
 | n = 16 | pct. =  94.12 % 
 | n = 17 | pct. = 100.00 % 
 Ended | Saved 10111 
-Elapsed time: 37.3333 seconds
+Elapsed time: 37.3688 seconds
 
 
     4 | in for opt 
@@ -281,24 +281,24 @@ Elapsed time: 37.3333 seconds
 | n = 19 | pct. =  95.00 % 
 | n = 20 | pct. = 100.00 % 
 Ended | Saved 11000 
-Elapsed time: 44.0364 seconds
+Elapsed time: 43.9215 seconds
 
 
 Ended | Total 
-Elapsed time: 471.5254 seconds
+Elapsed time: 472.5987 seconds
 
 
 
 Running Time:
 
-| elapsed_time_00000 =  85.1046 seconds
-| elapsed_time_10000 =  43.3761 seconds
-| elapsed_time_10001 =  43.2686 seconds
-| elapsed_time_10010 =  43.7811 seconds
-| elapsed_time_10011 =  43.9437 seconds
-| elapsed_time_10100 =  43.3306 seconds
-| elapsed_time_10101 =  43.7302 seconds
-| elapsed_time_10110 =  43.6075 seconds
-| elapsed_time_10111 =  37.3333 seconds
-| elapsed_time_11000 =  44.0364 seconds
-| elapsed_time_total = 471.5254 seconds
+| elapsed_time_00000 =  85.0571 seconds
+| elapsed_time_10000 =  43.7343 seconds
+| elapsed_time_10001 =  43.4018 seconds
+| elapsed_time_10010 =  43.4778 seconds
+| elapsed_time_10011 =  43.4489 seconds
+| elapsed_time_10100 =  45.6230 seconds
+| elapsed_time_10101 =  43.3264 seconds
+| elapsed_time_10110 =  43.2233 seconds
+| elapsed_time_10111 =  37.3688 seconds
+| elapsed_time_11000 =  43.9215 seconds
+| elapsed_time_total = 472.5987 seconds

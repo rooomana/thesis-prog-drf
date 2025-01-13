@@ -30,6 +30,8 @@
 ############################## Libraries ################################
 import os # [MR]
 import time # [MR]
+import math # [MR]
+import threading # [MR]
 import numpy as np
 import tensorflow as tf                             # [MR]
 from tensorflow.keras.utils import to_categorical   # [MR]
@@ -70,7 +72,7 @@ start_time = time.time() # [MR] Start timer
 print("\nLoading Data ...")                                         # [MR]
 filepath = os.path.dirname(current_directory_working)               # [MR] Path for easier management
 Data = np.loadtxt(rf"{filepath}\Data\RF_Data.csv", delimiter=",")   # [MR]
-print("Loaded data.\n")                                             # [MR]
+print("Loaded Data.\n")                                             # [MR]
 ############################## Splitting #################################
 print("\nPreparing Data ...")                                       # [MR]
 x = np.transpose(Data[0:2047,:])
@@ -81,44 +83,76 @@ Label_3 = np.transpose(Data[2050:2051,:]); Label_3 = Label_3.astype(int);
 Label_opt = globals()[f'Label_{opt}'] # [MR]
 #y = encode(Label_3)
 y = encode(Label_opt) # [MR]
-print("Prepared data.\n")                                           # [MR]
+print("Prepared Data.\n")                                           # [MR]
 ################################ Main ####################################
-cvscores    = []
-cnt         = 0
-kfold = StratifiedKFold(n_splits=K, shuffle=True, random_state=1)
-for train, test in kfold.split(x, decode(y)):
+#cvscores    = []
+#cnt         = 0
+#kfold = StratifiedKFold(n_splits=K, shuffle=True, random_state=1)
+#for train, test in kfold.split(x, decode(y)):
+# [MR] Function to handle each fold's training and evaluation
+def process_fold(train, test, fold_index, results_lock):
+    global cvscores, running_time
     start_time_phase = time.time() # [MR] Start phase timer
-    cnt = cnt + 1
-    print(f'| {cnt = }') # [MR]
-    x = x.reshape(x.shape[0], x.shape[1], 1)    # [MR] Reshape input (add channel dimension)
+    #cnt = cnt + 1
+    #print(f'| {cnt = }') # [MR]
+    digits_K = math.floor(math.log10(abs(K))) + 1 # [MR]
+    print(f'| Fold {fold_index:>{digits_K}} |') # [MR]
+    fold_x = x.reshape(x.shape[0], x.shape[1], 1) # [MR] Reshape input (add channel dimension)
+    
+    # [MR] Build the model
     model = Sequential()
     for i in range(number_inner_layers):
         # TODO: Compare different types of layers
+        # [MR] Dense layer
         #model.add(layers.Dense(int(number_inner_neurons/2), 
         #                       input_dim = x.shape[1], 
         #                       activation = inner_activation_fun))
+        # [MR] Convolutional layer
         model.add(layers.Conv1D(filters = int(number_inner_neurons/2), 
                                 kernel_size = 3, 
                                 activation = inner_activation_fun, 
-                                input_shape = (x.shape[1], 1) if i == 0 else None)) # [MR] Convolutional layer
+                                input_shape = (x.shape[1], 1) if i == 0 else None))
     model.add(layers.Flatten()) # [MR] Flatten before output
     model.add(layers.Dense(y.shape[1], activation = outer_activation_fun))
-    model.compile(loss = optimizer_loss_fun, optimizer = optimizer_algorithm, metrics =         ['accuracy'])
-    model.fit(x[train], y[train], epochs = number_epoch, batch_size = batch_length, verbose = show_inter_results)
-    scores = model.evaluate(x[test], y[test], verbose = show_inter_results)
-    print(f'scores = {scores[1]*100}') # [MR]
-    cvscores.append(scores[1]*100)
-    y_pred = model.predict(x[test])
+    model.compile(loss = optimizer_loss_fun, optimizer = optimizer_algorithm, metrics = ['accuracy'])
+    
+    # [MR] Train and evaluate the model
+    model.fit(fold_x[train], y[train], epochs = number_epoch, batch_size = batch_length, verbose = show_inter_results)
+    scores = model.evaluate(fold_x[test], y[test], verbose = show_inter_results)
+    print(f'| Fold {fold_index} scores = {scores[1] * 100}') # [MR]
+    
+    # [MR] Save results
+    y_pred = model.predict(fold_x[test]) # [MR]
     # [MR] (Results_{1,2,3} - Demo_4) - Only saving results for the 3rd NN (?)
     # np.savetxt("Results_3%s.csv" % cnt, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s')
-    np.savetxt(rf"{results_path}\Results_{opt}{cnt}.csv", \
-        np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s') # [MR]
+    results_file = rf"{results_path}\Results_{opt}{fold_index}.csv" # [MR] Saved results path
+    np.savetxt(results_file, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s') # [MR]
+    
     ## [MR] Elapsed time
-    print('Ended | %s' % cnt)
+    print('Ended | %s' % fold_index)
     end_time_phase = time.time()
     elapsed_time_phase = end_time_phase - start_time_phase
-    running_time[f'elapsed_time_{cnt}'] = elapsed_time_phase
+    with results_lock:
+        cvscores.append(scores[1] * 100)
+        running_time[f'elapsed_time_{fold_index}'] = elapsed_time_phase
+    print(f'| Fold {fold_index}')
     print("Elapsed time: %.4f seconds\n" % (elapsed_time_phase))
+
+# Use threading for the k-fold loop
+threads = []
+results_lock = threading.Lock()  # Protect shared resources
+kfold = StratifiedKFold(n_splits=K, shuffle=True, random_state=1)
+print("K-fold training (w/ threading) | Starting...\n")
+
+# Start threads (each fold)
+for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1):
+    thread = threading.Thread(target=process_fold, args=(train, test, fold_index, results_lock))
+    threads.append(thread)
+    thread.start()
+
+# Complete all threads
+for thread in threads:
+    thread.join()
 #########################################################################
 ## [MR] Elapsed time
 print('Ended | Total')

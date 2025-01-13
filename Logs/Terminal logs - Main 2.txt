@@ -7,14 +7,12 @@ save_filename  | C:\Miguel\Career\University\MSc\Thesis\Program\DroneRF\Data\
 00000 | in for b 
 | pct. =  25.00 % 
 
-
     2 | in for t 
 10000 | in for b 
 10001 | in for b 
 10010 | in for b 
 10011 | in for b 
 | pct. =  50.00 % 
-
 
     3 | in for t 
 10100 | in for b 
@@ -23,32 +21,25 @@ save_filename  | C:\Miguel\Career\University\MSc\Thesis\Program\DroneRF\Data\
 10111 | in for b 
 | pct. =  75.00 % 
 
-
     4 | in for t 
 11000 | in for b 
 | pct. = 100.00 % 
 
-
 Ended | Loading 
-Elapsed time: 1.6017 seconds
-
+Elapsed time: 1.5896 seconds
 
 Ended | Labeling 
-Elapsed time: 0.0035 seconds
-
+Elapsed time: 0.0050 seconds
 
 Ended | Saving 
-Elapsed time: 14.5014 seconds
-
+Elapsed time: 14.3165 seconds
 
 Ended | Total 
-Elapsed time: 16.1071 seconds
-
+Elapsed time: 15.9116 seconds
 
 
 Running Time:
-
-| elapsed_time_loading  =  1.6017 seconds
-| elapsed_time_labeling =  0.0035 seconds
-| elapsed_time_saving   = 14.5014 seconds
-| elapsed_time_total    = 16.1071 seconds
+| elapsed_time_loading  =  1.5896 seconds
+| elapsed_time_labeling =  0.0050 seconds
+| elapsed_time_saving   = 14.3165 seconds
+| elapsed_time_total    = 15.9116 seconds

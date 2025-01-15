@@ -119,7 +119,7 @@ def process_fold(train, test, fold_index, results_lock):
     # [MR] Train and evaluate the model
     model.fit(fold_x[train], y[train], epochs = number_epoch, batch_size = batch_length, verbose = show_inter_results)
     scores = model.evaluate(fold_x[test], y[test], verbose = show_inter_results)
-    print(f'| Fold {fold_index} | Scores = {scores[1] * 100}') # [MR]
+    print(f'| Fold {fold_index:>{digits_K}} | Scores = {scores[1] * 100}') # [MR]
     
     # [MR] Save results
     y_pred = model.predict(fold_x[test]) # [MR]
@@ -129,15 +129,14 @@ def process_fold(train, test, fold_index, results_lock):
     np.savetxt(results_file, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s') # [MR]
     
     ## [MR] Elapsed time
-    print(f'| Fold {fold_index} | Ended')
+    print(f'| Fold {fold_index:>{digits_K}} | Ended')
     end_time_phase = time.time()
     elapsed_time_phase = end_time_phase - start_time_phase
     with results_lock:
         cvscores.append(scores[1] * 100)
         running_time[f'elapsed_time_{fold_index}'] = elapsed_time_phase
-    #print("Elapsed time: %.4f seconds\n" % (elapsed_time_phase))
-    print("| Fold {fold_index} | Elapsed time: %.4f seconds\n" % (elapsed_time_phase))
-
+    print("| Fold %*d | Elapsed time: %.4f seconds\n" % (digits_K, fold_index, elapsed_time_phase))
+    
 # Use threading for the k-fold loop
 threads = []
 results_lock = threading.Lock()  # Protect shared resources

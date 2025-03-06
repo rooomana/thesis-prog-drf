@@ -31,6 +31,7 @@
 import os # [MR]
 import time # [MR]
 import math # [MR]
+import json # [MR]
 import threading # [MR]
 import numpy as np
 import tensorflow as tf                             # [MR]
@@ -104,17 +105,33 @@ def process_fold(train, test, fold_index, results_lock):
     for i in range(number_inner_layers):
         # TODO: Compare different types of layers
         # [MR] Dense layer
-        #model.add(layers.Dense(int(number_inner_neurons/2), 
-        #                       input_dim = x.shape[1], 
-        #                       activation = inner_activation_fun))
+        #model.add(layers.Dense(
+        #    int(number_inner_neurons/2), 
+        #    input_dim = x.shape[1], 
+        #    activation = inner_activation_fun
+        #))
         # [MR] Convolutional layer
-        model.add(layers.Conv1D(filters = int(number_inner_neurons/2), 
-                                kernel_size = 3, 
-                                activation = inner_activation_fun, 
-                                input_shape = (x.shape[1], 1) if i == 0 else None))
+        model.add(layers.Conv1D(
+            filters = int(number_inner_neurons / (2 ** i)), 
+            kernel_size = 3, 
+            strides = 1, 
+            padding = 'causal', 
+            dilation_rate = 1, 
+            activation = inner_activation_fun, 
+            input_shape = (x.shape[1], 1) if i == 0 else None
+        ))
     model.add(layers.Flatten()) # [MR] Flatten before output
     model.add(layers.Dense(y.shape[1], activation = outer_activation_fun))
     model.compile(loss = optimizer_loss_fun, optimizer = optimizer_algorithm, metrics = ['accuracy'])
+    
+    # [MR] Print model parameters
+    if fold_index == 1: # Prints only for defined fold
+        print("\n| Summary of the model:")
+        model.summary()
+        print("\n| Config of each layer:")
+        for layer in model.layers:
+            print(f"|| Layer \"{layer.name}\":")
+            print(json.dumps(layer.get_config(), indent=4))
     
     # [MR] Train and evaluate the model
     model.fit(fold_x[train], y[train], epochs = number_epoch, batch_size = batch_length, verbose = show_inter_results)

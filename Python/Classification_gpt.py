@@ -34,7 +34,7 @@ import math # [MR]
 import json # [MR]
 import threading # [MR]
 import numpy as np
-from concurrent.futures import ThreadPoolExecutor   # [MR]
+from concurrent.futures import ThreadPoolExecutor, as_completed   # [MR]
 import tensorflow as tf                             # [MR]
 from tensorflow.keras.utils import to_categorical   # [MR]
 from tensorflow.keras.models import Sequential      # [MR]
@@ -67,8 +67,8 @@ optimizer_algorithm  = 'adam'
 number_inner_layers  = 3
 number_inner_neurons = 256
 number_epoch         = 200
-#batch_length         = 10
-batch_length         = 32  # [MR] Increase for better performance
+batch_length         = 10
+#batch_length         = 32  # [MR] Increase for better performance
 show_inter_results   = 0
 
 opt = 1  # [MR] DNN Results number
@@ -148,6 +148,7 @@ def process_fold(train, test, fold_index, results_lock):
             print(json.dumps(layer.get_config(), indent=4))
 
     # [MR] Train and evaluate the model
+    # TODO: Fix model training - test with prints
     #model.fit(fold_x[train], y[train], epochs=number_epoch, batch_size=batch_length, verbose=show_inter_results)
     train_step(model, fold_x[train], y[train])
     scores = model.evaluate(fold_x[test], y[test], verbose=show_inter_results)
@@ -162,6 +163,8 @@ def process_fold(train, test, fold_index, results_lock):
     
     ## [MR] Elapsed time
     print(f'| Fold {fold_index:>{digits_K}} | Ended')
+    # TODO: Test time records
+    # TODO: Time calculations inside or outside lock?
     end_time_phase = time.time()
     elapsed_time_phase = end_time_phase - start_time_phase
     with results_lock:
@@ -171,14 +174,23 @@ def process_fold(train, test, fold_index, results_lock):
 
 #########################################################################
 ## [MR] Threading
+# TODO: Test different threading procedures
 # Using ThreadPoolExecutor for efficient threading
 results_lock = threading.Lock()  # Protect shared resources
 kfold = StratifiedKFold(n_splits=K, shuffle=True, random_state=1)
 print("K-fold training (w/ threading) \nStarting...\n")
 
-with ThreadPoolExecutor(max_workers=K) as executor:
-    for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1):
-        executor.submit(process_fold, train, test, fold_index, results_lock)
+#with ThreadPoolExecutor(max_workers=K) as executor:
+#    for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1):
+#        executor.submit(process_fold, train, test, fold_index, results_lock)
+        
+with ThreadPoolExecutor(max_workers=K) as executor:  # [MR] Threading
+    futures = {executor.submit(process_fold, train, test, fold_index, results_lock): fold_index for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1)}
+    for future in as_completed(futures):
+        try:
+            future.result()  # Ensure exceptions are caught
+        except Exception as e:
+            print(f"Error in fold {futures[future]}: {e}")  # [MR] Error handling
 
 #########################################################################
 ## [MR] Elapsed time

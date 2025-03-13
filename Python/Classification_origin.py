@@ -93,9 +93,17 @@ for train, test in kfold.split(x, decode(y)):
     print(f'| {cnt = }') # [MR]
     model = Sequential()
     for i in range(number_inner_layers):
-        model.add(layers.Dense(int(number_inner_neurons/2), input_dim = x.shape[1], activation = inner_activation_fun))
-    model.add(layers.Dense(y.shape[1], activation = outer_activation_fun))
+        model.add(layers.Dense(
+            int(number_inner_neurons/2), 
+            input_dim = x.shape[1], 
+            activation = inner_activation_fun
+        ))
+    model.add(layers.Dense(
+        y.shape[1], 
+        activation = outer_activation_fun
+    ))
     model.compile(loss = optimizer_loss_fun, optimizer = optimizer_algorithm, metrics = ['accuracy'])
+
     # [MR] Print model parameters
     if cnt == 1: # Prints only for defined cnt
         print("\n| Summary of the model:")
@@ -104,6 +112,7 @@ for train, test in kfold.split(x, decode(y)):
         for layer in model.layers:
             print(f"|| Layer \"{layer.name}\":")
             print(json.dumps(layer.get_config(), indent=4))
+
     model.fit(x[train], y[train], epochs = number_epoch, batch_size = batch_length, verbose = show_inter_results)
     scores = model.evaluate(x[test], y[test], verbose = show_inter_results)
     print(f'scores = {scores[1]*100}') # [MR]

@@ -86,18 +86,26 @@ def train_fold(train, test, fold_index):
     digits_K = math.floor(math.log10(abs(K))) + 1  # [MR]
     print(f'| Fold {fold_index:>{digits_K}} |')  # [MR]
     model = Sequential()
-    model.add(layers.Dense(
-        int(number_inner_neurons / 2), 
-        input_dim=x.shape[1], 
-        activation=inner_activation_fun
-    ))
-    for _ in range(number_inner_layers - 1):
+    for i in range(number_inner_layers):
         model.add(layers.Dense(
-            int(number_inner_neurons / 2), 
-            activation=inner_activation_fun
+            int(number_inner_neurons/2), 
+            input_dim = x.shape[1], 
+            activation = inner_activation_fun
         ))
-    model.add(layers.Dense(y.shape[1], activation=outer_activation_fun))
+    model.add(layers.Dense(
+        y.shape[1], 
+        activation = outer_activation_fun
+    ))
     model.compile(loss=optimizer_loss_fun, optimizer=optimizer_algorithm, metrics=['accuracy'])
+    
+    # [MR] Print model parameters
+    if fold_index == 1: # Prints only for defined fold
+        print("\n| Summary of the model:")
+        model.summary()
+        print("\n| Config of each layer:")
+        for layer in model.layers:
+            print(f"|| Layer \"{layer.name}\":")
+            print(json.dumps(layer.get_config(), indent=4))
     
     model.fit(x[train], y[train], epochs=number_epoch, batch_size=batch_length, verbose=show_inter_results)
     scores = model.evaluate(x[test], y[test], verbose=show_inter_results)

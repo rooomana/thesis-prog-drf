@@ -1,0 +1,230 @@
+PS C:\Users\mamra2\thesis\program\dronerf\thesis-prog-drf> & C:/Users/mamra2/AppData/Local/Programs/Python/Python311/python.exe c:/Users/mamra2/thesis/program/dronerf/thesis-prog-drf/Python/Classificatiopy
+2025-03-13 18:15:11.134818: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different com To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-03-13 18:15:14.314389: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different com To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+
+Loading Data ...
+Loaded Data.
+
+
+Preparing Data ...
+Prepared Data.
+
+
+Starting k-fold training with threading...
+
+| Fold  1 |
+| Fold  2 |
+2025-03-13 18:15:34.447136: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+C:\Users\mamra2\AppData\Local\Programs\Python\Python311\Lib\site-packages\keras\src\layers\core\dense.py:87: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequentir using an `Input(shape)` object as the first layer in the model instead.
+  super().__init__(activity_regularizer=activity_regularizer, **kwargs)
+| Fold  3 |
+| Fold  4 |
+| Fold  5 |
+| Fold  6 |
+| Fold  7 |
+| Fold  8 |
+| Fold  9 |
+| Fold 10 |
+
+| Summary of the model:
+Model: "sequential"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ dense (Dense)                        │ (None, 128)                 │         262,144 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_1 (Dense)                      │ (None, 128)                 │          16,512 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_2 (Dense)                      │ (None, 128)                 │          16,512 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_3 (Dense)                      │ (None, 2)                   │             258 │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+ Total params: 295,426 (1.13 MB)
+ Trainable params: 295,426 (1.13 MB)
+ Non-trainable params: 0 (0.00 B)
+
+| Config of each layer:
+|| Layer "dense":
+{
+    "name": "dense",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "units": 128,
+    "activation": "relu",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+|| Layer "dense_1":
+{
+    "name": "dense_1",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "units": 128,
+    "activation": "relu",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+|| Layer "dense_2":
+{
+    "name": "dense_2",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "units": 128,
+    "activation": "relu",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+|| Layer "dense_3":
+{
+    "name": "dense_3",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "units": 2,
+    "activation": "sigmoid",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 12ms/step  
+| Fold  6 | Ended
+Error in fold 6: cannot access local variable 'cvscores' where it is not associated with a value
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 12ms/step  
+| Fold 10 | Ended
+Error in fold 10: cannot access local variable 'cvscores' where it is not associated with a value
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 11ms/step  
+| Fold  8 | Ended
+Error in fold 8: cannot access local variable 'cvscores' where it is not associated with a value
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 9ms/step   
+45/71 ━━━━━━━━━━━━━━━━━━━━ 0s 6ms/step| Fold  9 | Ended
+Error in fold 9: cannot access local variable 'cvscores' where it is not associated with a value
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 9ms/step
+13/71 ━━━━━━━━━━━━━━━━━━━━ 0s 5ms/step   | Fold  2 | Ended
+Error in fold 2: cannot access local variable 'cvscores' where it is not associated with a value
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 6ms/step
+| Fold  7 | Ended
+Error in fold 7: cannot access local variable 'cvscores' where it is not associated with a value
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 6ms/step  
+| Fold  5 | Ended
+Error in fold 5: cannot access local variable 'cvscores' where it is not associated with a value
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 4ms/step  
+| Fold  1 | Ended
+Error in fold 1: cannot access local variable 'cvscores' where it is not associated with a value
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 3ms/step
+| Fold  3 | Ended
+Error in fold 3: cannot access local variable 'cvscores' where it is not associated with a value
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step
+| Fold  4 | Ended
+Error in fold 4: cannot access local variable 'cvscores' where it is not associated with a value
+Ended | Total
+Elapsed time: 2227.3648 seconds
+
+
+Running Time:
+
+| elapsed_time_6     = 2193.9483 seconds
+| elapsed_time_10    = 2196.0629 seconds
+| elapsed_time_8     = 2198.1013 seconds
+| elapsed_time_9     = 2201.1598 seconds
+| elapsed_time_2     = 2202.2049 seconds
+| elapsed_time_7     = 2202.7402 seconds
+| elapsed_time_5     = 2203.5274 seconds
+| elapsed_time_1     = 2212.9786 seconds
+| elapsed_time_3     = 2213.6630 seconds
+| elapsed_time_4     = 2215.6743 seconds
+| elapsed_time_total = 2227.3648 seconds

@@ -149,8 +149,8 @@ def process_fold(train, test, fold_index, results_lock):
 
     # [MR] Train and evaluate the model
     # TODO: Fix model training - test with prints
-    #model.fit(fold_x[train], y[train], epochs=number_epoch, batch_size=batch_length, verbose=show_inter_results)
-    train_step(model, fold_x[train], y[train])
+    model.fit(fold_x[train], y[train], epochs=number_epoch, batch_size=batch_length, verbose=show_inter_results)
+    #train_step(model, fold_x[train], y[train])
     scores = model.evaluate(fold_x[test], y[test], verbose=show_inter_results)
     print(f'| Fold {fold_index:>{digits_K}} | Scores = {scores[1] * 100}') # [MR]
     

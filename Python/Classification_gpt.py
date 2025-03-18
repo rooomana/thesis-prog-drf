@@ -106,9 +106,9 @@ def process_fold(train, test, fold_index, results_lock):
     global cvscores, running_time
     start_time_phase = time.time()  # [MR] Start phase timer
     #cnt = cnt + 1
-    #print(f'| {cnt = }') # [MR]
+    #print(f'\n| {cnt = }') # [MR]
     digits_K = math.floor(math.log10(abs(K))) + 1  # [MR]
-    print(f'| Fold {fold_index:>{digits_K}} |')  # [MR]
+    print(f'\n| Fold {fold_index:>{digits_K}} |')  # [MR]
     fold_x = x.reshape(x.shape[0], x.shape[1], 1)  # [MR] Reshape input (add channel dimension)
     
     # [MR] Build the model
@@ -129,7 +129,7 @@ def process_fold(train, test, fold_index, results_lock):
             filters=filters[i], 
             kernel_size=5, 
             strides=1, 
-            padding='same',
+            padding='causal',
             dilation_rate=1,
             activation=inner_activation_fun, 
             input_shape=(x.shape[1], 1) if i == 0 else None
@@ -138,13 +138,13 @@ def process_fold(train, test, fold_index, results_lock):
     model.add(layers.Dense(y.shape[1], activation=outer_activation_fun))
     model.compile(loss=optimizer_loss_fun, optimizer=optimizer_algorithm, metrics=['accuracy'])
     
-    # [MR] Print model parameters
-    if fold_index == 1: # Prints only for defined fold
+    # [MR] Displays model parameters
+    if fold_index == 1: # Displays only for defined fold
         print("\n| Summary of the model:")
         model.summary()
         print("\n| Config of each layer:")
         for layer in model.layers:
-            print(f"|| Layer \"{layer.name}\":")
+            print(f"\n|| Layer \"{layer.name}\":")
             print(json.dumps(layer.get_config(), indent=4))
 
     # [MR] Train and evaluate the model
@@ -152,7 +152,7 @@ def process_fold(train, test, fold_index, results_lock):
     model.fit(fold_x[train], y[train], epochs=number_epoch, batch_size=batch_length, verbose=show_inter_results)
     #train_step(model, fold_x[train], y[train])
     scores = model.evaluate(fold_x[test], y[test], verbose=show_inter_results)
-    print(f'| Fold {fold_index:>{digits_K}} | Scores = {scores[1] * 100}') # [MR]
+    print(f'\n| Fold {fold_index:>{digits_K}} | Scores = {scores[1] * 100}') # [MR]
     
     # [MR] Save results
     y_pred = model.predict(fold_x[test]) # [MR]
@@ -162,7 +162,7 @@ def process_fold(train, test, fold_index, results_lock):
     np.savetxt(results_file, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s') # [MR]
     
     ## [MR] Elapsed time
-    print(f'| Fold {fold_index:>{digits_K}} | Ended')
+    print(f'\n| Fold {fold_index:>{digits_K}} | Ended')
     # TODO: Test time records
     # TODO: Time calculations inside or outside lock?
     end_time_phase = time.time()
@@ -170,27 +170,18 @@ def process_fold(train, test, fold_index, results_lock):
     with results_lock:
         running_time[f'elapsed_time_{fold_index}'] = elapsed_time_phase
         cvscores = np.append(cvscores, scores[1] * 100)
-    print("| Fold %*d | Elapsed time: %.4f seconds\n" % (digits_K, fold_index, running_time[f'elapsed_time_{fold_index}']))
+    print("\n| Fold %*d | Elapsed time: %.4f seconds\n" % (digits_K, fold_index, running_time[f'elapsed_time_{fold_index}']))
 
 #########################################################################
 ## [MR] Threading
-# TODO: Test different threading procedures
 # Using ThreadPoolExecutor for efficient threading
 results_lock = threading.Lock()  # Protect shared resources
 kfold = StratifiedKFold(n_splits=K, shuffle=True, random_state=1)
-print("K-fold training (w/ threading) \nStarting...\n")
+print("\n> K-fold training (w/ threading) \nStarting...\n")
 
-#with ThreadPoolExecutor(max_workers=K) as executor:
-#    for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1):
-#        executor.submit(process_fold, train, test, fold_index, results_lock)
-        
-with ThreadPoolExecutor(max_workers=K) as executor:  # [MR] Threading
-    futures = {executor.submit(process_fold, train, test, fold_index, results_lock): fold_index for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1)}
-    for future in as_completed(futures):
-        try:
-            future.result()  # Ensure exceptions are caught
-        except Exception as e:
-            print(f"Error in fold {futures[future]}: {e}")  # [MR] Error handling
+with ThreadPoolExecutor(max_workers=K) as executor:
+    for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1):
+        executor.submit(process_fold, train, test, fold_index, results_lock)
 
 #########################################################################
 ## [MR] Elapsed time
@@ -206,3 +197,4 @@ longest_time_length = max(len(str(format(time, '.4f'))) for time in running_time
 print('\nRunning Time:\n')
 for phase_name, phase_elapsed_time in running_time.items():
     print(f'| {phase_name:<{longest_name_length}} = {phase_elapsed_time:>{longest_time_length}.4f} seconds')
+print('\n')

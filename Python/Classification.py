@@ -53,6 +53,7 @@ def encode(datum):
     return to_categorical(datum)
 
 # [MR] (?) Model training improvement
+# TODO: Check need for optimization
 @tf.function(reduce_retracing=True)
 def train_step(model, train_data, train_labels):
     model.fit(train_data, train_labels, epochs=number_epoch, batch_size=batch_length, verbose=show_inter_results)
@@ -126,7 +127,7 @@ def process_fold(train, test, fold_index, results_lock):
         # [MR] Convolutional layer
         model.add(layers.Conv1D(
             filters=filters[i], 
-            kernel_size=5, 
+            kernel_size=3, 
             strides=1, 
             padding='causal',
             dilation_rate=1,
@@ -164,9 +165,9 @@ def process_fold(train, test, fold_index, results_lock):
     print(f'\n| Fold {fold_index:>{digits_K}} | Ended')
     # TODO: Test time records
     # TODO: Time calculations inside or outside lock?
-    end_time_phase = time.time()
-    elapsed_time_phase = end_time_phase - start_time_phase
     with results_lock:
+        end_time_phase = time.time()
+        elapsed_time_phase = end_time_phase - start_time_phase
         running_time[f'elapsed_time_{fold_index}'] = elapsed_time_phase
         cvscores = np.append(cvscores, scores[1] * 100)
     print("\n| Fold %*d | Elapsed time: %.4f seconds\n" % (digits_K, fold_index, running_time[f'elapsed_time_{fold_index}']))

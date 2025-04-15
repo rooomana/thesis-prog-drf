@@ -129,8 +129,8 @@ def process_fold(train, test, fold_index, results_lock):
             filters=filters[i], 
             kernel_size=3, 
             strides=1, 
-            padding='valid',
-            dilation_rate=1,
+            padding='valid', 
+            dilation_rate=1, 
             activation=inner_activation_fun, 
             input_shape=(x.shape[1], 1) if i == 0 else None
         ))

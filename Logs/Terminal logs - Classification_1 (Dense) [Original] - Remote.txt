@@ -1,0 +1,247 @@
+PS C:\Users\mamra2\thesis\program\dronerf\thesis-prog-drf> & C:/Users/mamra2/AppData/Local/Programs/Python/Python311/python.exe c:/Users/mamra2/thesis/program/dronerf/thesis-prog-drf/Python/Classification_origin.py
+2025-04-17 16:48:56.605038: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-04-17 16:48:59.785348: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+
+Loading Data ...
+Loaded Data.
+
+
+Preparing Data ...
+Prepared Data.    
+
+| cnt = 1
+C:\Users\mamra2\AppData\Local\Programs\Python\Python311\Lib\site-packages\keras\src\layers\core\dense.py:87: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
+  super().__init__(activity_regularizer=activity_regularizer, **kwargs)
+2025-04-17 16:49:18.850329: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+| Summary of the model:
+Model: "sequential"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ dense (Dense)                        │ (None, 128)                 │         262,144 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_1 (Dense)                      │ (None, 128)                 │          16,512 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_2 (Dense)                      │ (None, 128)                 │          16,512 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_3 (Dense)                      │ (None, 2)                   │             258 │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+ Total params: 295,426 (1.13 MB)
+ Trainable params: 295,426 (1.13 MB)
+ Non-trainable params: 0 (0.00 B)
+
+| Config of each layer:
+|| Layer "dense":
+{
+    "name": "dense",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "units": 128,
+    "activation": "relu",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+|| Layer "dense_1":
+{
+    "name": "dense_1",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "units": 128,
+    "activation": "relu",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+|| Layer "dense_2":
+{
+    "name": "dense_2",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "units": 128,
+    "activation": "relu",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+|| Layer "dense_3":
+{
+    "name": "dense_3",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "units": 2,
+    "activation": "sigmoid",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+scores = 99.73568320274353
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step  
+Ended | 1
+Elapsed time: 1035.0998 seconds
+
+| cnt = 2
+scores = 99.95594620704651
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step  
+Ended | 2
+Elapsed time: 1023.6601 seconds
+
+| cnt = 3
+scores = 99.82379078865051
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step  
+Ended | 3
+Elapsed time: 1023.1145 seconds
+
+| cnt = 4
+scores = 99.64757561683655
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step 
+Ended | 4
+Elapsed time: 1030.6349 seconds
+
+| cnt = 5
+scores = 99.69162940979004
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step 
+Ended | 5
+Elapsed time: 1031.1857 seconds
+
+| cnt = 6
+scores = 99.73568320274353
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step 
+Ended | 6
+Elapsed time: 1026.3670 seconds
+
+| cnt = 7
+scores = 99.91189241409302
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step  
+Ended | 7
+Elapsed time: 1048.1630 seconds
+
+| cnt = 8
+scores = 99.86783862113953
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step  
+Ended | 8
+Elapsed time: 1030.6169 seconds
+
+| cnt = 9
+scores = 99.91189241409302
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step 
+Ended | 9
+Elapsed time: 1032.1519 seconds
+
+| cnt = 10
+scores = 99.82379078865051
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 2ms/step  
+Ended | 10
+Elapsed time: 1027.3825 seconds
+
+Ended | Total
+Elapsed time: 10319.4078 seconds
+
+
+Running Time:
+
+| elapsed_time_1     =  1035.0998 seconds
+| elapsed_time_2     =  1023.6601 seconds
+| elapsed_time_3     =  1023.1145 seconds
+| elapsed_time_4     =  1030.6349 seconds
+| elapsed_time_5     =  1031.1857 seconds
+| elapsed_time_6     =  1026.3670 seconds
+| elapsed_time_7     =  1048.1630 seconds
+| elapsed_time_8     =  1030.6169 seconds
+| elapsed_time_9     =  1032.1519 seconds
+| elapsed_time_10    =  1027.3825 seconds
+| elapsed_time_total = 10319.4078 seconds

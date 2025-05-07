@@ -129,12 +129,14 @@ def process_fold(train, test, fold_index, results_lock):
             filters=filters[i], 
             kernel_size=3, 
             strides=1, 
-            padding='valid', 
+            padding='causal', 
             dilation_rate=1, 
             activation=inner_activation_fun, 
             input_shape=(x.shape[1], 1) if i == 0 else None
         ))
-    model.add(layers.Flatten())     # [MR] Flatten before output
+        model.add(layers.BatchNormalization()) # Stabilise learning and less overfitting
+        model.add(layers.MaxPooling1D(pool_size=2)) # Reduces temporal resolution
+    model.add(layers.GlobalAveragePooling1D()) # Reduce #parameters and avoid overfitting
     model.add(layers.Dense(y.shape[1], activation=outer_activation_fun))
     model.compile(loss=optimizer_loss_fun, optimizer=optimizer_algorithm, metrics=['accuracy'])
     

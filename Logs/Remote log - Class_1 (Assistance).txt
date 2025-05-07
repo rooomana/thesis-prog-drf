@@ -1,0 +1,6 @@
+TODO:
+Make sure to have same amount of parameters
+300.000
+Maybe increase filters
+
+Reread notes from meeting

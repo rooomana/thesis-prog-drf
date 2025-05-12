@@ -1,6 +1,8 @@
 TODO:
-Make sure to have same amount of parameters
-300.000
-Maybe increase filters
+Reread notes from meetings
+Very Important - Check performance
 
-Reread notes from meeting
+#Parameters
+Check for amount of parameters
+  OG had ~295k param.
+Maybe increase filters

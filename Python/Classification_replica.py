@@ -2,13 +2,10 @@
 #
 # | Replicating architecture from:
 #
-# RF-Based UAV Surveillance System: A Sequential Convolution Neural Networks Approach
+# Drone Detection Approach Based on Radio-Frequency Using Convolutional Neural Network
 #
-# Authors: Rubina Akter
-#          Van-Sang Doan
-#          Godwin Brown Tunze
-#          Jae-Min Lee
-#          Dong-Seong Kim
+# Authors: Sara Al-Emadi
+#          Felwa Al-Senaid
 #
 #########################################################################
 
@@ -52,14 +49,15 @@ optimizer_loss_fun   = 'categorical_crossentropy'
 optimizer_algorithm  = 'adam'
 number_inner_layers  = 3
 conv_pool_layers  = 4 # [MR]
-conv_only_layers  = 5 # [MR]
+conv_only_layers  = 0 # [MR]
 number_inner_neurons = 256
-number_epoch         = 200
-batch_length         = 10
+number_epoch         = 100 # NN 1 | Two-class
+#number_epoch         = 350 # NN 2 | Multi-class
+batch_length         = 50 # NN 1 & 2 | Two or Multi-class
 #batch_length         = 32  # [MR] Increase for better performance
 show_inter_results   = 0
 
-opt = 2     # [MR] DNN Results number
+opt = 1     # [MR] DNN Results number
 current_directory_working = os.getcwd()     # [MR] Current working directory
 results_path = rf"{current_directory_working}\Results_{opt}"    # [MR]
 
@@ -99,8 +97,8 @@ def process_fold(train, test, fold_index, results_lock):
     fold_x = x.reshape(x.shape[0], x.shape[1], 1)   # [MR] Reshape input (add channel dimension)
     
     ## [MR] Build model
-    filters =       [64, 64, 64, 64, 128, 64, 128, 128, 96]
-    kernel_sizes =  [ 3,  3,  3,  3,   3,  3,   5,   5,  7]
+    filters =       [32, 64, 128, 128]
+    kernel_sizes =  [ 3,  3,   3,   3]
     model = Sequential()
     ## Input layer
     model.add(layers.Input(
@@ -116,28 +114,19 @@ def process_fold(train, test, fold_index, results_lock):
             padding='same',
             activation='relu'
         ))
-        model.add(layers.MaxPooling1D(pool_size=3))
-
-    # Conv only layers
-    for i in range(conv_pool_layers, 
-                   conv_pool_layers + conv_only_layers):
-        model.add(layers.Conv1D(
-            filters=filters[i],
-            kernel_size=kernel_sizes[i],
-            strides=1,
-            padding='same',
-            activation='relu'
-        ))
+        model.add(layers.AveragePooling1D(pool_size=2))
     
     # Dropout to prevent overfitting
-    model.add(layers.Dropout(0.3))
+    model.add(layers.Dropout(0.25))
     # Flatten before fully connected layers
     model.add(layers.Flatten())
     # Fully connected layers
     model.add(layers.Dense(256, activation='relu'))
-    model.add(layers.Dense(y.shape[1], activation='softmax'))
+    model.add(layers.Dense(y.shape[1], activation='sigmoid'))                                           # NN 1 | Two-class
+#    model.add(layers.Dense(y.shape[1], activation='softmax'))                                          # NN 2 | Multi-class
     
-    model.compile(loss=optimizer_loss_fun, optimizer=optimizer_algorithm, metrics=['accuracy'])
+    model.compile(loss='binary_crossentropy', optimizer=optimizer_algorithm, metrics=['accuracy'])      # NN 1 | Two-class
+#    model.compile(loss='categorical_crossentropy', optimizer=optimizer_algorithm, metrics=['accuracy']) # NN 2 | Multi-class
     
     ## [MR] Display parameters
     if fold_index == 1: # Displays only for defined fold

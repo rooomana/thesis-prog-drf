@@ -109,7 +109,6 @@ def process_fold(train, test, fold_index, results_lock):
 
     # [1-2] Linked Conv (w/ Pooling) layers
     for i in range(linked_conv_pool_layers):
-        print(f"| Fold {fold_index:>{digits_K}} | {i = }") # [MR] Remove after testing
         model.add(layers.Conv1D(
             filters=filters[i],
             kernel_size=kernel_sizes[i],
@@ -122,7 +121,6 @@ def process_fold(train, test, fold_index, results_lock):
     # [3-4] Linked Conv only layers
     for i in range(linked_conv_pool_layers, 
                    linked_conv_pool_layers + linked_conv_only_layers):
-        print(f"| Fold {fold_index:>{digits_K}} | {i = }") # [MR] Remove after testing
         model.add(layers.Conv1D(
             filters=filters[i],
             kernel_size=kernel_sizes[i],
@@ -130,13 +128,10 @@ def process_fold(train, test, fold_index, results_lock):
             padding='same',
             activation='relu'
         ))
-    print(f"| Fold {fold_index:>{digits_K}} | {linked_conv_pool_layers = }") # [MR] Remove after testing
-    print(f"| Fold {fold_index:>{digits_K}} | {linked_conv_only_layers = }") # [MR] Remove after testing
+    
     linked_layers = linked_conv_pool_layers + linked_conv_only_layers
-    print(f"| Fold {fold_index:>{digits_K}} | {linked_layers = }") # [MR] Remove after testing
     # [5] Conv (w/ Pooling) layer
     i = linked_layers
-    print(f"| Fold {fold_index:>{digits_K}} | {i = }") # [MR] Remove after testing
     model.add(layers.Conv1D(
         filters=filters[i],
         kernel_size=kernel_sizes[i],
@@ -148,7 +143,6 @@ def process_fold(train, test, fold_index, results_lock):
     
     # [6] Conv only layer
     i = linked_layers + 1
-    print(f"| Fold {fold_index:>{digits_K}} | {i = }") # [MR] Remove after testing
     model.add(layers.Conv1D(
         filters=filters[i],
         kernel_size=kernel_sizes[i],

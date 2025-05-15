@@ -1,13 +1,13 @@
 #########################################################################
 #
+# Objective: Drone Detection
+#
 # | Replicating architecture from:
 #
 # Drone Detection Approach Based on Radio-Frequency Using Convolutional Neural Network
 #
 # Authors: Sara Al-Emadi
 #          Felwa Al-Senaid
-#
-# Objective: Drone Detection
 #
 #########################################################################
 

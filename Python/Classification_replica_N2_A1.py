@@ -1,13 +1,16 @@
 #########################################################################
 #
+# Objective: Drone Classification
+#
 # | Replicating architecture from:
 #
-# Drone Detection Approach Based on Radio-Frequency Using Convolutional Neural Network
+# RF-Based UAV Surveillance System: A Sequential Convolution Neural Networks Approach
 #
-# Authors: Sara Al-Emadi
-#          Felwa Al-Senaid
-#
-# Objective: Drone Classification
+# Authors: Rubina Akter
+#          Van-Sang Doan
+#          Godwin Brown Tunze
+#          Jae-Min Lee
+#          Dong-Seong Kim
 #
 #########################################################################
 
@@ -50,12 +53,11 @@ outer_activation_fun = 'sigmoid'
 optimizer_loss_fun   = 'categorical_crossentropy'
 optimizer_algorithm  = 'adam'
 number_inner_layers  = 3
-linked_conv_pool_layers  = 2 # [MR]
-linked_conv_only_layers  = 2 # [MR]
+conv_pool_layers  = 4 # [MR]
+conv_only_layers  = 5 # [MR]
 number_inner_neurons = 256
-#number_epoch         = 100 # NN 1 | Two-class
-number_epoch         = 350 # NN 2 | Multi-class
-batch_length         = 50 # NN 1 & 2 | Two or Multi-class
+number_epoch         = 200
+batch_length         = 10
 #batch_length         = 32  # [MR] Increase for better performance
 show_inter_results   = 0
 
@@ -99,17 +101,16 @@ def process_fold(train, test, fold_index, results_lock):
     fold_x = x.reshape(x.shape[0], x.shape[1], 1)   # [MR] Reshape input (add channel dimension)
     
     ## [MR] Build model
-    filters =       [32, 64, 64, 128, 128, 256]
-    kernel_sizes =  [ 3,  3,  3,   3,   3,   3]
+    filters =       [64, 64, 64, 64, 128, 64, 128, 128, 96]
+    kernel_sizes =  [ 3,  3,  3,  3,   3,  3,   5,   5,  7]
     model = Sequential()
     ## Input layer
     model.add(layers.Input(
         shape=(x.shape[1], 1)
     ))
 
-    # [1-2] Linked Conv (w/ Pooling) layers
-    for i in range(linked_conv_pool_layers):
-        print(f"| Fold {fold_index:>{digits_K}} | {i = }") # [MR] Remove after testing
+    # Conv (w/ Pooling) layers
+    for i in range(conv_pool_layers):
         model.add(layers.Conv1D(
             filters=filters[i],
             kernel_size=kernel_sizes[i],
@@ -117,12 +118,11 @@ def process_fold(train, test, fold_index, results_lock):
             padding='same',
             activation='relu'
         ))
-        model.add(layers.AveragePooling1D(pool_size=3))
-    
-    # [3-4] Linked Conv only layers
-    for i in range(linked_conv_pool_layers, 
-                   linked_conv_pool_layers + linked_conv_only_layers):
-        print(f"| Fold {fold_index:>{digits_K}} | {i = }") # [MR] Remove after testing
+        model.add(layers.MaxPooling1D(pool_size=3))
+
+    # Conv only layers
+    for i in range(conv_pool_layers, 
+                   conv_pool_layers + conv_only_layers):
         model.add(layers.Conv1D(
             filters=filters[i],
             kernel_size=kernel_sizes[i],
@@ -130,44 +130,16 @@ def process_fold(train, test, fold_index, results_lock):
             padding='same',
             activation='relu'
         ))
-    print(f"| Fold {fold_index:>{digits_K}} | {linked_conv_pool_layers = }") # [MR] Remove after testing
-    print(f"| Fold {fold_index:>{digits_K}} | {linked_conv_only_layers = }") # [MR] Remove after testing
-    linked_layers = linked_conv_pool_layers + linked_conv_only_layers
-    print(f"| Fold {fold_index:>{digits_K}} | {linked_layers = }") # [MR] Remove after testing
-    # [5] Conv (w/ Pooling) layer
-    i = linked_layers
-    print(f"| Fold {fold_index:>{digits_K}} | {i = }") # [MR] Remove after testing
-    model.add(layers.Conv1D(
-        filters=filters[i],
-        kernel_size=kernel_sizes[i],
-        strides=1,
-        padding='same',
-        activation='relu'
-    ))
-    model.add(layers.AveragePooling1D(pool_size=1))
-    
-    # [6] Conv only layer
-    i = linked_layers + 1
-    print(f"| Fold {fold_index:>{digits_K}} | {i = }") # [MR] Remove after testing
-    model.add(layers.Conv1D(
-        filters=filters[i],
-        kernel_size=kernel_sizes[i],
-        strides=1,
-        padding='same',
-        activation='relu'
-    ))
     
     # Dropout to prevent overfitting
-    model.add(layers.Dropout(0.2))
+    model.add(layers.Dropout(0.3))
     # Flatten before fully connected layers
     model.add(layers.Flatten())
     # Fully connected layers
     model.add(layers.Dense(256, activation='relu'))
-#    model.add(layers.Dense(y.shape[1], activation='sigmoid'))                                           # NN 1 | Two-class
-    model.add(layers.Dense(y.shape[1], activation='softmax'))                                          # NN 2 | Multi-class
+    model.add(layers.Dense(y.shape[1], activation='softmax'))
     
-#    model.compile(loss='binary_crossentropy', optimizer=optimizer_algorithm, metrics=['accuracy'])      # NN 1 | Two-class
-    model.compile(loss='categorical_crossentropy', optimizer=optimizer_algorithm, metrics=['accuracy']) # NN 2 | Multi-class
+    model.compile(loss=optimizer_loss_fun, optimizer=optimizer_algorithm, metrics=['accuracy'])
     
     ## [MR] Display parameters
     if fold_index == 1: # Displays only for defined fold

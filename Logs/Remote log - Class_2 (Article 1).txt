@@ -2,6 +2,8 @@
 
 #########################################################################
 #
+# Objective: Drone Classification
+#
 # | Replicating architecture from:
 #
 # RF-Based UAV Surveillance System: A Sequential Convolution Neural Networks Approach
@@ -11,7 +13,5 @@
 #          Godwin Brown Tunze
 #          Jae-Min Lee
 #          Dong-Seong Kim
-#
-# Objective: Drone Classification
 #
 #########################################################################

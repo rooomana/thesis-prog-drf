@@ -116,7 +116,7 @@ def process_fold(train, test, fold_index, results_lock):
             padding='same',
             activation='relu'
         ))
-        model.add(layers.AveragePooling1D(pool_size=2))
+        model.add(layers.AveragePooling1D(pool_size=3))
     
     # Dropout to prevent overfitting
     model.add(layers.Dropout(0.25))

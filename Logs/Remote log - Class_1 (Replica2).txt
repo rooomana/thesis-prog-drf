@@ -564,4 +564,6 @@ Running Time:
 # Authors: Sara Al-Emadi
 #          Felwa Al-Senaid
 #
+# Objective: Drone Detection
+#
 #########################################################################

@@ -752,4 +752,6 @@ Running Time:
 #          Jae-Min Lee
 #          Dong-Seong Kim
 #
+# Objective: Drone Classification
+#
 #########################################################################

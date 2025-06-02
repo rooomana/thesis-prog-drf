@@ -33,8 +33,7 @@ filepath = fileparts(current_directory_working);    % [MR] Path for easier manag
 filepath = [filepath '\Data\'];
 
 %% Parameters
-%opt = 1;  % Change to 1, 2, or 3 to alternate between the 1st, 2nd, and 3rd DNN results respectively.
-opt = 3; % [MR] DNN Results number
+opt = 2;  % Change to 1, 2, or 3 to alternate between the 1st, 2nd, and 3rd DNN results respectively.
 
 results_path = [pwd '\Results_' num2str(opt) '\']; % [MR]
 

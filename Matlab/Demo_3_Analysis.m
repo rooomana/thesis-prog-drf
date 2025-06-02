@@ -33,7 +33,7 @@ filepath = fileparts(current_directory_working);    % [MR] Path for easier manag
 filepath = [filepath '\Data\'];
 
 %% Parameters
-opt = 3;                                      % Change to 1, 2, or 3 to alternate between the 1st, 2nd, and 3rd DNN inputs respectively.
+opt = 2;                                      % Change to 1, 2, or 3 to alternate between the 1st, 2nd, and 3rd DNN inputs respectively.
 BUI = {'00000','10000','10001','10010','10011',...
     '10100','10101','10110','10111','11000'}; % BUI of all RF data
 M   = 2048;                                   % Total number of frequency bins

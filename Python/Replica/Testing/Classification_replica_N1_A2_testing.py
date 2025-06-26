@@ -25,6 +25,7 @@ from tensorflow.keras.models import Sequential      # [MR]
 #from tensorflow.keras.layers import Dense           # [MR]
 layers = tf.keras.layers                            # [MR]
 from sklearn.model_selection import StratifiedKFold
+import matplotlib.pyplot as plt                     # [MR] For analysis
 
 ############################## Functions ###############################
 def decode(datum):
@@ -62,6 +63,7 @@ show_inter_results   = 0
 opt = 1     # [MR] DNN Results number
 current_directory_working = os.getcwd()     # [MR] Current working directory
 results_path = rf"{current_directory_working}\Results_{opt}"    # [MR]
+histories = [None] * K  # [MR] For analysis
 
 running_time = {}           # [MR] Timers
 start_time = time.time()    # [MR] Start timer
@@ -90,7 +92,7 @@ cvscores = np.array([])     # [MR]
 
 ## [MR] Each fold's process
 def process_fold(train, test, fold_index, results_lock):
-    global cvscores, running_time
+    global digits_K, cvscores, running_time, histories
     start_time_phase = time.time()  # [MR] Start phase timer
     #cnt = cnt + 1
     #print(f'\n| {cnt = }') # [MR]
@@ -141,8 +143,15 @@ def process_fold(train, test, fold_index, results_lock):
 
     ## [MR] Train and eval model
     # TODO: Fix model training - test with prints
-    model.fit(fold_x[train], y[train], epochs=number_epoch, batch_size=batch_length, verbose=show_inter_results)
+    history = model.fit(
+        fold_x[train], y[train],
+        epochs=number_epoch,
+        batch_size=batch_length,
+        verbose=show_inter_results,
+        validation_data=(fold_x[test], y[test])  # [MR] For analysis
+    )
     #train_step(model, fold_x[train], y[train])
+    histories[fold_index - 1] = history.history  # [MR] For analysis
     scores = model.evaluate(fold_x[test], y[test], verbose=show_inter_results)
     print(f'\n| Fold {fold_index:>{digits_K}} | Scores = {scores[1] * 100}') # [MR]
     
@@ -190,3 +199,33 @@ print('\nRunning Time:\n')
 for phase_name, phase_elapsed_time in running_time.items():
     print(f'| {phase_name:<{longest_name_length}} = {phase_elapsed_time:>{longest_time_length}.4f} seconds')
 print('\n')
+
+#########################################################################
+# [MR] Graphs for analysis
+for hist_index, history in enumerate(histories):
+    fold_index = hist_index + 1
+    if history is None: continue
+    plt.figure(figsize=(12, 5))
+
+    # Loss
+    plt.subplot(1, 2, 1)
+    plt.plot(history['loss'], label='Train Loss')
+    if 'val_loss' in history:
+        plt.plot(history['val_loss'], label='Val Loss')
+    plt.title(f'| Fold {fold_index:>{digits_K}} | Loss')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.legend()
+
+    # Accuracy
+    plt.subplot(1, 2, 2)
+    plt.plot(history['accuracy'], label='Train Accuracy')
+    if 'val_accuracy' in history:
+        plt.plot(history['val_accuracy'], label='Val Accuracy')
+    plt.title(f'| Fold {fold_index:>{digits_K}} | Accuracy')
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
+    plt.legend()
+
+    plt.tight_layout()
+    plt.show()

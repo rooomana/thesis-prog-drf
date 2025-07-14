@@ -205,59 +205,62 @@ print('\n')
 
 # Accuracy
 train_accuracies = []
-val_accuracies = []
+valid_accuracies = []
 # Loss
-train_losses = []
-val_losses = []
+train_losses     = []
+valid_losses     = []
 
-# Organisation
-for history in histories:
-    if history is None:
-        continue
+# Join histories from each fold
+for fold_index, history in enumerate(histories):
+    if history is None: continue
     train_accuracies.append(history["accuracy"])
-    if "val_accuracy" in history:
-        val_accuracies.append(history["val_accuracy"])
     train_losses.append(history["loss"])
+    if "val_accuracy" in history:
+        valid_accuracies.append(history["val_accuracy"])
     if "val_loss" in history:
-        val_losses.append(history["val_loss"])
+        valid_losses.append(history["val_loss"])
 
-# Plot
-plt.figure(figsize=(12, 10))
+## Means
+# Accuracy
+mean_train_accuracies = np.mean(np.array(train_accuracies), axis=0)
+mean_valid_accuracies = np.mean(np.array(valid_accuracies), axis=0)
+# Loss
+mean_train_loss       = np.mean(np.array(train_losses), axis=0)
+mean_valid_loss       = np.mean(np.array(valid_losses), axis=0)
+
+## Plot
+plt.figure(figsize=(12, 6))
 
 # Accuracy | Train
 plt.subplot(2, 2, 1)
-for fold_index, acc in enumerate(train_accuracies):
-    plt.plot(acc, label=f"Fold {fold_index + 1:>{digits_K}}")
+plt.plot(mean_train_accuracies, color='red')
 plt.title("Accuracy | Train")
-plt.xlabel("Epoch")
 plt.ylabel("Accuracy")
+plt.xlabel("Epoch")
 plt.legend()
 
 # Loss | Train
 plt.subplot(2, 2, 2)
-for fold_index, loss in enumerate(train_losses):
-    plt.plot(loss, label=f"Fold {fold_index + 1:>{digits_K}}")
+plt.plot(mean_train_loss, color='blue')
 plt.title("Loss | Train")
-plt.xlabel("Epoch")
 plt.ylabel("Loss")
+plt.xlabel("Epoch")
 plt.legend()
 
 # Accuracy | Validation
 plt.subplot(2, 2, 3)
-for fold_index, acc in enumerate(val_accuracies):
-    plt.plot(acc, label=f"Fold {fold_index + 1:>{digits_K}}")
+plt.plot(mean_valid_accuracies, color='red')
 plt.title("Accuracy | Validation")
-plt.xlabel("Epoch")
 plt.ylabel("Accuracy")
+plt.xlabel("Epoch")
 plt.legend()
 
 # Loss | Validation
 plt.subplot(2, 2, 4)
-for fold_index, loss in enumerate(val_losses):
-    plt.plot(loss, label=f"Fold {fold_index + 1:>{digits_K}}")
+plt.plot(mean_valid_loss, color='blue')
 plt.title("Loss | Validation")
-plt.xlabel("Epoch")
 plt.ylabel("Loss")
+plt.xlabel("Epoch")
 plt.legend()
 
 plt.tight_layout()

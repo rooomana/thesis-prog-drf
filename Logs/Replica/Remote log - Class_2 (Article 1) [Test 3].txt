@@ -1,0 +1,811 @@
+PS C:\Users\mamra2\thesis\program\dronerf\thesis-prog-drf> & C:/Users/mamra2/AppData/Local/Programs/Python/Python311/python.exe c:/Users/mamra2/thesis/program/dronerf/thesis-prog-drf/Python/Replica/Testing/Classification_replica_N2_A1_testing.py
+2025-07-16 19:59:16.246914: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-07-16 19:59:18.788311: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+
+Loading Data ...
+Loaded Data.
+
+
+Preparing Data ...
+Prepared Data.
+
+
+> K-fold training (w/ threading) 
+Starting...
+
+
+| Fold  1 |
+2025-07-16 19:59:37.063849: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+| Fold  2 |
+
+| Fold  3 |
+
+| Fold  4 |
+
+| Fold  5 |
+
+| Fold  6 |
+
+| Fold  7 |
+
+| Fold  8 |
+
+| Fold  9 |
+
+| Fold 10 |
+
+| Summary of the model:
+Model: "sequential"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ conv1d (Conv1D)                      │ (None, 2047, 64)            │             256 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ max_pooling1d (MaxPooling1D)         │ (None, 682, 64)             │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv1d_1 (Conv1D)                    │ (None, 682, 64)             │          12,352 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ max_pooling1d_1 (MaxPooling1D)       │ (None, 227, 64)             │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv1d_2 (Conv1D)                    │ (None, 227, 64)             │          12,352 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ max_pooling1d_2 (MaxPooling1D)       │ (None, 75, 64)              │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv1d_3 (Conv1D)                    │ (None, 75, 64)              │          12,352 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ max_pooling1d_3 (MaxPooling1D)       │ (None, 25, 64)              │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv1d_4 (Conv1D)                    │ (None, 25, 128)             │          24,704 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv1d_5 (Conv1D)                    │ (None, 25, 64)              │          24,640 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv1d_6 (Conv1D)                    │ (None, 25, 128)             │          41,088 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv1d_7 (Conv1D)                    │ (None, 25, 128)             │          82,048 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ conv1d_8 (Conv1D)                    │ (None, 25, 96)              │          86,112 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dropout (Dropout)                    │ (None, 25, 96)              │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ flatten (Flatten)                    │ (None, 2400)                │               0 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense (Dense)                        │ (None, 256)                 │         614,656 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_1 (Dense)                      │ (None, 4)                   │           1,028 │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+ Total params: 911,588 (3.48 MB)
+ Trainable params: 911,588 (3.48 MB)
+ Non-trainable params: 0 (0.00 B)
+
+| Config of each layer:
+
+|| Layer "conv1d":
+{
+    "name": "conv1d",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "filters": 64,
+    "kernel_size": [
+        3
+    ],
+    "strides": [
+        1
+    ],
+    "padding": "same",
+    "data_format": "channels_last",
+    "dilation_rate": [
+        1
+    ],
+    "groups": 1,
+    "activation": "relu",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "activity_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+
+|| Layer "max_pooling1d":
+{
+    "name": "max_pooling1d",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "pool_size": [
+        3
+    ],
+    "padding": "valid",
+    "strides": [
+        3
+    ],
+    "data_format": "channels_last"
+}
+
+|| Layer "conv1d_1":
+{
+    "name": "conv1d_1",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "filters": 64,
+    "kernel_size": [
+        3
+    ],
+    "strides": [
+        1
+    ],
+    "padding": "same",
+    "data_format": "channels_last",
+    "dilation_rate": [
+        1
+    ],
+    "groups": 1,
+    "activation": "relu",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "activity_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+
+|| Layer "max_pooling1d_1":
+{
+    "name": "max_pooling1d_1",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "pool_size": [
+        3
+    ],
+    "padding": "valid",
+    "strides": [
+        3
+    ],
+    "data_format": "channels_last"
+}
+
+|| Layer "conv1d_2":
+{
+    "name": "conv1d_2",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "filters": 64,
+    "kernel_size": [
+        3
+    ],
+    "strides": [
+        1
+    ],
+    "padding": "same",
+    "data_format": "channels_last",
+    "dilation_rate": [
+        1
+    ],
+    "groups": 1,
+    "activation": "relu",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "activity_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+
+|| Layer "max_pooling1d_2":
+{
+    "name": "max_pooling1d_2",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "pool_size": [
+        3
+    ],
+    "padding": "valid",
+    "strides": [
+        3
+    ],
+    "data_format": "channels_last"
+}
+
+|| Layer "conv1d_3":
+{
+    "name": "conv1d_3",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "filters": 64,
+    "kernel_size": [
+        3
+    ],
+    "strides": [
+        1
+    ],
+    "padding": "same",
+    "data_format": "channels_last",
+    "dilation_rate": [
+        1
+    ],
+    "groups": 1,
+    "activation": "relu",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "activity_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+
+|| Layer "max_pooling1d_3":
+{
+    "name": "max_pooling1d_3",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "pool_size": [
+        3
+    ],
+    "padding": "valid",
+    "strides": [
+        3
+    ],
+    "data_format": "channels_last"
+}
+
+|| Layer "conv1d_4":
+{
+    "name": "conv1d_4",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "filters": 128,
+    "kernel_size": [
+        3
+    ],
+    "strides": [
+        1
+    ],
+    "padding": "same",
+    "data_format": "channels_last",
+    "dilation_rate": [
+        1
+    ],
+    "groups": 1,
+    "activation": "relu",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "activity_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+
+|| Layer "conv1d_5":
+{
+    "name": "conv1d_5",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "filters": 64,
+    "kernel_size": [
+        3
+    ],
+    "strides": [
+        1
+    ],
+    "padding": "same",
+    "data_format": "channels_last",
+    "dilation_rate": [
+        1
+    ],
+    "groups": 1,
+    "activation": "relu",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "activity_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+
+|| Layer "conv1d_6":
+{
+    "name": "conv1d_6",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "filters": 128,
+    "kernel_size": [
+        5
+    ],
+    "strides": [
+        1
+    ],
+    "padding": "same",
+    "data_format": "channels_last",
+    "dilation_rate": [
+        1
+    ],
+    "groups": 1,
+    "activation": "relu",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "activity_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+
+|| Layer "conv1d_7":
+{
+    "name": "conv1d_7",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "filters": 128,
+    "kernel_size": [
+        5
+    ],
+    "strides": [
+        1
+    ],
+    "padding": "same",
+    "data_format": "channels_last",
+    "dilation_rate": [
+        1
+    ],
+    "groups": 1,
+    "activation": "relu",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "activity_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+
+|| Layer "conv1d_8":
+{
+    "name": "conv1d_8",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "filters": 96,
+    "kernel_size": [
+        7
+    ],
+    "strides": [
+        1
+    ],
+    "padding": "same",
+    "data_format": "channels_last",
+    "dilation_rate": [
+        1
+    ],
+    "groups": 1,
+    "activation": "relu",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "activity_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+
+|| Layer "dropout":
+{
+    "name": "dropout",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "rate": 0.3,
+    "seed": null,
+    "noise_shape": null
+}
+
+|| Layer "flatten":
+{
+    "name": "flatten",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "data_format": "channels_last"
+}
+
+|| Layer "dense":
+{
+    "name": "dense",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "units": 256,
+    "activation": "relu",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+
+|| Layer "dense_1":
+{
+    "name": "dense_1",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "units": 4,
+    "activation": "softmax",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+
+| Fold  6 | Scores = 37.00440526008606
+71/71 ━━━━━━━━━━━━━━━━━━━━ 8s 94ms/step   
+
+| Fold  6 | Ended
+
+| Fold  6 | Elapsed time: 49429.8415 seconds
+
+
+| Fold  8 | Scores = 37.00440526008606
+71/71 ━━━━━━━━━━━━━━━━━━━━ 7s 89ms/step
+
+| Fold  8 | Ended
+
+| Fold  8 | Elapsed time: 49489.1536 seconds
+
+
+| Fold 10 | Scores = 37.00440526008606
+71/71 ━━━━━━━━━━━━━━━━━━━━ 6s 76ms/step   
+
+| Fold 10 | Ended
+
+| Fold 10 | Elapsed time: 49624.0579 seconds
+
+
+| Fold  2 | Scores = 37.00440526008606
+71/71 ━━━━━━━━━━━━━━━━━━━━ 5s 63ms/step  
+
+| Fold  2 | Ended
+
+| Fold  2 | Elapsed time: 49677.5927 seconds
+
+
+| Fold  4 | Scores = 37.00440526008606
+35/71 ━━━━━━━━━━━━━━━━━━━━ 1s 52ms/step  
+| Fold  9 | Scores = 37.00440526008606
+71/71 ━━━━━━━━━━━━━━━━━━━━ 5s 62ms/step  
+38/71 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+| Fold  4 | Ended
+
+| Fold  4 | Elapsed time: 49691.6746 seconds
+
+71/71 ━━━━━━━━━━━━━━━━━━━━ 4s 52ms/step
+
+| Fold  9 | Ended
+
+| Fold  9 | Elapsed time: 49693.7602 seconds
+
+
+| Fold  3 | Scores = 37.00440526008606
+71/71 ━━━━━━━━━━━━━━━━━━━━ 3s 39ms/step  
+
+| Fold  3 | Ended
+
+| Fold  3 | Elapsed time: 49705.6838 seconds
+
+
+| Fold  5 | Scores = 37.00440526008606
+71/71 ━━━━━━━━━━━━━━━━━━━━ 3s 30ms/step  
+
+| Fold  5 | Ended
+
+| Fold  5 | Elapsed time: 49793.1976 seconds
+
+
+| Fold  7 | Scores = 37.00440526008606
+71/71 ━━━━━━━━━━━━━━━━━━━━ 2s 24ms/step  
+
+| Fold  7 | Ended
+
+| Fold  7 | Elapsed time: 50068.8326 seconds
+
+
+| Fold  1 | Scores = 37.00440526008606
+71/71 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step  
+
+| Fold  1 | Ended
+
+| Fold  1 | Elapsed time: 50115.9432 seconds
+
+Ended | Total
+Elapsed time: 50126.7819 seconds
+
+
+Running Time:
+
+| elapsed_time_6     = 49429.8415 seconds
+| elapsed_time_8     = 49489.1536 seconds
+| elapsed_time_10    = 49624.0579 seconds
+| elapsed_time_2     = 49677.5927 seconds
+| elapsed_time_4     = 49691.6746 seconds
+| elapsed_time_9     = 49693.7602 seconds
+| elapsed_time_3     = 49705.6838 seconds
+| elapsed_time_5     = 49793.1976 seconds
+| elapsed_time_7     = 50068.8326 seconds
+| elapsed_time_1     = 50115.9432 seconds
+| elapsed_time_total = 50126.7819 seconds
+
+
+c:\Users\mamra2\thesis\program\dronerf\thesis-prog-drf\Python\Replica\Testing\Classification_replica_N2_A1_testing.py:251: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  plt.legend()
+c:\Users\mamra2\thesis\program\dronerf\thesis-prog-drf\Python\Replica\Testing\Classification_replica_N2_A1_testing.py:259: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  plt.legend()
+c:\Users\mamra2\thesis\program\dronerf\thesis-prog-drf\Python\Replica\Testing\Classification_replica_N2_A1_testing.py:267: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  plt.legend()
+c:\Users\mamra2\thesis\program\dronerf\thesis-prog-drf\Python\Replica\Testing\Classification_replica_N2_A1_testing.py:275: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  plt.legend()

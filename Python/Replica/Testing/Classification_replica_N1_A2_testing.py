@@ -54,7 +54,7 @@ number_inner_layers  = 3
 conv_pool_layers  = 4 # [MR]
 conv_only_layers  = 0 # [MR]
 number_inner_neurons = 256
-number_epoch         = 200 # NN 1 | Two-class
+number_epoch         = 60 # NN 1 | Two-class
 #number_epoch         = 350 # NN 2 | Multi-class
 batch_length         = 50 # NN 1 & 2 | Two or Multi-class
 #batch_length         = 32  # [MR] Increase for better performance
@@ -116,7 +116,8 @@ def process_fold(train, test, fold_index, results_lock):
             kernel_size=kernel_sizes[i],
             strides=1,
             padding='same',
-            activation='relu'
+            activation='relu',
+            dilation_rate=2 if i == 0 else 1
         ))
         model.add(layers.AveragePooling1D(pool_size=3))
     

@@ -1,8 +1,0 @@
-TODO:
-Reread notes from meetings
-Very Important - Check performance
-
-#Parameters
-Check for amount of parameters
-  OG had ~295k param.
-Maybe increase filters

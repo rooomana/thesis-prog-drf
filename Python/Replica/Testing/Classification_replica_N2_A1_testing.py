@@ -28,6 +28,7 @@ from tensorflow.keras.models import Sequential      # [MR]
 #from tensorflow.keras.layers import Dense           # [MR]
 layers = tf.keras.layers                            # [MR]
 from sklearn.model_selection import StratifiedKFold
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay # [MR] For diagnostics
 import matplotlib.pyplot as plt                     # [MR] For analysis
 
 ############################## Functions ###############################
@@ -86,21 +87,46 @@ Label_opt = globals()[f'Label_{opt}']       # [MR]
 y = encode(Label_opt)                       # [MR]
 print("Prepared Data.\n")                                           # [MR]
 
+#########################################################################
+## [MR] Diagnostics Checking
+# Check classes
+print("Number of classes (output layer):", y.shape[1])
+print("Unique classes in labels:", np.unique(decode(y)))
+# Check distribution
+unique, counts = np.unique(decode(y), return_counts=True)
+print("Label distribution:", dict(zip(unique, counts)))
+#########################################################################
+
 ################################ Main ####################################
 cvscores = np.array([])     # [MR]
 #cnt = 0
 #kfold = StratifiedKFold(n_splits=K, shuffle=True, random_state=1)
 #for train, test in kfold.split(x, decode(y)):
+fold_x = x.reshape(x.shape[0], x.shape[1], 1)   # [MR] Reshape input (add channel dimension)
 
 ## [MR] Each fold's process
 def process_fold(train, test, fold_index, results_lock):
-    global digits_K, cvscores, running_time, histories
+    global digits_K, fold_x, cvscores, running_time, histories
     start_time_phase = time.time()  # [MR] Start phase timer
     #cnt = cnt + 1
     #print(f'\n| {cnt = }') # [MR]
     digits_K = math.floor(math.log10(abs(K))) + 1   # [MR]
     print(f'\n| Fold {fold_index:>{digits_K}} |')   # [MR]
-    fold_x = x.reshape(x.shape[0], x.shape[1], 1)   # [MR] Reshape input (add channel dimension)
+    
+    #########################################################################
+    ## [MR] Diagnostics Checking
+    # Check shapes
+    print(f"Fold {fold_index} | x[train] shape: {x[train].shape}")
+    print(f"Fold {fold_index} | y[train] shape: {y[train].shape}")
+    print(f"Fold {fold_index} | x[test] shape: {x[test].shape}")
+    print(f"Fold {fold_index} | y[test] shape: {y[test].shape}")
+    # Check decoded labels
+    decoded_y_test = decode(y[test])
+    print(f"Fold {fold_index} | Decoded y[test] shape: {decoded_y_test.shape}, dtype: {decoded_y_test.dtype}")
+    print(f"Fold {fold_index} | Decoded y[test] sample: {decoded_y_test[:10].flatten()}")
+    # Check number of classes vs output layer
+    print(f"Fold {fold_index} | Number of classes in y: {y.shape[1]}")
+    #########################################################################
     
     ## [MR] Build model
     filters =       [64, 64, 64, 64, 128, 64, 128, 128, 96]
@@ -151,20 +177,36 @@ def process_fold(train, test, fold_index, results_lock):
         for layer in model.layers:
             print(f"\n|| Layer \"{layer.name}\":")
             print(json.dumps(layer.get_config(), indent=4))
-
+    
+    #########################################################################
+    ## [MR] Diagnostics Checking
+    # Check output layer
+    print(f"Model output layer units: {model.layers[-1].output_shape}")
+    #########################################################################
+    
     ## [MR] Train and eval model
     # TODO: Fix model training - test with prints
     history = model.fit(
-    fold_x[train], y[train],
-    epochs=number_epoch,
-    batch_size=batch_length,
-    verbose=show_inter_results,
-    validation_data=(fold_x[test], y[test])  # [MR] For analysis
+        fold_x[train], y[train],
+        epochs=number_epoch,
+        batch_size=batch_length,
+        verbose=show_inter_results,
+        validation_data=(fold_x[test], y[test])  # [MR] For analysis
     )
     #train_step(model, fold_x[train], y[train])
     histories[fold_index - 1] = history.history  # [MR] For analysis
     scores = model.evaluate(fold_x[test], y[test], verbose=show_inter_results)
     print(f'\n| Fold {fold_index:>{digits_K}} | Scores = {scores[1] * 100}') # [MR]
+    
+    #########################################################################
+    ## [MR] Diagnostics Checking
+    # Check shapes
+    print(f"Fold {fold_index} | y[test] unique labels: {np.unique(decode(y[test]))}")
+    print(f"Fold {fold_index} | y_pred shape: {y_pred.shape}")
+    # Check predicted classes
+    y_pred_classes = np.argmax(y_pred, axis=1)
+    print(f"Fold {fold_index} | y_pred_classes unique labels: {np.unique(y_pred_classes)}")
+    #########################################################################
     
     ## [MR] Save results
     y_pred = model.predict(fold_x[test])    # [MR]
@@ -183,6 +225,16 @@ def process_fold(train, test, fold_index, results_lock):
         running_time[f'elapsed_time_{fold_index}'] = elapsed_time_phase
         cvscores = np.append(cvscores, scores[1] * 100)
     print("\n| Fold %*d | Elapsed time: %.4f seconds\n" % (digits_K, fold_index, running_time[f'elapsed_time_{fold_index}']))
+
+    #########################################################################
+    ## [MR] Diagnostics Checking
+    # Check confusion matrix
+    cm = confusion_matrix(decoded_y_test.flatten(), y_pred_classes)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm)
+    disp.plot()
+    plt.title(f"Fold {fold_index} | Confusion Matrix")
+    plt.show()
+    #########################################################################
 
 #########################################################################
 ## [MR] Threading

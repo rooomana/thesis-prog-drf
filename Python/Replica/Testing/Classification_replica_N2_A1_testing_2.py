@@ -41,7 +41,7 @@ inner_activation_fun = 'relu'
 outer_activation_fun = 'sigmoid'
 optimizer_loss_fun   = 'categorical_crossentropy'
 optimizer_algorithm  = 'adam'
-number_epoch         = 200
+number_epoch         = 60
 batch_length         = 10
 show_inter_results   = 0
 

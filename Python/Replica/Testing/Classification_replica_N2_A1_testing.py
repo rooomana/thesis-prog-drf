@@ -197,6 +197,13 @@ def process_fold(train, test, fold_index, results_lock):
     scores = model.evaluate(fold_x[test], y[test], verbose=show_inter_results)
     print(f'\n| Fold {fold_index:>{digits_K}} | Scores = {scores[1] * 100}') # [MR]
     
+    ## [MR] Save results
+    y_pred = model.predict(fold_x[test])    # [MR]
+    # [MR] (Results_{1,2,3} - Demo_4) - Only saving results for the 3rd NN (?)
+    # np.savetxt("Results_3%s.csv" % cnt, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s')
+    results_file = rf"{results_path}\Results_{opt}{fold_index}.csv"     # [MR] Saved results path
+    np.savetxt(results_file, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s')   # [MR]
+    
     #########################################################################
     ## [MR] Diagnostics Checking
     # Check shapes
@@ -206,13 +213,6 @@ def process_fold(train, test, fold_index, results_lock):
     y_pred_classes = np.argmax(y_pred, axis=1)
     print(f"Fold {fold_index} | y_pred_classes unique labels: {np.unique(y_pred_classes)}")
     #########################################################################
-    
-    ## [MR] Save results
-    y_pred = model.predict(fold_x[test])    # [MR]
-    # [MR] (Results_{1,2,3} - Demo_4) - Only saving results for the 3rd NN (?)
-    # np.savetxt("Results_3%s.csv" % cnt, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s')
-    results_file = rf"{results_path}\Results_{opt}{fold_index}.csv"     # [MR] Saved results path
-    np.savetxt(results_file, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s')   # [MR]
     
     ## [MR] Elapsed time
     print(f'\n| Fold {fold_index:>{digits_K}} | Ended')

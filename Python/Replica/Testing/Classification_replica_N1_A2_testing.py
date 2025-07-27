@@ -181,6 +181,8 @@ results_lock = threading.Lock()  # Protect shared resources
 kfold = StratifiedKFold(n_splits=K, shuffle=True, random_state=1)
 print("\n> K-fold training (w/ threading) \nStarting...\n")
 
+# TODO: Maybe replace threading with multiprocessing for thread-safe model
+# TODO: Implement ProcessPoolExecutor
 with ThreadPoolExecutor(max_workers=K) as executor:
     for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1):
         executor.submit(process_fold, train, test, fold_index, results_lock)

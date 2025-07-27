@@ -117,7 +117,7 @@ def process_fold(train, test, fold_index, results_lock):
             strides=1,
             padding='same',
             activation='relu',
-            dilation_rate=3
+            dilation_rate=2
         ))
         model.add(layers.AveragePooling1D(pool_size=3))
     

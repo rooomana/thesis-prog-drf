@@ -149,8 +149,7 @@ def process_fold(train, test, fold_index, results_lock):
         model.add(layers.MaxPooling1D(pool_size=3))
 
     # Conv only layers
-    for i in range(conv_pool_layers, 
-                   conv_pool_layers + conv_only_layers):
+    for i in range(conv_pool_layers, conv_pool_layers + conv_only_layers):
         model.add(layers.Conv1D(
             filters=filters[i],
             kernel_size=kernel_sizes[i],
@@ -167,7 +166,7 @@ def process_fold(train, test, fold_index, results_lock):
     model.add(layers.Dense(256, activation='relu'))
     model.add(layers.Dense(y.shape[1], activation='softmax'))
     
-    model.compile(loss=optimizer_loss_fun, optimizer=optimizer_algorithm, metrics=['accuracy'])
+    model.compile(loss='categorical_crossentropy', optimizer=optimizer_algorithm, metrics=['accuracy'])
     
     ## [MR] Display parameters
     if fold_index == 1: # Displays only for defined fold

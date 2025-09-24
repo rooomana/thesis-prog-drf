@@ -51,11 +51,8 @@ outer_activation_fun = 'sigmoid'
 optimizer_loss_fun   = 'categorical_crossentropy'
 optimizer_algorithm  = 'adam'
 number_inner_layers  = 3
-conv_pool_layers  = 4 # [MR]
-conv_only_layers  = 0 # [MR]
 number_inner_neurons = 256
-number_epoch         = 60 # NN 1 | Two-class
-#number_epoch         = 350 # NN 2 | Multi-class
+number_epoch         = 60
 batch_length         = 50 # NN 1 & 2 | Two or Multi-class
 #batch_length         = 32  # [MR] Increase for better performance
 show_inter_results   = 0
@@ -101,37 +98,30 @@ def process_fold(train, test, fold_index, results_lock):
     fold_x = x.reshape(x.shape[0], x.shape[1], 1)   # [MR] Reshape input (add channel dimension)
     
     ## [MR] Build model
-    filters =       [32, 64, 128, 128]
-    kernel_sizes =  [ 3,  3,   3,   3]
     model = Sequential()
     ## Input layer
     model.add(layers.Input(
         shape=(x.shape[1], 1)
     ))
 
-    # Conv (w/ Pooling) layers
-    for i in range(conv_pool_layers):
-        model.add(layers.Conv1D(
-            filters=filters[i],
-            kernel_size=kernel_sizes[i],
-            strides=1,
-            padding='same',
-            activation='relu',
-            dilation_rate=2
-        ))
-        model.add(layers.AveragePooling1D(pool_size=3))
-    
+    # RNN layers
+    ### TODO:
+    ### T1: Try GRU first w/ 60 epoch
+    ### T2: Try LSTM second w/ 60 epoch
+    ### F1: Execute 1-LSTM w/ 200 epoch
+    ### F2: Execute 2-LSTM w/ 200 epoch
+    model.add(layers.GRU(128, activation='relu'))
+#    model.add(layers.LSTM(128, activation='relu'))
+#    model.add(layers.LSTM(128, activation='relu'))
+
     # Dropout to prevent overfitting
     model.add(layers.Dropout(0.25))
-    # Flatten before fully connected layers
-    model.add(layers.Flatten())
-    # Fully connected layers
-    model.add(layers.Dense(256, activation='relu'))
-    model.add(layers.Dense(y.shape[1], activation='sigmoid'))                                           # NN 1 | Two-class
-#    model.add(layers.Dense(y.shape[1], activation='softmax'))                                          # NN 2 | Multi-class
     
-    model.compile(loss='binary_crossentropy', optimizer=optimizer_algorithm, metrics=['accuracy'])      # NN 1 | Two-class
-#    model.compile(loss='categorical_crossentropy', optimizer=optimizer_algorithm, metrics=['accuracy']) # NN 2 | Multi-class
+    # Fully connected layers
+    ## Output layer
+    model.add(layers.Dense(y.shape[1], activation='sigmoid'))
+    
+    model.compile(loss='binary_crossentropy', optimizer=optimizer_algorithm, metrics=['accuracy'])
     
     ## [MR] Display parameters
     if fold_index == 1: # Displays only for defined fold

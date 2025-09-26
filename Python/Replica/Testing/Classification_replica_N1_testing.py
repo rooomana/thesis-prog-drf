@@ -52,7 +52,7 @@ optimizer_loss_fun   = 'categorical_crossentropy'
 optimizer_algorithm  = 'adam'
 number_inner_layers  = 3
 number_inner_neurons = 256
-number_epoch         = 60
+number_epoch         = 10
 batch_length         = 50 # NN 1 & 2 | Two or Multi-class
 #batch_length         = 32  # [MR] Increase for better performance
 show_inter_results   = 0
@@ -106,19 +106,21 @@ def process_fold(train, test, fold_index, results_lock):
 
     # RNN layers
     ### TODO:
-    ### T1: Try GRU first w/ 60 epoch
-    ### T2: Try LSTM second w/ 60 epoch
+    ### T1: Try LSTM second w/ 10 epoch
     ### F1: Execute 1-LSTM w/ 200 epoch
     ### F2: Execute 2-LSTM w/ 200 epoch
-    model.add(layers.GRU(128, activation='relu'))
-#    model.add(layers.LSTM(128, activation='relu'))
-#    model.add(layers.LSTM(128, activation='relu'))
+    model.add(layers.LSTM(128, activation='tanh', return_sequences=True, dropout=0.2, recurrent_dropout=0.1))
+    #model.add(layers.LSTM(64, activation='tanh', return_sequences=False, dropout=0.2, recurrent_dropout=0.1))
+
+    # Pooling layers
+    model.add(layers.GlobalAveragePooling1D())
 
     # Dropout to prevent overfitting
     model.add(layers.Dropout(0.25))
     
     # Fully connected layers
     ## Output layer
+    model.add(layers.Dense(64, activation='relu'))
     model.add(layers.Dense(y.shape[1], activation='sigmoid'))
     
     model.compile(loss='binary_crossentropy', optimizer=optimizer_algorithm, metrics=['accuracy'])

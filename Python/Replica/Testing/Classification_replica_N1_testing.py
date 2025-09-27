@@ -52,10 +52,10 @@ optimizer_loss_fun   = 'categorical_crossentropy'
 optimizer_algorithm  = 'adam'
 number_inner_layers  = 3
 number_inner_neurons = 256
-number_epoch         = 10
+number_epoch         = 2
 batch_length         = 50 # NN 1 & 2 | Two or Multi-class
 #batch_length         = 32  # [MR] Increase for better performance
-show_inter_results   = 0
+show_inter_results   = 1
 
 opt = 1     # [MR] DNN Results number
 current_directory_working = os.getcwd()     # [MR] Current working directory
@@ -136,6 +136,7 @@ def process_fold(train, test, fold_index, results_lock):
 
     ## [MR] Train and eval model
     # TODO: Fix model training - test with prints
+    print(f'\n| Fold {fold_index:>{digits_K}} | Training starting...') # [MR]
     history = model.fit(
         fold_x[train], y[train],
         epochs=number_epoch,
@@ -144,6 +145,7 @@ def process_fold(train, test, fold_index, results_lock):
         validation_data=(fold_x[test], y[test])  # [MR] For analysis
     )
     # history = train_step(model, fold_x[train], y[train], fold_x[test], y[test])
+    print(f'\n| Fold {fold_index:>{digits_K}} | Training finished.') # [MR]
     histories[fold_index - 1] = history.history  # [MR] For analysis
     scores = model.evaluate(fold_x[test], y[test], verbose=show_inter_results)
     print(f'\n| Fold {fold_index:>{digits_K}} | Scores = {scores[1] * 100}') # [MR]

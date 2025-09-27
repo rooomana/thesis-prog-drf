@@ -119,8 +119,8 @@ def process_fold(train, test, fold_index, results_lock):
     model.add(layers.Dropout(0.25))
     
     # Fully connected layers
-    ## Output layer
     model.add(layers.Dense(64, activation='relu'))
+    ## Output layer
     model.add(layers.Dense(y.shape[1], activation='sigmoid'))
     
     model.compile(loss='binary_crossentropy', optimizer=optimizer_algorithm, metrics=['accuracy'])

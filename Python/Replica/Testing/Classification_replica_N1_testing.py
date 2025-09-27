@@ -39,9 +39,9 @@ def encode(datum):
 
 # [MR] (?) Model training improvement
 # TODO: Check need for optimization
-@tf.function(reduce_retracing=True)
-def train_step(model, train_data, train_labels):
-    model.fit(train_data, train_labels, epochs=number_epoch, batch_size=batch_length, verbose=show_inter_results)
+#@tf.function(reduce_retracing=True)
+#def train_step(model, train_data, train_labels, test_data, test_labels):
+#    model.fit(train_data, train_labels, epochs=number_epoch, batch_size=batch_length, verbose=show_inter_results, validation_data=(test_data, test_labels))
 
 ############################# Parameters ###############################
 np.random.seed(1)
@@ -143,7 +143,7 @@ def process_fold(train, test, fold_index, results_lock):
         verbose=show_inter_results,
         validation_data=(fold_x[test], y[test])  # [MR] For analysis
     )
-    #train_step(model, fold_x[train], y[train])
+    # history = train_step(model, fold_x[train], y[train], fold_x[test], y[test])
     histories[fold_index - 1] = history.history  # [MR] For analysis
     scores = model.evaluate(fold_x[test], y[test], verbose=show_inter_results)
     print(f'\n| Fold {fold_index:>{digits_K}} | Scores = {scores[1] * 100}') # [MR]

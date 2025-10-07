@@ -106,8 +106,9 @@ def process_fold(train, test, fold_index, results_lock):
 
     # RNN layers
     ### TODO:
-    ### T1: Try LSTM w/ 10 epoch
-    ### T2: Fix LSTM w/ 4 epoch
+    ### T1: 1-LSTM [10-epoch] return_sequences=True + pooling + dropout
+    ### T2: 1-LSTM [4-epoch] return_sequences=True + pooling w/o dropout
+    ### T3: 1-LSTM [4-epoch] return_sequences=False w/o pooling w/o dropout
     ### F1: Execute 1-LSTM w/ 200 epoch
     ### F2: Execute 2-LSTM w/ 200 epoch
     model.add(layers.LSTM(64, activation='tanh', return_sequences=True))

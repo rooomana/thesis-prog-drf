@@ -52,7 +52,7 @@ optimizer_loss_fun   = 'categorical_crossentropy'
 optimizer_algorithm  = 'adam'
 number_inner_layers  = 3
 number_inner_neurons = 256
-number_epoch         = 2
+number_epoch         = 10
 batch_length         = 50 # NN 1 & 2 | Two or Multi-class
 #batch_length         = 32  # [MR] Increase for better performance
 show_inter_results   = 1
@@ -109,8 +109,8 @@ def process_fold(train, test, fold_index, results_lock):
     ### T1: Try LSTM second w/ 10 epoch
     ### F1: Execute 1-LSTM w/ 200 epoch
     ### F2: Execute 2-LSTM w/ 200 epoch
-    model.add(layers.LSTM(128, activation='tanh', return_sequences=True, dropout=0.2, recurrent_dropout=0.1))
-    #model.add(layers.LSTM(64, activation='tanh', return_sequences=False, dropout=0.2, recurrent_dropout=0.1))
+    model.add(layers.LSTM(64, activation='tanh', return_sequences=True))
+    #model.add(layers.LSTM(32, activation='tanh', return_sequences=False))
 
     # Pooling layers
     model.add(layers.GlobalAveragePooling1D())
@@ -119,7 +119,7 @@ def process_fold(train, test, fold_index, results_lock):
     model.add(layers.Dropout(0.25))
     
     # Fully connected layers
-    model.add(layers.Dense(64, activation='relu'))
+    model.add(layers.Dense(32, activation='relu'))
     ## Output layer
     model.add(layers.Dense(y.shape[1], activation='sigmoid'))
     

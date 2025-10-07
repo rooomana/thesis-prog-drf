@@ -156,6 +156,12 @@ def process_fold(train, test, fold_index, results_lock):
     
     ## [MR] Save results
     y_pred = model.predict(fold_x[test])    # [MR]
+    # [MR] Debugging
+    # If all ~0.5 - underfits
+    # If all ~0 or ~1 - data imbalance
+    print(f'\n| Mean | {np.mean(y_pred)}') # [MR]
+    print(f'\n| Min  | {np.min(y_pred)}') # [MR]
+    print(f'\n| Max  | {np.max(y_pred)}') # [MR]
     # [MR] (Results_{1,2,3} - Demo_4) - Only saving results for the 3rd NN (?)
     # np.savetxt("Results_3%s.csv" % cnt, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s')
     results_file = rf"{results_path}\Results_{opt}{fold_index}.csv"     # [MR] Saved results path

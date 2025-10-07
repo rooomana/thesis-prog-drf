@@ -110,14 +110,14 @@ def process_fold(train, test, fold_index, results_lock):
     ### T2: Fix LSTM w/ 4 epoch
     ### F1: Execute 1-LSTM w/ 200 epoch
     ### F2: Execute 2-LSTM w/ 200 epoch
-    model.add(layers.LSTM(64, activation='tanh'))
-    #model.add(layers.LSTM(32, activation='tanh'))
+    model.add(layers.LSTM(64, activation='tanh', return_sequences=True))
+    #model.add(layers.LSTM(32, activation='tanh', return_sequences=False))
 
     # Pooling layers
     model.add(layers.GlobalAveragePooling1D())
 
     # Dropout to prevent overfitting
-    model.add(layers.Dropout(0.25))
+    #model.add(layers.Dropout(0.25))
     
     # Flatten before fully connected layers
     #model.add(layers.Flatten())

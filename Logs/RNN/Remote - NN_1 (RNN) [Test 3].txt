@@ -1,0 +1,483 @@
+PS C:\Users\mamra2\thesis\program\dronerf\thesis-prog-drf> & "C:/Program Files/Python311/python.exe" c:/Users/mamra2/thesis/program/dronerf/thesis-prog-drf/Python/Replica/Testing/Classification_replica_N1_testing.py
+2025-10-08 12:07:19.398724: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-10-08 12:07:20.561156: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+
+Loading Data ...
+Loaded Data.
+
+
+Preparing Data ...
+Prepared Data.
+
+
+> K-fold training (w/ threading) 
+Starting...
+
+
+| Fold  1 |
+2025-10-08 12:07:26.226431: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+| Fold  2 |
+
+| Fold  3 |
+
+| Fold  4 |
+
+| Fold  5 |
+
+| Fold  6 |
+
+| Fold  7 |
+
+| Fold  8 |
+
+| Fold  9 |
+
+| Fold 10 |
+
+| Fold 10 | Training starting...
+
+| Fold  5 | Training starting...
+| Fold  7 | Training starting...
+
+
+| Summary of the model:
+| Fold  3 | Training starting...
+| Fold  9 | Training starting...
+
+
+| Fold  2 | Training starting...
+| Fold  8 | Training starting...
+| Fold  6 | Training starting...
+
+
+
+
+| Fold  4 | Training starting...
+Model: "sequential"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ lstm (LSTM)                          │ (None, 64)                  │          16,896 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense (Dense)                        │ (None, 32)                  │           2,080 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense_1 (Dense)                      │ (None, 2)                   │              66 │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+ Total params: 19,042 (74.38 KB)
+ Trainable params: 19,042 (74.38 KB)
+ Non-trainable params: 0 (0.00 B)
+
+| Config of each layer:
+
+|| Layer "lstm":
+{
+    "name": "lstm",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "return_sequences": false,
+    "return_state": false,
+    "go_backwards": false,
+    "stateful": false,
+    "unroll": false,
+    "zero_output_for_mask": false,
+    "units": 64,
+    "activation": "tanh",
+    "recurrent_activation": "sigmoid",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "recurrent_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Orthogonal",
+        "config": {
+            "seed": null,
+            "gain": 1.0
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "unit_forget_bias": true,
+    "kernel_regularizer": null,
+    "recurrent_regularizer": null,
+    "bias_regularizer": null,
+    "activity_regularizer": null,
+    "kernel_constraint": null,
+    "recurrent_constraint": null,
+    "bias_constraint": null,
+    "dropout": 0.0,
+    "recurrent_dropout": 0.0,
+    "seed": null
+}
+
+|| Layer "dense":
+{
+    "name": "dense",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "units": 32,
+    "activation": "relu",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+
+|| Layer "dense_1":
+{
+    "name": "dense_1",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "units": 2,
+    "activation": "sigmoid",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+
+| Fold  1 | Training starting...
+Epoch 1/4
+Epoch 1/4
+Epoch 1/4
+Epoch 1/4
+Epoch 1/4
+Epoch 1/4
+Epoch 1/4
+Epoch 1/4
+Epoch 1/4
+Epoch 1/4
+  1/409 ━━━━━━━━━━━━━━━━━━━━ 51:04 8s/step - accuracy: 0.0800 - loss: 0.6931WARNING:tensorflow:5 out of the last 5 calls to <function TensorFlowTrainer._make_function.<locals>.multi_step_on_iterator at 0x00000247CEF76700> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+  2/409 ━━━━━━━━━━━━━━━━━━━━ 3:41 545ms/step - accuracy: 0.3750 - loss: 0.6930WARNING:tensorflow:6 out of the last 8 calls to <function TensorFlowTrainer._make_function.<locals>.multi_step_on_iterator at 0x00000247CEF758A0> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+409/409 ━━━━━━━━━━━━━━━━━━━━ 798s 2s/step - accuracy: 0.8180 - loss: 0.4786 - val_accuracy: 0.8194 - val_loss: 0.4737
+Epoch 2/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 800s 2s/step - accuracy: 0.8180 - loss: 0.4835 - val_accuracy: 0.8194 - val_loss: 0.4724
+Epoch 2/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 800s 2s/step - accuracy: 0.8180 - loss: 0.4817 - val_accuracy: 0.8194 - val_loss: 0.4740
+Epoch 2/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 800s 2s/step - accuracy: 0.8174 - loss: 0.4807 - val_accuracy: 0.8194 - val_loss: 0.4744
+Epoch 2/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 800s 2s/step - accuracy: 0.8177 - loss: 0.4810 - val_accuracy: 0.8194 - val_loss: 0.4783
+Epoch 2/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 800s 2s/step - accuracy: 0.8180 - loss: 0.4830 - val_accuracy: 0.8194 - val_loss: 0.4724
+Epoch 2/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 801s 2s/step - accuracy: 0.8175 - loss: 0.4817 - val_accuracy: 0.8194 - val_loss: 0.4733
+Epoch 2/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 801s 2s/step - accuracy: 0.8176 - loss: 0.4819 - val_accuracy: 0.8194 - val_loss: 0.4730
+Epoch 2/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 802s 2s/step - accuracy: 0.8178 - loss: 0.4798 - val_accuracy: 0.8194 - val_loss: 0.4749
+Epoch 2/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 803s 2s/step - accuracy: 0.8176 - loss: 0.4837 - val_accuracy: 0.8194 - val_loss: 0.4725
+Epoch 2/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1984s 5s/step - accuracy: 0.8194 - loss: 0.4735 - val_accuracy: 0.8194 - val_loss: 0.4728
+Epoch 3/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1984s 5s/step - accuracy: 0.8194 - loss: 0.4728 - val_accuracy: 0.8194 - val_loss: 0.4724
+Epoch 3/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1984s 5s/step - accuracy: 0.8194 - loss: 0.4733 - val_accuracy: 0.8194 - val_loss: 0.4725
+Epoch 3/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1984s 5s/step - accuracy: 0.8194 - loss: 0.4736 - val_accuracy: 0.8194 - val_loss: 0.4743
+Epoch 3/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1985s 5s/step - accuracy: 0.8194 - loss: 0.4732 - val_accuracy: 0.8194 - val_loss: 0.4754
+Epoch 3/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1985s 5s/step - accuracy: 0.8194 - loss: 0.4733 - val_accuracy: 0.8194 - val_loss: 0.4727
+Epoch 3/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1985s 5s/step - accuracy: 0.8194 - loss: 0.4739 - val_accuracy: 0.8194 - val_loss: 0.4750
+Epoch 3/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1986s 5s/step - accuracy: 0.8194 - loss: 0.4736 - val_accuracy: 0.8194 - val_loss: 0.4728
+Epoch 3/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1985s 5s/step - accuracy: 0.8194 - loss: 0.4733 - val_accuracy: 0.8194 - val_loss: 0.4729
+Epoch 3/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1987s 5s/step - accuracy: 0.8194 - loss: 0.4732 - val_accuracy: 0.8194 - val_loss: 0.4724
+Epoch 3/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2246s 6s/step - accuracy: 0.8194 - loss: 0.4729 - val_accuracy: 0.8194 - val_loss: 0.4733
+Epoch 4/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2244s 5s/step - accuracy: 0.8194 - loss: 0.4731 - val_accuracy: 0.8194 - val_loss: 0.4725
+Epoch 4/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2244s 5s/step - accuracy: 0.8194 - loss: 0.4733 - val_accuracy: 0.8194 - val_loss: 0.4723
+Epoch 4/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2244s 5s/step - accuracy: 0.8193 - loss: 0.4734 - val_accuracy: 0.8194 - val_loss: 0.4740
+Epoch 4/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2246s 5s/step - accuracy: 0.8193 - loss: 0.4735 - val_accuracy: 0.8194 - val_loss: 0.4728
+Epoch 4/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2245s 5s/step - accuracy: 0.8194 - loss: 0.4733 - val_accuracy: 0.8194 - val_loss: 0.4727
+Epoch 4/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2246s 5s/step - accuracy: 0.8194 - loss: 0.4731 - val_accuracy: 0.8194 - val_loss: 0.4730
+Epoch 4/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2245s 5s/step - accuracy: 0.8194 - loss: 0.4734 - val_accuracy: 0.8194 - val_loss: 0.4730
+Epoch 4/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2246s 5s/step - accuracy: 0.8193 - loss: 0.4737 - val_accuracy: 0.8194 - val_loss: 0.4724
+Epoch 4/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2246s 5s/step - accuracy: 0.8193 - loss: 0.4731 - val_accuracy: 0.8194 - val_loss: 0.4765
+Epoch 4/4
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2465s 6s/step - accuracy: 0.8194 - loss: 0.4733 - val_accuracy: 0.8194 - val_loss: 0.4724
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2465s 6s/step - accuracy: 0.8194 - loss: 0.4731 - val_accuracy: 0.8194 - val_loss: 0.4730
+
+| Fold  9 | Training finished.
+
+| Fold  5 | Training finished.
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2466s 6s/step - accuracy: 0.8194 - loss: 0.4731 - val_accuracy: 0.8194 - val_loss: 0.4721
+
+| Fold  1 | Training finished.
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2464s 6s/step - accuracy: 0.8194 - loss: 0.4732 - val_accuracy: 0.8194 - val_loss: 0.4727
+
+| Fold 10 | Training finished.
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2464s 6s/step - accuracy: 0.8194 - loss: 0.4727 - val_accuracy: 0.8194 - val_loss: 0.4723
+
+| Fold  8 | Training finished.
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2464s 6s/step - accuracy: 0.8194 - loss: 0.4727 - val_accuracy: 0.8194 - val_loss: 0.4724
+
+| Fold  3 | Training finished.
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2463s 6s/step - accuracy: 0.8193 - loss: 0.4735 - val_accuracy: 0.8194 - val_loss: 0.4727
+
+| Fold  6 | Training finished.
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2463s 6s/step - accuracy: 0.8194 - loss: 0.4730 - val_accuracy: 0.8194 - val_loss: 0.4728
+
+| Fold  2 | Training finished.
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2463s 6s/step - accuracy: 0.8194 - loss: 0.4731 - val_accuracy: 0.8194 - val_loss: 0.4727
+
+| Fold  4 | Training finished.
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2461s 6s/step - accuracy: 0.8194 - loss: 0.4732 - val_accuracy: 0.8194 - val_loss: 0.4727
+
+| Fold  7 | Training finished.
+71/71 ━━━━━━━━━━━━━━━━━━━━ 54s 757ms/step - accuracy: 0.8194 - loss: 0.4724    
+
+| Fold  9 | Scores = 81.93832635879517
+71/71 ━━━━━━━━━━━━━━━━━━━━ 54s 758ms/step - accuracy: 0.8194 - loss: 0.4730
+
+| Fold  5 | Scores = 81.93832635879517
+71/71 ━━━━━━━━━━━━━━━━━━━━ 54s 760ms/step - accuracy: 0.8194 - loss: 0.4721
+
+| Fold  1 | Scores = 81.93832635879517
+71/71 ━━━━━━━━━━━━━━━━━━━━ 54s 762ms/step - accuracy: 0.8194 - loss: 0.4727
+
+| Fold 10 | Scores = 81.93832635879517
+71/71 ━━━━━━━━━━━━━━━━━━━━ 54s 764ms/step - accuracy: 0.8194 - loss: 0.4723
+
+| Fold  8 | Scores = 81.93832635879517
+71/71 ━━━━━━━━━━━━━━━━━━━━ 54s 763ms/step - accuracy: 0.8194 - loss: 0.4727
+
+| Fold  6 | Scores = 81.93832635879517
+71/71 ━━━━━━━━━━━━━━━━━━━━ 54s 764ms/step - accuracy: 0.8194 - loss: 0.4724
+
+| Fold  3 | Scores = 81.93832635879517
+71/71 ━━━━━━━━━━━━━━━━━━━━ 54s 763ms/step - accuracy: 0.8194 - loss: 0.4728
+
+| Fold  2 | Scores = 81.93832635879517
+71/71 ━━━━━━━━━━━━━━━━━━━━ 54s 761ms/step - accuracy: 0.8194 - loss: 0.4727
+
+| Fold  4 | Scores = 81.93832635879517
+ 2/71 ━━━━━━━━━━━━━━━━━━━━ 44s 640ms/stepWARNING:tensorflow:5 out of the last 11 calls to <function TensorFlowTrainer.make_predict_function.<locals>.one_step_on_data_distributed at 0x000002493AA55EE0> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+ 1/71 ━━━━━━━━━━━━━━━━━━━━ 56s 813ms/stepWARNING:tensorflow:5 out of the last 11 calls to <function TensorFlowTrainer.make_predict_function.<locals>.one_step_on_data_distributed at 0x000002493AA54F40> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+71/71 ━━━━━━━━━━━━━━━━━━━━ 54s 760ms/step - accuracy: 0.8194 - loss: 0.4727
+
+| Fold  7 | Scores = 81.93832635879517
+71/71 ━━━━━━━━━━━━━━━━━━━━ 53s 743ms/step
+71/71 ━━━━━━━━━━━━━━━━━━━━ 53s 744ms/step
+67/71 ━━━━━━━━━━━━━━━━━━━━ 2s 745ms/step
+| Fold  5 | Mean | 0.500974
+| Fold  9 | Mean | 0.500918
+
+
+| Fold  5 | Min  |  0.195982
+| Fold  9 | Min  |  0.175399
+
+
+| Fold  5 | Max  |  0.805965
+| Fold  9 | Max  |  0.826438
+
+
+| Fold  5 | Ended
+
+| Fold  9 | Ended
+| Fold  5 | Elapsed time: 7601.0268 seconds
+
+
+
+| Fold  9 | Elapsed time: 7601.0055 seconds
+
+71/71 ━━━━━━━━━━━━━━━━━━━━ 53s 741ms/step
+
+| Fold  1 | Mean | 0.498150
+
+| Fold  1 | Min  |  0.032771
+
+| Fold  1 | Max  |  0.898147
+
+| Fold  1 | Ended
+
+| Fold  1 | Elapsed time: 7601.4539 seconds
+
+71/71 ━━━━━━━━━━━━━━━━━━━━ 53s 740ms/step
+
+| Fold 10 | Mean | 0.500051
+
+| Fold 10 | Min  |  0.169556
+
+| Fold 10 | Max  |  0.830545
+
+| Fold 10 | Ended
+
+| Fold 10 | Elapsed time: 7601.7467 seconds
+
+71/71 ━━━━━━━━━━━━━━━━━━━━ 52s 733ms/step
+
+| Fold  8 | Mean | 0.499798
+
+| Fold  8 | Min  |  0.180033
+
+| Fold  8 | Max  |  0.819566
+
+| Fold  8 | Ended
+
+| Fold  8 | Elapsed time: 7602.0947 seconds
+
+71/71 ━━━━━━━━━━━━━━━━━━━━ 52s 734ms/step
+71/71 ━━━━━━━━━━━━━━━━━━━━ 52s 735ms/step
+
+| Fold  3 | Mean | 0.500905
+
+| Fold  3 | Min  |  0.010230
+
+| Fold  3 | Max  |  0.990663
+
+| Fold  3 | Ended
+
+| Fold  3 | Elapsed time: 7602.1751 seconds
+
+
+| Fold  6 | Mean | 0.498630
+
+| Fold  6 | Min  |  0.169362
+
+| Fold  6 | Max  |  0.827899
+
+| Fold  6 | Ended
+
+| Fold  6 | Elapsed time: 7602.1876 seconds
+
+71/71 ━━━━━━━━━━━━━━━━━━━━ 52s 732ms/step
+71/71 ━━━━━━━━━━━━━━━━━━━━ 52s 730ms/step
+
+| Fold  2 | Mean | 0.501019
+
+| Fold  2 | Min  |  0.194195
+
+| Fold  2 | Max  |  0.807845
+
+| Fold  2 | Ended
+
+| Fold  2 | Elapsed time: 7602.2587 seconds
+
+71/71 ━━━━━━━━━━━━━━━━━━━━ 0s 721ms/step
+| Fold  4 | Mean | 0.499671
+
+| Fold  4 | Min  |  0.063828
+
+| Fold  4 | Max  |  0.984157
+71/71 ━━━━━━━━━━━━━━━━━━━━ 51s 721ms/step
+
+| Fold  4 | Ended
+
+| Fold  4 | Elapsed time: 7602.2737 seconds
+
+
+| Fold  7 | Mean | 0.499656
+
+| Fold  7 | Min  |  0.169674
+
+| Fold  7 | Max  |  0.829639
+
+| Fold  7 | Ended
+
+| Fold  7 | Elapsed time: 7602.2853 seconds
+
+Ended | Total
+Elapsed time: 7607.2165 seconds
+
+
+Running Time:
+
+| elapsed_time_5     = 7601.0268 seconds
+| elapsed_time_9     = 7601.0055 seconds
+| elapsed_time_1     = 7601.4539 seconds
+| elapsed_time_10    = 7601.7467 seconds
+| elapsed_time_8     = 7602.0947 seconds
+| elapsed_time_3     = 7602.1751 seconds
+| elapsed_time_6     = 7602.1876 seconds
+| elapsed_time_2     = 7602.2587 seconds
+| elapsed_time_4     = 7602.2737 seconds
+| elapsed_time_7     = 7602.2853 seconds
+| elapsed_time_total = 7607.2165 seconds
+
+
+c:\Users\mamra2\thesis\program\dronerf\thesis-prog-drf\Python\Replica\Testing\Classification_replica_N1_testing.py:246: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  plt.legend()
+c:\Users\mamra2\thesis\program\dronerf\thesis-prog-drf\Python\Replica\Testing\Classification_replica_N1_testing.py:254: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  plt.legend()
+c:\Users\mamra2\thesis\program\dronerf\thesis-prog-drf\Python\Replica\Testing\Classification_replica_N1_testing.py:262: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  plt.legend()
+c:\Users\mamra2\thesis\program\dronerf\thesis-prog-drf\Python\Replica\Testing\Classification_replica_N1_testing.py:270: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  plt.legend()

@@ -52,7 +52,7 @@ optimizer_loss_fun   = 'categorical_crossentropy'
 optimizer_algorithm  = 'adam'
 number_inner_layers  = 3
 number_inner_neurons = 256
-number_epoch         = 4
+number_epoch         = 50
 batch_length         = 50 # NN 1 & 2 | Two or Multi-class
 #batch_length         = 32  # [MR] Increase for better performance
 show_inter_results   = 1
@@ -109,13 +109,14 @@ def process_fold(train, test, fold_index, results_lock):
     ### T1: 1-LSTM [10-epoch] return_sequences=True + pooling + dropout
     ### T2: 1-LSTM [4-epoch] return_sequences=True + pooling w/o dropout
     ### T3: 1-LSTM [4-epoch] return_sequences=False w/o pooling w/o dropout
+    ### T4: 1-LSTM [50-epoch] return_sequences=False w/o pooling w/o dropout
     ### F1: Execute 1-LSTM w/ 200 epoch
     ### F2: Execute 2-LSTM w/ 200 epoch
-    model.add(layers.LSTM(64, activation='tanh', return_sequences=True))
+    model.add(layers.LSTM(64, activation='tanh', return_sequences=False))
     #model.add(layers.LSTM(32, activation='tanh', return_sequences=False))
 
     # Pooling layers
-    model.add(layers.GlobalAveragePooling1D())
+    #model.add(layers.GlobalAveragePooling1D())
 
     # Dropout to prevent overfitting
     #model.add(layers.Dropout(0.25))
@@ -158,11 +159,9 @@ def process_fold(train, test, fold_index, results_lock):
     ## [MR] Save results
     y_pred = model.predict(fold_x[test])    # [MR]
     # [MR] Debugging
-    # If all ~0.5 - underfits
-    # If all ~0 or ~1 - data imbalance
-    print(f'\n| Mean | {np.mean(y_pred)}') # [MR]
-    print(f'\n| Min  | {np.min(y_pred)}') # [MR]
-    print(f'\n| Max  | {np.max(y_pred)}') # [MR]
+    print(f'\n| Fold {fold_index:>{digits_K}} | Mean | {np.mean(y_pred):.6f}') # [MR]
+    print(f'\n| Fold {fold_index:>{digits_K}} | Min  |  {np.min(y_pred):.6f}') # [MR]
+    print(f'\n| Fold {fold_index:>{digits_K}} | Max  |  {np.max(y_pred):.6f}') # [MR]
     # [MR] (Results_{1,2,3} - Demo_4) - Only saving results for the 3rd NN (?)
     # np.savetxt("Results_3%s.csv" % cnt, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s')
     results_file = rf"{results_path}\Results_{opt}{fold_index}.csv"     # [MR] Saved results path

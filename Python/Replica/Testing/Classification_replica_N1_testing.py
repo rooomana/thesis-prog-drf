@@ -110,6 +110,8 @@ def process_fold(train, test, fold_index, results_lock):
     ### T2: 1-LSTM [4-epoch] return_sequences=True + pooling w/o dropout
     ### T3: 1-LSTM [4-epoch] return_sequences=False w/o pooling w/o dropout
     ### T4: 1-LSTM [50-epoch] return_sequences=False w/o pooling w/o dropout
+    ### T5: 1-LSTM [10-epoch] return_sequences=False w/o pooling w/o dropout w/o dense
+    ### T6: 1-LSTM [10-epoch] activation='relu' + hidden units increased to 128
     ### F1: Execute 1-LSTM w/ 200 epoch
     ### F2: Execute 2-LSTM w/ 200 epoch
     model.add(layers.LSTM(64, activation='tanh', return_sequences=False))
@@ -125,7 +127,7 @@ def process_fold(train, test, fold_index, results_lock):
     #model.add(layers.Flatten())
 
     # Fully connected layers
-    model.add(layers.Dense(32, activation='relu'))
+    #model.add(layers.Dense(32, activation='relu'))
     ## Output layer
     model.add(layers.Dense(y.shape[1], activation='sigmoid'))
     

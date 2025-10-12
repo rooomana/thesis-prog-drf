@@ -81,6 +81,21 @@ Label_opt = globals()[f'Label_{opt}']       # [MR]
 y = encode(Label_opt)                       # [MR]
 print("Prepared Data.\n")                                           # [MR]
 
+############################## Debugging #################################
+# [MR] Data sanity diagnostic checks
+print("\n[Debugging]\nData diagnostic checks:")
+print("| Unique labels and counts:\n| =", np.unique(decode(y), return_counts=True))
+print(f"| Data.shape: {Data.shape}")
+print(f"| x.shape: {x.shape}")
+print(f"| y.shape: {y.shape}")
+print("| x:")
+print(f"| - min  = {np.min(x):>8.6f}")
+print(f"| - max  = {np.max(x):>8.6f}")
+print(f"| - mean = {np.mean(x):>8.6f}")
+print(f"| - std  = {np.std(x):>8.6f}")
+print("| First few label values:\n| = ", decode(y)[:10].flatten())
+print("| Example of first row of x:\n| = ", x[0, :10])
+
 ################################ Main ####################################
 cvscores = np.array([])     # [MR]
 #cnt = 0
@@ -111,11 +126,11 @@ def process_fold(train, test, fold_index, results_lock):
     ### T3: 1-LSTM [4-epoch] return_sequences=False w/o pooling w/o dropout
     ### T4: 1-LSTM [50-epoch] return_sequences=False w/o pooling w/o dropout
     ### T5: 1-LSTM [20-epoch] return_sequences=False w/o pooling w/o dropout w/o dense
-    ### T6: 1-LSTM [20-epoch] activation='relu' + hidden units increased to 128
+    ### T6: 1-LSTM [20-epoch] activation='relu' + hidden units increase
     ### F1: Execute 1-LSTM w/ 200 epoch
     ### F2: Execute 2-LSTM w/ 200 epoch
-    model.add(layers.LSTM(64, activation='tanh', return_sequences=False))
-    #model.add(layers.LSTM(32, activation='tanh', return_sequences=False))
+    model.add(layers.LSTM(80, activation='relu', return_sequences=False))
+    #model.add(layers.LSTM(128, activation='relu', return_sequences=False))
 
     # Pooling layers
     #model.add(layers.GlobalAveragePooling1D())

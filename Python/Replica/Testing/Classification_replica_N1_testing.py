@@ -126,14 +126,15 @@ def process_fold(train, test, fold_index, results_lock):
     ### T3: 1-LSTM [4-epoch] return_sequences=False w/o pooling w/o dropout
     ### T4: 1-LSTM [50-epoch] return_sequences=False w/o pooling w/o dropout
     ### T5: 1-LSTM [20-epoch] return_sequences=False w/o pooling w/o dropout w/o dense
-    ### T6: 1-LSTM [20-epoch] activation='relu' + hidden units increase
+    ### T6: 1-LSTM [20-epoch] activation='relu' + hidden units increase (80)
+    ### T7: 1-LSTM [20-epoch] return_sequences=True + pooling + activation='relu' + hidden units increase (100)
     ### F1: Execute 1-LSTM w/ 200 epoch
     ### F2: Execute 2-LSTM w/ 200 epoch
-    model.add(layers.LSTM(80, activation='relu', return_sequences=False))
+    model.add(layers.LSTM(100, activation='relu', return_sequences=True))
     #model.add(layers.LSTM(128, activation='relu', return_sequences=False))
 
     # Pooling layers
-    #model.add(layers.GlobalAveragePooling1D())
+    model.add(layers.GlobalAveragePooling1D())
 
     # Dropout to prevent overfitting
     #model.add(layers.Dropout(0.25))

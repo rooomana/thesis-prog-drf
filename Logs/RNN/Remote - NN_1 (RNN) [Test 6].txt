@@ -1,0 +1,783 @@
+PS C:\Users\mamra2\thesis\program\dronerf\thesis-prog-drf> & "C:/Program Files/Python311/python.exe" c:/Users/mamra2/thesis/program/dronerf/thesis-prog-drf/Python/Replica/Testing/Classification_replica_N1_testing.py
+2025-10-12 13:22:56.218084: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-10-12 13:22:57.355967: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+
+Loading Data ...
+Loaded Data.
+
+
+Preparing Data ...     
+Prepared Data.
+
+
+[Debugging]
+Data diagnostic checks:
+| Unique labels and counts:
+| = (array([0., 1.]), array([ 4100, 18600]))
+| Data.shape: (2051, 22700)
+| x.shape: (22700, 2047)
+| y.shape: (22700, 2)
+| x:
+| - min  = 0.000000
+| - max  = 1.000000
+| - mean = 0.000240
+| - std  = 0.004497
+| First few label values:
+| =  [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+| Example of first row of x:
+| =  [0.0005604  0.00081005 0.00037847 0.0019828  0.0010069  0.00069083
+ 0.0011074  0.0015991  0.00079813 0.0011051 ]
+
+> K-fold training (w/ threading)
+Starting...
+
+
+| Fold  1 |
+2025-10-12 13:23:03.424184: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+
+| Fold  2 |
+
+| Fold  3 |
+
+| Fold  4 |
+
+| Fold  5 |
+
+| Fold  6 |
+
+| Fold  7 |
+
+| Fold  8 |
+
+| Fold  9 |
+
+| Fold 10 |
+
+| Fold  6 | Training starting...
+
+| Fold  9 | Training starting...
+
+| Fold  3 | Training starting...
+
+| Fold  4 | Training starting...
+
+| Fold  5 | Training starting...
+| Fold 10 | Training starting...
+| Summary of the model:
+
+
+
+| Fold  8 | Training starting...
+| Fold  7 | Training starting...
+
+
+| Fold  2 | Training starting...
+Model: "sequential"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+│ lstm (LSTM)                          │ (None, 80)                  │          26,240 │
+├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+│ dense (Dense)                        │ (None, 2)                   │             162 │
+└──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+ Total params: 26,402 (103.13 KB)
+ Trainable params: 26,402 (103.13 KB)
+ Non-trainable params: 0 (0.00 B)
+
+| Config of each layer:
+
+|| Layer "lstm":
+{
+    "name": "lstm",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "return_sequences": false,
+    "return_state": false,
+    "go_backwards": false,
+    "stateful": false,
+    "unroll": false,
+    "zero_output_for_mask": false,
+    "units": 80,
+    "activation": "relu",
+    "recurrent_activation": "sigmoid",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "recurrent_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Orthogonal",
+        "config": {
+            "seed": null,
+            "gain": 1.0
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "unit_forget_bias": true,
+    "kernel_regularizer": null,
+    "recurrent_regularizer": null,
+    "bias_regularizer": null,
+    "activity_regularizer": null,
+    "kernel_constraint": null,
+    "recurrent_constraint": null,
+    "bias_constraint": null,
+    "dropout": 0.0,
+    "recurrent_dropout": 0.0,
+    "seed": null
+}
+
+|| Layer "dense":
+{
+    "name": "dense",
+    "trainable": true,
+    "dtype": {
+        "module": "keras",
+        "class_name": "DTypePolicy",
+        "config": {
+            "name": "float32"
+        },
+        "registered_name": null
+    },
+    "units": 2,
+    "activation": "sigmoid",
+    "use_bias": true,
+    "kernel_initializer": {
+        "module": "keras.initializers",
+        "class_name": "GlorotUniform",
+        "config": {
+            "seed": null
+        },
+        "registered_name": null
+    },
+    "bias_initializer": {
+        "module": "keras.initializers",
+        "class_name": "Zeros",
+        "config": {},
+        "registered_name": null
+    },
+    "kernel_regularizer": null,
+    "bias_regularizer": null,
+    "kernel_constraint": null,
+    "bias_constraint": null
+}
+
+| Fold  1 | Training starting...
+Epoch 1/20
+Epoch 1/20
+Epoch 1/20
+Epoch 1/20
+Epoch 1/20
+Epoch 1/20
+Epoch 1/20
+Epoch 1/20
+Epoch 1/20
+Epoch 1/20
+  1/409 ━━━━━━━━━━━━━━━━━━━━ 44:02 6s/step - accuracy: 0.1200 - loss: 0.6931WARNING:tensorflow:5 out of the last 5 calls to <function TensorFlowTrainer._make_function.<locals>.multi_step_on_iterator at 0x00000288DC504720> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+  1/409 ━━━━━━━━━━━━━━━━━━━━ 44:22 7s/step - accuracy: 0.0800 - loss: 0.6931WARNING:tensorflow:6 out of the last 6 calls to <function TensorFlowTrainer._make_function.<locals>.multi_step_on_iterator at 0x00000288D531F740> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+409/409 ━━━━━━━━━━━━━━━━━━━━ 893s 2s/step - accuracy: 0.2215 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 2/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 894s 2s/step - accuracy: 0.2162 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 2/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 896s 2s/step - accuracy: 0.2132 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 2/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 896s 2s/step - accuracy: 0.2138 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 2/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 897s 2s/step - accuracy: 0.2171 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+409/409 ━━━━━━━━━━━━━━━━━━━━ 897s 2s/step - accuracy: 0.2183 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 2/20
+Epoch 2/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 898s 2s/step - accuracy: 0.2140 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 2/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 898s 2s/step - accuracy: 0.2136 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 2/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 899s 2s/step - accuracy: 0.2117 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 2/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 901s 2s/step - accuracy: 0.2118 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 2/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1949s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 3/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1947s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 3/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1950s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 3/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1948s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 3/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1948s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 3/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1948s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 3/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1947s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 3/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1949s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 3/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1949s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 3/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1947s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 3/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1936s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 4/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1935s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 4/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1935s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 4/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1934s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 4/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1935s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 4/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1936s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 4/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1934s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 4/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1938s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 4/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1936s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 4/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 1939s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 4/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2093s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 5/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2094s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 5/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2101s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 5/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2101s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 5/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2102s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 5/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2102s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 5/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2102s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 5/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2101s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 5/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2102s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 5/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2101s 5s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 5/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2304s 6s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 6/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2304s 6s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 6/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2304s 6s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 6/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2305s 6s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 6/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2305s 6s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 6/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2303s 6s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 6/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2317s 6s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 6/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2302s 6s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 6/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2302s 6s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 6/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2320s 6s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 6/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2648s 6s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 7/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2647s 6s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 7/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2647s 6s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 7/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2649s 6s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 7/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2648s 6s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 7/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2650s 6s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 7/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2650s 6s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 7/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2651s 6s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 7/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2671s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 7/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2676s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 7/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2867s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 8/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2867s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 8/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2868s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 8/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2866s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 8/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2869s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 8/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2870s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 8/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2868s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 8/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2870s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 8/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2892s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 8/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2892s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 8/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2928s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 9/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2928s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 9/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2929s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 9/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2929s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 9/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2931s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 9/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2930s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 9/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2931s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 9/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2932s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 9/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2945s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 9/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 2945s 7s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 9/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3087s 8s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 10/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3087s 8s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 10/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3087s 8s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 10/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3087s 8s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 10/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3090s 8s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 10/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3089s 8s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 10/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3090s 8s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 10/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3091s 8s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 10/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3123s 8s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 10/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3125s 8s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 10/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3563s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 11/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3563s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 11/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3564s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 11/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3564s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 11/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3562s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 11/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3563s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 11/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3568s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 11/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3566s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 11/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3631s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 11/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3638s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 11/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3745s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 12/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3747s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 12/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3746s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 12/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3748s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 12/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3748s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 12/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3748s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 12/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3747s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 12/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3750s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 12/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3768s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 12/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3770s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 12/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3751s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 13/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3749s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 13/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3748s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 13/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3750s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 13/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3750s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 13/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3749s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 13/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3755s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 13/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3757s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 13/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3795s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 13/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3795s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 13/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3866s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 14/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3868s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 14/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3868s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 14/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3868s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 14/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3867s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 14/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3866s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 14/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3869s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 14/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3874s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 14/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3936s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 14/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3938s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 14/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4058s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 15/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4058s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 15/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4058s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 15/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4058s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 15/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4059s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 15/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4060s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 15/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4060s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 15/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4061s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 15/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4106s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 15/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4104s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 15/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3932s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 16/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3932s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 16/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3932s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 16/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3929s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 16/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3937s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 16/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3936s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 16/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3941s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 16/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3949s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 16/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4035s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 16/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4035s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 16/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4196s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 17/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4195s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 17/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4194s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 17/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4196s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 17/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4200s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 17/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4199s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 17/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4197s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 17/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4205s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 17/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4213s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 17/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4213s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 17/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4019s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 18/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4019s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 18/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4019s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 18/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4018s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 18/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4018s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 18/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4021s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 18/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4020s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 18/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4026s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 18/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4031s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 18/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4031s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 18/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3890s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 19/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3890s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 19/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3891s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 19/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3891s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 19/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3891s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 19/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3894s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 19/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3898s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 19/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3909s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 19/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3999s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 19/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4009s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 19/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4144s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 20/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4145s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 20/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4144s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 20/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4146s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 20/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4146s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 20/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4151s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 20/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4145s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 20/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4165s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 20/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4190s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 20/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4192s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+Epoch 20/20
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4264s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+
+| Fold  4 | Training finished.
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4265s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+
+| Fold  3 | Training finished.
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4261s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+
+| Fold  5 | Training finished.
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4263s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+
+| Fold  8 | Training finished.
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4250s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+
+| Fold  6 | Training finished.
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4244s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+
+| Fold 10 | Training finished.
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4230s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+
+| Fold  9 | Training finished.
+409/409 ━━━━━━━━━━━━━━━━━━━━ 4185s 10s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+
+| Fold  7 | Training finished.
+71/71 ━━━━━━━━━━━━━━━━━━━━ 113s 2s/step - accuracy: 0.1806 - loss: nann  
+
+| Fold  4 | Scores = 18.061673641204834
+71/71 ━━━━━━━━━━━━━━━━━━━━ 112s 2s/step - accuracy: 0.1806 - loss: nan
+
+| Fold  5 | Scores = 18.061673641204834
+71/71 ━━━━━━━━━━━━━━━━━━━━ 113s 2s/step - accuracy: 0.1806 - loss: nan
+
+| Fold  3 | Scores = 18.061673641204834
+71/71 ━━━━━━━━━━━━━━━━━━━━ 112s 2s/step - accuracy: 0.1806 - loss: nan
+
+| Fold  8 | Scores = 18.061673641204834
+71/71 ━━━━━━━━━━━━━━━━━━━━ 112s 2s/step - accuracy: 0.1806 - loss: nan 
+
+| Fold  6 | Scores = 18.061673641204834
+71/71 ━━━━━━━━━━━━━━━━━━━━ 111s 2s/step - accuracy: 0.1806 - loss: nan
+
+| Fold 10 | Scores = 18.061673641204834
+71/71 ━━━━━━━━━━━━━━━━━━━━ 110s 2s/step - accuracy: 0.1806 - loss: nan
+
+| Fold  9 | Scores = 18.061673641204834
+71/71 ━━━━━━━━━━━━━━━━━━━━ 106s 1s/step - accuracy: 0.1806 - loss: nan
+
+| Fold  7 | Scores = 18.061673641204834
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3788s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+
+| Fold  1 | Training finished.
+409/409 ━━━━━━━━━━━━━━━━━━━━ 3761s 9s/step - accuracy: 0.1806 - loss: nan - val_accuracy: 0.1806 - val_loss: nan
+
+| Fold  2 | Training finished.
+71/71 ━━━━━━━━━━━━━━━━━━━━ 93s 1s/step - accuracy: 0.7931 - loss: nann
+
+| Fold  4 | Mean | nan
+
+| Fold  4 | Min  |  nan
+
+| Fold  4 | Max  |  nan
+62/71 ━━━━━━━━━━━━━━━━━━━━ 11s 1s/step
+| Fold  4 | Ended
+
+| Fold  4 | Elapsed time: 64350.4952 seconds
+
+71/71 ━━━━━━━━━━━━━━━━━━━━ 93s 1s/step
+
+| Fold  5 | Mean | nan
+
+| Fold  5 | Min  |  nan
+
+| Fold  5 | Max  |  nan
+
+| Fold  5 | Ended
+
+| Fold  5 | Elapsed time: 64350.5474 seconds
+
+71/71 ━━━━━━━━━━━━━━━━━━━━ 93s 1s/stepp - accuracy: 0.8591 - loss: nan
+
+| Fold  3 | Mean | nan
+
+| Fold  3 | Min  |  nan
+
+| Fold  3 | Max  |  nan
+
+| Fold  3 | Ended
+
+| Fold  3 | Elapsed time: 64350.7540 seconds
+
+30/71 ━━━━━━━━━━━━━━━━━━━━ 52s 1s/step - accuracy: 0.7809 - loss: nanWARNING:tensorflow:5 out of the last 376 calls to <function TensorFlowTrainer.make_predict_function.<locals>.one_step_on_data_distributed at 0x0000028A3A2F0360> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+71/71 ━━━━━━━━━━━━━━━━━━━━ 92s 1s/step
+
+| Fold  8 | Mean | nan
+
+| Fold  8 | Min  |  nan
+
+| Fold  8 | Max  |  nan
+
+| Fold  8 | Ended
+
+| Fold  8 | Elapsed time: 64350.9251 seconds
+
+71/71 ━━━━━━━━━━━━━━━━━━━━ 88s 1s/step - accuracy: 0.7931 - loss: nan 
+
+| Fold  6 | Mean | nan
+
+| Fold  6 | Min  |  nan
+
+| Fold  6 | Max  |  nan
+
+| Fold  6 | Ended
+
+| Fold  6 | Elapsed time: 64353.7728 seconds
+
+71/71 ━━━━━━━━━━━━━━━━━━━━ 85s 1s/step - accuracy: 0.7463 - loss: nan
+
+| Fold 10 | Mean | nan
+
+| Fold 10 | Min  |  nan
+
+| Fold 10 | Max  |  nan
+
+| Fold 10 | Ended
+
+| Fold 10 | Elapsed time: 64355.4725 seconds
+
+71/71 ━━━━━━━━━━━━━━━━━━━━ 84s 1s/step - accuracy: 0.7249 - loss: nan
+
+| Fold  9 | Mean | nan
+
+| Fold  9 | Min  |  nan
+
+| Fold  9 | Max  |  nan
+
+| Fold  9 | Ended
+
+| Fold  9 | Elapsed time: 64356.1542 seconds
+
+71/71 ━━━━━━━━━━━━━━━━━━━━ 71s 989ms/step - accuracy: 0.6118 - loss: nan
+
+| Fold  7 | Mean | nan
+
+| Fold  7 | Min  |  nan
+
+| Fold  7 | Max  |  nan
+
+| Fold  7 | Ended
+
+| Fold  7 | Elapsed time: 64359.3974 seconds
+
+71/71 ━━━━━━━━━━━━━━━━━━━━ 50s 695ms/step - accuracy: 0.1806 - loss: nan
+
+| Fold  1 | Scores = 18.061673641204834
+71/71 ━━━━━━━━━━━━━━━━━━━━ 43s 601ms/step - accuracy: 0.1806 - loss: nan
+
+| Fold  2 | Scores = 18.061673641204834
+71/71 ━━━━━━━━━━━━━━━━━━━━ 10s 145ms/step
+
+| Fold  1 | Mean | nan
+
+| Fold  1 | Min  |  nan
+
+| Fold  1 | Max  |  nan
+
+| Fold  1 | Ended
+
+| Fold  1 | Elapsed time: 64372.6076 seconds
+
+71/71 ━━━━━━━━━━━━━━━━━━━━ 10s 142ms/step
+
+| Fold  2 | Mean | nan
+
+| Fold  2 | Min  |  nan
+
+| Fold  2 | Max  |  nan
+
+| Fold  2 | Ended
+
+| Fold  2 | Elapsed time: 64373.2013 seconds
+
+Ended | Total
+Elapsed time: 64378.4773 seconds
+
+
+Running Time:
+
+| elapsed_time_4     = 64350.4952 seconds
+| elapsed_time_5     = 64350.5474 seconds
+| elapsed_time_3     = 64350.7540 seconds
+| elapsed_time_8     = 64350.9251 seconds
+| elapsed_time_6     = 64353.7728 seconds
+| elapsed_time_10    = 64355.4725 seconds
+| elapsed_time_9     = 64356.1542 seconds
+| elapsed_time_7     = 64359.3974 seconds
+| elapsed_time_1     = 64372.6076 seconds
+| elapsed_time_2     = 64373.2013 seconds
+| elapsed_time_total = 64378.4773 seconds
+
+
+c:\Users\mamra2\thesis\program\dronerf\thesis-prog-drf\Python\Replica\Testing\Classification_replica_N1_testing.py:264: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  plt.legend()
+c:\Users\mamra2\thesis\program\dronerf\thesis-prog-drf\Python\Replica\Testing\Classification_replica_N1_testing.py:272: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  plt.legend()
+c:\Users\mamra2\thesis\program\dronerf\thesis-prog-drf\Python\Replica\Testing\Classification_replica_N1_testing.py:280: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  plt.legend()
+c:\Users\mamra2\thesis\program\dronerf\thesis-prog-drf\Python\Replica\Testing\Classification_replica_N1_testing.py:288: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  plt.legend()

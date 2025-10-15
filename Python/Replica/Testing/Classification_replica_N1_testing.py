@@ -128,6 +128,7 @@ def process_fold(train, test, fold_index, results_lock):
     ### T5: 1-LSTM [20-epoch] return_sequences=False w/o pooling w/o dropout w/o dense
     ### T6: 1-LSTM [20-epoch] activation='relu' + hidden units increase (80)
     ### T7: 1-LSTM [20-epoch] return_sequences=True + pooling + hidden units increase (100)
+    ### T8: 1-LSTM [20-epoch] return_sequences=False + dropout
     ### F1: Execute 1-LSTM w/ 200 epoch
     ### F2: Execute 2-LSTM w/ 200 epoch
     model.add(layers.LSTM(100, activation='relu', return_sequences=True))

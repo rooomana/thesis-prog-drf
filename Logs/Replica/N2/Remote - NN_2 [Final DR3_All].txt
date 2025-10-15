@@ -1,11 +1,11 @@
 PS C:\Users\mamra2\thesis\program\dronerf\thesis-prog-drf> & C:\Users\mamra2\AppData\Local\Programs\Python\Python311\python.exe c:/Users/mamra2/thesis/program/dronerf/thesis-prog-drf/Python/Replica/Testing/Classification_replica_N2_testing.py
-2025-10-10 11:12:02.351137: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation 
+2025-10-13 15:32:08.829669: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation 
 orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
-2025-10-10 11:12:05.583190: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation 
+2025-10-13 15:32:11.947347: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation 
 orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
 
 Loading Data ...
-Loaded Data.
+Loaded Data.      
 
 
 Preparing Data ...
@@ -17,7 +17,7 @@ Starting...
 
 
 | Fold  1 |
-2025-10-10 11:12:25.818680: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+2025-10-13 15:32:31.403825: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
 To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
 
 | Fold  2 |
@@ -458,42 +458,102 @@ Model: "sequential"
     "bias_constraint": null
 }
 
-| Fold  8 | Scores = 64.09691572189331
-56/71 ━━━━━━━━━━━━━━━━━━━━ 2s 188ms/step 
-| Fold  3 | Scores = 60.30837297439575
-71/71 ━━━━━━━━━━━━━━━━━━━━ 15s 198ms/step
-71/71 ━━━━━━━━━━━━━━━━━━━━ 13s 173ms/step
+| Fold  1 | Scores = 64.58149552345276
+71/71 ━━━━━━━━━━━━━━━━━━━━ 15s 204ms/step 
 
-| Fold  7 | Scores = 62.90748715400696
-71/71 ━━━━━━━━━━━━━━━━━━━━ 13s 171ms/step
+| Fold  1 | Ended
 
-| Fold  1 | Scores = 63.56828212738037
+| Fold  1 | Elapsed time: 41079.0656 seconds
+
+
+| Fold  8 | Scores = 59.559470415115356
+71/71 ━━━━━━━━━━━━━━━━━━━━ 13s 176ms/step 
+
+| Fold  8 | Ended
+
+| Fold  8 | Elapsed time: 41470.1970 seconds
+
+
+| Fold  3 | Scores = 60.22026538848877
+71/71 ━━━━━━━━━━━━━━━━━━━━ 12s 162ms/step 
+
+| Fold  3 | Ended
+
+| Fold  3 | Elapsed time: 41510.1373 seconds
+
+
+| Fold  7 | Scores = 66.43171906471252
 71/71 ━━━━━━━━━━━━━━━━━━━━ 11s 142ms/step
 
-| Fold  4 | Scores = 65.59471487998962
-71/71 ━━━━━━━━━━━━━━━━━━━━ 9s 116ms/step 
+| Fold  7 | Ended
 
-| Fold  6 | Scores = 63.65638971328735
-71/71 ━━━━━━━━━━━━━━━━━━━━ 7s 87ms/step  
+| Fold  7 | Elapsed time: 41536.7577 seconds
 
-| Fold  9 | Scores = 62.026429176330566
-71/71 ━━━━━━━━━━━━━━━━━━━━ 5s 71ms/step  
 
-| Fold  2 | Scores = 60.22026538848877
-71/71 ━━━━━━━━━━━━━━━━━━━━ 4s 55ms/step  
+| Fold 10 | Scores = 66.87224507331848
+71/71 ━━━━━━━━━━━━━━━━━━━━ 9s 115ms/step 
 
-| Fold 10 | Scores = 61.49779558181763
-71/71 ━━━━━━━━━━━━━━━━━━━━ 3s 32ms/step  
+| Fold 10 | Ended
 
-| Fold  5 | Scores = 64.1409695148468
+| Fold 10 | Elapsed time: 41577.5494 seconds
+
+
+| Fold  4 | Scores = 64.44934010505676
+71/71 ━━━━━━━━━━━━━━━━━━━━ 7s 94ms/step  
+
+| Fold  4 | Ended
+
+| Fold  4 | Elapsed time: 41613.5401 seconds
+
+
+| Fold  6 | Scores = 60.088104009628296
+71/71 ━━━━━━━━━━━━━━━━━━━━ 6s 74ms/step  
+
+| Fold  6 | Ended
+
+| Fold  6 | Elapsed time: 41696.3980 seconds
+
+
+| Fold  2 | Scores = 63.78854513168335
+71/71 ━━━━━━━━━━━━━━━━━━━━ 4s 54ms/step  
+
+| Fold  2 | Ended
+
+| Fold  2 | Elapsed time: 41847.0429 seconds
+
+
+| Fold  9 | Scores = 60.83700656890869
+71/71 ━━━━━━━━━━━━━━━━━━━━ 3s 36ms/step  
+
+| Fold  9 | Ended
+
+| Fold  9 | Elapsed time: 41870.9015 seconds
+
+
+| Fold  5 | Scores = 63.87665271759033
 71/71 ━━━━━━━━━━━━━━━━━━━━ 2s 19ms/step  
+
+| Fold  5 | Ended
+
+| Fold  5 | Elapsed time: 41885.5108 seconds
+
 Ended | Total
-Elapsed time: 41665.0087 seconds
+Elapsed time: 41895.7875 seconds
 
 
 Running Time:
 
-| elapsed_time_total = 41665.0087 seconds
+| elapsed_time_1     = 41079.0656 seconds
+| elapsed_time_8     = 41470.1970 seconds
+| elapsed_time_3     = 41510.1373 seconds
+| elapsed_time_7     = 41536.7577 seconds
+| elapsed_time_10    = 41577.5494 seconds
+| elapsed_time_4     = 41613.5401 seconds
+| elapsed_time_6     = 41696.3980 seconds
+| elapsed_time_2     = 41847.0429 seconds
+| elapsed_time_9     = 41870.9015 seconds
+| elapsed_time_5     = 41885.5108 seconds
+| elapsed_time_total = 41895.7875 seconds
 
 
 c:\Users\mamra2\thesis\program\dronerf\thesis-prog-drf\Python\Replica\Testing\Classification_replica_N2_testing.py:243: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.

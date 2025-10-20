@@ -1,14 +1,30 @@
 #########################################################################
 #
-# Objective: Drone Detection
+# Copyright 2018 Mohammad Al-Sa'd
 #
-# | Replicating architecture from:
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
 #
-# Drone Detection Approach Based on Radio-Frequency Using Convolutional Neural Network
+#     http://www.apache.org/licenses/LICENSE-2.0
 #
-# Authors: Sara Al-Emadi
-#          Felwa Al-Senaid
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 #
+# Authors: Mohammad F. Al-Sa'd (mohammad.al-sad@tut.fi)
+#          Amr Mohamed         (amrm@qu.edu.qa)
+#          Abdulla Al-Ali
+#          Tamer Khattab
+#
+# The following reference should be cited whenever this script is used:
+#     M. Al-Sa'd et al. "RF-based drone detection and identification using
+#     deep learning approaches: an initiative towards a large open source
+#     drone database", 2018.
+#
+# Last Modification: 19-11-2018
 #########################################################################
 
 ############################## Libraries ################################
@@ -25,7 +41,6 @@ from tensorflow.keras.models import Sequential      # [MR]
 #from tensorflow.keras.layers import Dense           # [MR]
 layers = tf.keras.layers                            # [MR]
 from sklearn.model_selection import StratifiedKFold
-import matplotlib.pyplot as plt                     # [MR] For analysis
 
 ############################## Functions ###############################
 def decode(datum):
@@ -48,22 +63,18 @@ np.random.seed(1)
 K                    = 10
 inner_activation_fun = 'relu'
 outer_activation_fun = 'sigmoid'
-optimizer_loss_fun   = 'categorical_crossentropy'
+optimizer_loss_fun   = 'mse'
 optimizer_algorithm  = 'adam'
 number_inner_layers  = 3
-conv_pool_layers  = 4 # [MR]
-conv_only_layers  = 0 # [MR]
 number_inner_neurons = 256
-number_epoch         = 60 # NN 1 | Two-class
-#number_epoch         = 350 # NN 2 | Multi-class
-batch_length         = 50 # NN 1 & 2 | Two or Multi-class
+number_epoch         = 200
+batch_length         = 10
 #batch_length         = 32  # [MR] Increase for better performance
 show_inter_results   = 0
 
 opt = 1     # [MR] DNN Results number
 current_directory_working = os.getcwd()     # [MR] Current working directory
 results_path = rf"{current_directory_working}\Results_{opt}"    # [MR]
-histories = [None] * K  # [MR] For analysis
 
 running_time = {}           # [MR] Timers
 start_time = time.time()    # [MR] Start timer
@@ -90,12 +101,9 @@ cvscores = np.array([])     # [MR]
 #kfold = StratifiedKFold(n_splits=K, shuffle=True, random_state=1)
 #for train, test in kfold.split(x, decode(y)):
 
-## [MR] Depthwise Separable Convolutions
-# . . .
-
 ## [MR] Each fold's process
 def process_fold(train, test, fold_index, results_lock):
-    global digits_K, cvscores, running_time, histories
+    global cvscores, running_time
     start_time_phase = time.time()  # [MR] Start phase timer
     #cnt = cnt + 1
     #print(f'\n| {cnt = }') # [MR]
@@ -104,37 +112,33 @@ def process_fold(train, test, fold_index, results_lock):
     fold_x = x.reshape(x.shape[0], x.shape[1], 1)   # [MR] Reshape input (add channel dimension)
     
     ## [MR] Build model
-    filters =       [32, 64, 128, 128]
-    kernel_sizes =  [ 3,  3,   3,   3]
+    # TODO: Test different parameters
     model = Sequential()
-    ## Input layer
-    model.add(layers.Input(
-        shape=(x.shape[1], 1)
-    ))
-
-    # Conv (w/ Pooling) layers
-    for i in range(conv_pool_layers):
+    # TODO: Change filters definition
+    filters = [128, 64, 32]     # [MR] "Optimal" decreasing filters
+    for i in range(number_inner_layers):
+        # TODO: Compare different types of layers
+        # [MR] Dense layer
+        #model.add(layers.Dense(
+        #    int(number_inner_neurons/2), 
+        #    input_dim = x.shape[1], 
+        #    activation = inner_activation_fun
+        #))
+        # [MR] Convolutional layer
         model.add(layers.Conv1D(
-            filters=filters[i],
-            kernel_size=kernel_sizes[i],
-            strides=1,
-            padding='same',
-            activation='relu',
-            dilation_rate=2,
+            filters=filters[i], 
+            kernel_size=3, 
+            strides=1, 
+            padding='causal', 
+            dilation_rate=1, 
+            activation=inner_activation_fun, 
+            input_shape=(x.shape[1], 1) if i == 0 else None
         ))
-        model.add(layers.AveragePooling1D(pool_size=3))
-    
-    # Dropout to prevent overfitting
-    model.add(layers.Dropout(0.25))
-    # Flatten before fully connected layers
-    model.add(layers.Flatten())
-    # Fully connected layers
-    model.add(layers.Dense(256, activation='relu'))
-    model.add(layers.Dense(y.shape[1], activation='sigmoid'))                                           # NN 1 | Two-class
-#    model.add(layers.Dense(y.shape[1], activation='softmax'))                                          # NN 2 | Multi-class
-    
-    model.compile(loss='binary_crossentropy', optimizer=optimizer_algorithm, metrics=['accuracy'])      # NN 1 | Two-class
-#    model.compile(loss='categorical_crossentropy', optimizer=optimizer_algorithm, metrics=['accuracy']) # NN 2 | Multi-class
+        model.add(layers.BatchNormalization()) # Stabilise learning and less overfitting
+        model.add(layers.MaxPooling1D(pool_size=2)) # Reduces temporal resolution
+    model.add(layers.GlobalAveragePooling1D()) # Reduce #parameters and avoid overfitting
+    model.add(layers.Dense(y.shape[1], activation=outer_activation_fun))
+    model.compile(loss=optimizer_loss_fun, optimizer=optimizer_algorithm, metrics=['accuracy'])
     
     ## [MR] Display parameters
     if fold_index == 1: # Displays only for defined fold
@@ -147,15 +151,8 @@ def process_fold(train, test, fold_index, results_lock):
 
     ## [MR] Train and eval model
     # TODO: Fix model training - test with prints
-    history = model.fit(
-        fold_x[train], y[train],
-        epochs=number_epoch,
-        batch_size=batch_length,
-        verbose=show_inter_results,
-        validation_data=(fold_x[test], y[test])  # [MR] For analysis
-    )
+    model.fit(fold_x[train], y[train], epochs=number_epoch, batch_size=batch_length, verbose=show_inter_results)
     #train_step(model, fold_x[train], y[train])
-    histories[fold_index - 1] = history.history  # [MR] For analysis
     scores = model.evaluate(fold_x[test], y[test], verbose=show_inter_results)
     print(f'\n| Fold {fold_index:>{digits_K}} | Scores = {scores[1] * 100}') # [MR]
     
@@ -184,8 +181,6 @@ results_lock = threading.Lock()  # Protect shared resources
 kfold = StratifiedKFold(n_splits=K, shuffle=True, random_state=1)
 print("\n> K-fold training (w/ threading) \nStarting...\n")
 
-# TODO: Maybe replace threading with multiprocessing for thread-safe model
-# TODO: Implement ProcessPoolExecutor
 with ThreadPoolExecutor(max_workers=K) as executor:
     for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1):
         executor.submit(process_fold, train, test, fold_index, results_lock)
@@ -205,69 +200,3 @@ print('\nRunning Time:\n')
 for phase_name, phase_elapsed_time in running_time.items():
     print(f'| {phase_name:<{longest_name_length}} = {phase_elapsed_time:>{longest_time_length}.4f} seconds')
 print('\n')
-
-#########################################################################
-# [MR] Graphs for analysis
-
-# Accuracy
-train_accuracies = []
-valid_accuracies = []
-# Loss
-train_losses     = []
-valid_losses     = []
-
-# Join histories from each fold
-for fold_index, history in enumerate(histories):
-    if history is None: continue
-    train_accuracies.append(history["accuracy"])
-    train_losses.append(history["loss"])
-    if "val_accuracy" in history:
-        valid_accuracies.append(history["val_accuracy"])
-    if "val_loss" in history:
-        valid_losses.append(history["val_loss"])
-
-## Means
-# Accuracy
-mean_train_accuracies = np.mean(np.array(train_accuracies), axis=0)
-mean_valid_accuracies = np.mean(np.array(valid_accuracies), axis=0)
-# Loss
-mean_train_loss       = np.mean(np.array(train_losses), axis=0)
-mean_valid_loss       = np.mean(np.array(valid_losses), axis=0)
-
-## Plot
-plt.figure(figsize=(12, 6))
-
-# Accuracy | Train
-plt.subplot(2, 2, 1)
-plt.plot(mean_train_accuracies, color='red')
-plt.title("Accuracy | Train")
-plt.ylabel("Accuracy")
-plt.xlabel("Epoch")
-plt.legend()
-
-# Loss | Train
-plt.subplot(2, 2, 2)
-plt.plot(mean_train_loss, color='blue')
-plt.title("Loss | Train")
-plt.ylabel("Loss")
-plt.xlabel("Epoch")
-plt.legend()
-
-# Accuracy | Validation
-plt.subplot(2, 2, 3)
-plt.plot(mean_valid_accuracies, color='red')
-plt.title("Accuracy | Validation")
-plt.ylabel("Accuracy")
-plt.xlabel("Epoch")
-plt.legend()
-
-# Loss | Validation
-plt.subplot(2, 2, 4)
-plt.plot(mean_valid_loss, color='blue')
-plt.title("Loss | Validation")
-plt.ylabel("Loss")
-plt.xlabel("Epoch")
-plt.legend()
-
-plt.tight_layout()
-plt.show()

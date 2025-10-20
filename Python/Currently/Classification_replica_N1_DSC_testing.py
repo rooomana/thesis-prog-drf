@@ -116,8 +116,7 @@ def process_fold(train, test, fold_index, results_lock):
     for i in range(conv_pool_layers):
         #if (i == 3 or i == 2 or i == 1 or i == 0):
         #if (i == 3 or i == 2 or i == 1):
-        #if (i == 3 or i == 2):
-        if (i == 3):
+        if (i == 3 or i == 2):
             model.add(layers.SeparableConv1D(
                 filters=filters[i],
                 kernel_size=kernel_sizes[i],

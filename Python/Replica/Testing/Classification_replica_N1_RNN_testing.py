@@ -121,18 +121,18 @@ def process_fold(train, test, fold_index, results_lock):
 
     # RNN layers
     ### TODO:
-    ### T1: 1-LSTM [10-epoch] return=True  w pooling w dropout
-    ### T2: 1-LSTM [4-epoch]  return=True  w pooling - dropout
-    ### T3: 1-LSTM [4-epoch]  return=False - pooling - dropout
+    ### T1: 1-LSTM [10-epoch] return=True   w pooling  w dropout
+    ### T2: 1-LSTM [4-epoch]  return=True   w pooling  - dropout
+    ### T3: 1-LSTM [4-epoch]  return=False  - pooling  - dropout
     ### T4: 1-LSTM [50-epoch] " "
-    ### T5: 1-LSTM [20-epoch] " "          - dense
-    ### T6: 1-LSTM [20-epoch] " "          + activ.=relu + units (80)
-    ### T7: 1-LSTM [20-epoch] return=True  + activ.=tanh + units (64)
-    ### T8: 1-LSTM [20-epoch] " "          w dense       w flatten
-    ### T9: 1-LSTM [20-epoch] reshape data
+    ### T5: 1-LSTM [20-epoch] " "           - FC(relu)
+    ### T6: 1-LSTM [20-epoch] " "                      + rnn(relu) + units(80)
+    ### T7: 1-LSTM [20-epoch] " " + flatten w FC(relu) + rnn(tanh) + units(64)
+    ### T8: 1-LSTM [20-epoch] " "           w FC(tanh)
+    ### T9: 1-LSTM [20-epoch] (?) reshape data
     ### F1: Execute 1-LSTM w/ 200 epoch
     ### F2: Execute 2-LSTM w/ 200 epoch
-    model.add(layers.LSTM(64, activation='tanh', return_sequences=True))
+    model.add(layers.LSTM(64, activation='tanh', return_sequences=False))
     #model.add(layers.LSTM(128, activation='tanh', return_sequences=False))
 
     # Pooling layers
@@ -142,10 +142,10 @@ def process_fold(train, test, fold_index, results_lock):
     #model.add(layers.Dropout(0.25))
     
     # Flatten before fully connected layers
-    #model.add(layers.Flatten())
+    model.add(layers.Flatten())
 
     # Fully connected layers
-    #model.add(layers.Dense(256, activation='relu'))
+    model.add(layers.Dense(256, activation='relu'))
     ## Output layer
     model.add(layers.Dense(y.shape[1], activation='sigmoid'))
     

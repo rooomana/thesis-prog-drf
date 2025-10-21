@@ -121,15 +121,23 @@ def process_fold(train, test, fold_index):
     ))
 
     ### TODO:
-    ### T1: 1-LSTM [10-epoch] return=True   w pooling  w dropout
-    ### T2: 1-LSTM [4-epoch]  return=True   w pooling  - dropout
-    ### T3: 1-LSTM [4-epoch]  return=False  - pooling  - dropout
-    ### T4: 1-LSTM [50-epoch] " "
-    ### T5: 1-LSTM [20-epoch] " "           - dense
-    ### T6: 1-LSTM [20-epoch] " "           + rnn[relu + units(80)] 
-    ### T7: 1-LSTM [20-epoch] " "           + rnn[tanh + units(64)] w dense    + flatten
-    ### T8: 1-LSTM [20-epoch] return=True   w pooling  w dropout    w FC[more] - flatten
-    ### T9: 1-LSTM [20-epoch] (?) reshape data
+    ########## Ideas yet to try ################################
+    ### - batch size          | increase for faster training
+    ### - batch normalization | for stable training
+    ### - class weights       | due to class imbalance
+    ### - (?) reshape data    | check for error prevention
+    ############################################################
+
+    ### T1:  1-LSTM [10-epoch] return=True   w pooling  w dropout
+    ### T2:  1-LSTM [4-epoch]  return=True   w pooling  - dropout
+    ### T3:  1-LSTM [4-epoch]  return=False  - pooling  - dropout
+    ### T4:  1-LSTM [50-epoch] " "
+    ### T5:  1-LSTM [20-epoch] " "           - dense
+    ### T6:  1-LSTM [20-epoch] " "           + rnn[relu + units(80)] 
+    ### T7:  1-LSTM [20-epoch] " "           + rnn[tanh + units(64)] w dense    + flatten
+    ### T8:  1-LSTM [20-epoch] return=True   w pooling  w dropout    w FC[more] - flatten
+    ### T0:  1-LSTM [20-epoch] " "           w batch normalization   w FC[less]
+
     ### F1: Execute 1-LSTM w/ 200 epoch
     ### F2: Execute 2-LSTM w/ 200 epoch
 

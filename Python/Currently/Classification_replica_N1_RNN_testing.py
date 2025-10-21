@@ -123,6 +123,7 @@ def process_fold(train, test, fold_index):
     ### TODO:
     ########## Ideas yet to try ################################
     ### - batch size          | increase for faster training
+    ### - add complexity      | increase amount and type of layers
     ### - batch normalization | for stable training
     ### - class weights       | due to class imbalance
     ### - (?) reshape data    | check for error prevention

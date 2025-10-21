@@ -50,6 +50,7 @@ inner_activation_fun = 'relu'
 outer_activation_fun = 'sigmoid'
 optimizer_loss_fun   = 'categorical_crossentropy'
 optimizer_algorithm  = 'adam'
+lstm_pool_layers  = 1
 number_inner_layers  = 3
 number_inner_neurons = 256
 number_epoch         = 20
@@ -103,7 +104,7 @@ cvscores = np.array([])     # [MR]
 #for train, test in kfold.split(x, decode(y)):
 
 ## [MR] Each fold's process
-def process_fold(train, test, fold_index, results_lock):
+def process_fold(train, test, fold_index):
     global digits_K, cvscores, running_time, histories
     start_time_phase = time.time()  # [MR] Start phase timer
     #cnt = cnt + 1
@@ -116,36 +117,48 @@ def process_fold(train, test, fold_index, results_lock):
     model = Sequential()
     ## Input layer
     model.add(layers.Input(
-        shape=(x.shape[1])
+        shape=(x.shape[1], 1)
     ))
 
-    # RNN layers
     ### TODO:
     ### T1: 1-LSTM [10-epoch] return=True   w pooling  w dropout
     ### T2: 1-LSTM [4-epoch]  return=True   w pooling  - dropout
     ### T3: 1-LSTM [4-epoch]  return=False  - pooling  - dropout
     ### T4: 1-LSTM [50-epoch] " "
-    ### T5: 1-LSTM [20-epoch] " "           - FC(relu)
-    ### T6: 1-LSTM [20-epoch] " "                      + rnn(relu) + units(80)
-    ### T7: 1-LSTM [20-epoch] " " + flatten w FC(relu) + rnn(tanh) + units(64)
-    ### T8: 1-LSTM [20-epoch] " "           w FC(tanh)
+    ### T5: 1-LSTM [20-epoch] " "           - dense
+    ### T6: 1-LSTM [20-epoch] " "           + rnn[relu + units(80)] 
+    ### T7: 1-LSTM [20-epoch] " "           + rnn[tanh + units(64)] w dense    + flatten
+    ### T8: 1-LSTM [20-epoch] return=True   w pooling  w dropout    w FC[more] - flatten
     ### T9: 1-LSTM [20-epoch] (?) reshape data
     ### F1: Execute 1-LSTM w/ 200 epoch
     ### F2: Execute 2-LSTM w/ 200 epoch
-    model.add(layers.LSTM(64, activation='tanh', return_sequences=False))
-    #model.add(layers.LSTM(128, activation='tanh', return_sequences=False))
 
-    # Pooling layers
-    #model.add(layers.GlobalAveragePooling1D())
+    # RNN layers + Pooling layers
+    for i in range(lstm_pool_layers):
+        # RNN layers
+        model.add(layers.LSTM(
+            units=64, 
+            activation='tanh', 
+            return_sequences=True
+        ))
+        # Pooling layers
+        model.add(layers.GlobalAveragePooling1D())
+        #model.add(layers.GlobalMaxPooling1D())
 
     # Dropout to prevent overfitting
-    #model.add(layers.Dropout(0.25))
+    # TODO: (?) Implement more dropout layers
+    model.add(layers.Dropout(0.25))
     
     # Flatten before fully connected layers
-    model.add(layers.Flatten())
+    #model.add(layers.Flatten())
+
+    # TODO: (?) Include batch normalization
+    #model.add(layers.BatchNormalization())
 
     # Fully connected layers
     model.add(layers.Dense(256, activation='relu'))
+    model.add(layers.Dense(128, activation='relu'))
+    model.add(layers.Dense(64,  activation='relu'))
     ## Output layer
     model.add(layers.Dense(y.shape[1], activation='sigmoid'))
     
@@ -191,25 +204,28 @@ def process_fold(train, test, fold_index, results_lock):
     print(f'\n| Fold {fold_index:>{digits_K}} | Ended')
     # TODO: Test time records
     # TODO: Time calculations inside or outside lock?
-    with results_lock:
-        end_time_phase = time.time()
-        elapsed_time_phase = end_time_phase - start_time_phase
-        running_time[f'elapsed_time_{fold_index}'] = elapsed_time_phase
-        cvscores = np.append(cvscores, scores[1] * 100)
+    end_time_phase = time.time()
+    elapsed_time_phase = end_time_phase - start_time_phase
+    running_time[f'elapsed_time_{fold_index}'] = elapsed_time_phase
+    cvscores = np.append(cvscores, scores[1] * 100)
     print("\n| Fold %*d | Elapsed time: %.4f seconds\n" % (digits_K, fold_index, running_time[f'elapsed_time_{fold_index}']))
 
 #########################################################################
 ## [MR] Threading
 # Using ThreadPoolExecutor for efficient threading
-results_lock = threading.Lock()  # Protect shared resources
+#results_lock = threading.Lock()  # Protect shared resources
 kfold = StratifiedKFold(n_splits=K, shuffle=True, random_state=1)
-print("\n> K-fold training (w/ threading) \nStarting...\n")
+#print("\n> K-fold training (w/ threading) \nStarting...\n")
+print("\n> K-fold training (no threading) \nStarting...\n")
 
 # TODO: Maybe replace threading with multiprocessing for thread-safe model
 # TODO: Implement ProcessPoolExecutor
-with ThreadPoolExecutor(max_workers=K) as executor:
-    for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1):
-        executor.submit(process_fold, train, test, fold_index, results_lock)
+#with ThreadPoolExecutor(max_workers=K) as executor:
+#    for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1):
+#        executor.submit(process_fold, train, test, fold_index, results_lock)
+
+for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1):
+    process_fold(train, test, fold_index)
 
 #########################################################################
 ## [MR] Elapsed time

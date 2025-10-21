@@ -54,7 +54,7 @@ number_inner_layers  = 3
 conv_pool_layers  = 4 # [MR]
 conv_only_layers  = 0 # [MR]
 number_inner_neurons = 256
-number_epoch         = 60 # NN 1 | Two-class
+number_epoch         = 200 # NN 1 | Two-class
 #number_epoch         = 350 # NN 2 | Multi-class
 batch_length         = 50 # NN 1 & 2 | Two or Multi-class
 #batch_length         = 32  # [MR] Increase for better performance
@@ -90,9 +90,6 @@ cvscores = np.array([])     # [MR]
 #kfold = StratifiedKFold(n_splits=K, shuffle=True, random_state=1)
 #for train, test in kfold.split(x, decode(y)):
 
-## [MR] Depthwise Separable Convolutions
-# . . .
-
 ## [MR] Each fold's process
 def process_fold(train, test, fold_index, results_lock):
     global digits_K, cvscores, running_time, histories
@@ -114,7 +111,8 @@ def process_fold(train, test, fold_index, results_lock):
 
     # Conv (w/ Pooling) layers
     for i in range(conv_pool_layers):
-        if (i == 3 or i == 2 or i == 1 or i == 0):
+        #if (i == 3 or i == 2 or i == 1 or i == 0):
+        if (i == 3 or i == 2):
             model.add(layers.SeparableConv1D(
                 filters=filters[i],
                 kernel_size=kernel_sizes[i],

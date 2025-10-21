@@ -111,7 +111,7 @@ def process_fold(train, test, fold_index):
     #print(f'\n| {cnt = }') # [MR]
     digits_K = math.floor(math.log10(abs(K))) + 1   # [MR]
     print(f'\n| Fold {fold_index:>{digits_K}} |')   # [MR]
-    fold_x = x.reshape(x.shape[0], x.shape[1], 1)   # [MR] Reshape input (add channel dimension)
+    x = x.reshape(x.shape[0], x.shape[1], 1)   # [MR] Reshape input (add channel dimension)
     
     ## [MR] Build model
     model = Sequential()
@@ -120,27 +120,30 @@ def process_fold(train, test, fold_index):
         shape=(x.shape[1], 1)
     ))
 
-    ### TODO:
-    ########## Ideas yet to try ################################
-    ### - batch size          | increase for faster training
-    ### - add complexity      | increase amount and type of layers
-    ### - batch normalization | for stable training
-    ### - class weights       | due to class imbalance
-    ### - (?) reshape data    | check for error prevention
-    ############################################################
+    ## TODO:
+    ########## Ideas yet to try ################################################################################
+    ## - batch size          | increase for faster training
+    ## - (?) reshape data    | check for error prevention (samples, timesteps, features)
+    ## - time steps          | check quantity needed - probably should reduce
+    ## - class weights       | due to class imbalance
+    ## - learning rate       | test diff values - tf.keras.optimizers.Adam(learning_rate=1e-3)
+    ## - pooling             | implement where?
+    ## - dropout             | increase amount - prevent overfitting + vanishing weights
+    ## - batch normalization | implement - for stable training + vanishing weights
+    ##############################################################################################################
 
-    ### T1:  1-LSTM [10-epoch] return=True   w pooling  w dropout
-    ### T2:  1-LSTM [4-epoch]  return=True   w pooling  - dropout
-    ### T3:  1-LSTM [4-epoch]  return=False  - pooling  - dropout
-    ### T4:  1-LSTM [50-epoch] " "
-    ### T5:  1-LSTM [20-epoch] " "           - dense
-    ### T6:  1-LSTM [20-epoch] " "           + rnn[relu + units(80)] 
-    ### T7:  1-LSTM [20-epoch] " "           + rnn[tanh + units(64)] w dense    + flatten
-    ### T8:  1-LSTM [20-epoch] return=True   w pooling  w dropout    w FC[more] - flatten
-    ### T0:  1-LSTM [20-epoch] " "           w batch normalization   w FC[less]
+    ## T1:  1-LSTM [10-epoch] return=True   w pooling  w dropout
+    ## T2:  1-LSTM [4-epoch]  return=True   w pooling  - dropout
+    ## T3:  1-LSTM [4-epoch]  return=False  - pooling  - dropout
+    ## T4:  1-LSTM [50-epoch] " "
+    ## T5:  1-LSTM [20-epoch] " "           - dense
+    ## T6:  1-LSTM [20-epoch] " "           + rnn[relu + units(80)] 
+    ## T7:  1-LSTM [20-epoch] " "           + rnn[tanh + units(64)] w dense    + flatten
+    ## T8:  1-LSTM [20-epoch] return=True   w pooling  w dropout    w FC[more] - flatten
+    ## T0:  1-LSTM [20-epoch] " "           w batch normalization   w FC[less]
 
-    ### F1: Execute 1-LSTM w/ 200 epoch
-    ### F2: Execute 2-LSTM w/ 200 epoch
+    ## F1: Execute 1-LSTM w/ 200 epoch
+    ## F2: Execute 2-LSTM w/ 200 epoch
 
     # RNN layers + Pooling layers
     for i in range(lstm_pool_layers):
@@ -186,20 +189,20 @@ def process_fold(train, test, fold_index):
     # TODO: Fix model training - test with prints
     print(f'\n| Fold {fold_index:>{digits_K}} | Training starting...') # [MR]
     history = model.fit(
-        fold_x[train], y[train],
+        x[train], y[train],
         epochs=number_epoch,
         batch_size=batch_length,
         verbose=show_inter_results,
-        validation_data=(fold_x[test], y[test])  # [MR] For analysis
+        validation_data=(x[test], y[test])  # [MR] For analysis
     )
-    # history = train_step(model, fold_x[train], y[train], fold_x[test], y[test])
+    # history = train_step(model, x[train], y[train], x[test], y[test])
     print(f'\n| Fold {fold_index:>{digits_K}} | Training finished.') # [MR]
     histories[fold_index - 1] = history.history  # [MR] For analysis
-    scores = model.evaluate(fold_x[test], y[test], verbose=show_inter_results)
+    scores = model.evaluate(x[test], y[test], verbose=show_inter_results)
     print(f'\n| Fold {fold_index:>{digits_K}} | Scores = {scores[1] * 100}') # [MR]
     
     ## [MR] Save results
-    y_pred = model.predict(fold_x[test])    # [MR]
+    y_pred = model.predict(x[test])    # [MR]
     # [MR] Debugging
     print(f'\n| Fold {fold_index:>{digits_K}} | Mean | {np.mean(y_pred):.6f}') # [MR]
     print(f'\n| Fold {fold_index:>{digits_K}} | Min  |  {np.min(y_pred):.6f}') # [MR]

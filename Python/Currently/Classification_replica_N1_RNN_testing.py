@@ -50,11 +50,12 @@ inner_activation_fun = 'relu'
 outer_activation_fun = 'sigmoid'
 optimizer_loss_fun   = 'categorical_crossentropy'
 optimizer_algorithm  = 'adam'
-lstm_pool_layers  = 1
+lstm_join_layers  = 1
 number_inner_layers  = 3
 number_inner_neurons = 256
-number_epoch         = 20
-batch_length         = 50 # NN 1 & 2 | Two or Multi-class
+number_epoch         = 12
+batch_length         = 256 # TODO: Temporarily - for faster training
+#batch_length         = 50 # NN 1 & 2 | Two or Multi-class
 #batch_length         = 32  # [MR] Increase for better performance
 show_inter_results   = 1
 
@@ -111,7 +112,7 @@ def process_fold(train, test, fold_index):
     #print(f'\n| {cnt = }') # [MR]
     digits_K = math.floor(math.log10(abs(K))) + 1   # [MR]
     print(f'\n| Fold {fold_index:>{digits_K}} |')   # [MR]
-    x = x.reshape(x.shape[0], x.shape[1], 1)   # [MR] Reshape input (add channel dimension)
+    x.reshape(x.shape[0], x.shape[1], 1)   # [MR] Reshape input
     
     ## [MR] Build model
     model = Sequential()
@@ -123,13 +124,14 @@ def process_fold(train, test, fold_index):
     ## TODO:
     ########## Ideas yet to try ################################################################################
     ## - batch size          | increase for faster training
+    ## - learning rate       | test diff values - tf.keras.optimizers.Adam(learning_rate=1e-4)
     ## - (?) reshape data    | check for error prevention (samples, timesteps, features)
+    ## - (?) output data     | check if output as y.shape[1] = 1 is better
     ## - time steps          | check quantity needed - probably should reduce
     ## - class weights       | due to class imbalance
-    ## - learning rate       | test diff values - tf.keras.optimizers.Adam(learning_rate=1e-3)
-    ## - pooling             | implement where?
     ## - dropout             | increase amount - prevent overfitting + vanishing weights
     ## - batch normalization | implement - for stable training + vanishing weights
+    ## - recurrent layers    | implement more recurrent (LSTM) layers - better results?
     ##############################################################################################################
 
     ## T1:  1-LSTM [10-epoch] return=True   w pooling  w dropout
@@ -146,35 +148,31 @@ def process_fold(train, test, fold_index):
     ## F2: Execute 2-LSTM w/ 200 epoch
 
     # RNN layers + Pooling layers
-    for i in range(lstm_pool_layers):
+    for i in range(lstm_join_layers):
         # RNN layers
         model.add(layers.LSTM(
             units=64, 
             activation='tanh', 
-            return_sequences=True
+            return_sequences=False
         ))
         # Pooling layers
-        model.add(layers.GlobalAveragePooling1D())
+        #model.add(layers.GlobalAveragePooling1D())
         #model.add(layers.GlobalMaxPooling1D())
 
     # Dropout to prevent overfitting
     # TODO: (?) Implement more dropout layers
     model.add(layers.Dropout(0.25))
-    
-    # Flatten before fully connected layers
-    #model.add(layers.Flatten())
+    #model.add(layers.Dropout(0.25))
 
     # TODO: (?) Include batch normalization
     #model.add(layers.BatchNormalization())
 
     # Fully connected layers
-    model.add(layers.Dense(256, activation='relu'))
-    model.add(layers.Dense(128, activation='relu'))
-    model.add(layers.Dense(64,  activation='relu'))
+    #model.add(layers.Dense(128, activation='relu'))
     ## Output layer
     model.add(layers.Dense(y.shape[1], activation='sigmoid'))
     
-    model.compile(loss='binary_crossentropy', optimizer=optimizer_algorithm, metrics=['accuracy'])
+    model.compile(loss='binary_crossentropy', optimizer=tf.keras.optimizers.Adam(learning_rate=1e-3), metrics=['accuracy'])
     
     ## [MR] Display parameters
     if fold_index == 1: # Displays only for defined fold
@@ -207,6 +205,7 @@ def process_fold(train, test, fold_index):
     print(f'\n| Fold {fold_index:>{digits_K}} | Mean | {np.mean(y_pred):.6f}') # [MR]
     print(f'\n| Fold {fold_index:>{digits_K}} | Min  |  {np.min(y_pred):.6f}') # [MR]
     print(f'\n| Fold {fold_index:>{digits_K}} | Max  |  {np.max(y_pred):.6f}') # [MR]
+    
     # [MR] (Results_{1,2,3} - Demo_4) - Only saving results for the 3rd NN (?)
     # np.savetxt("Results_3%s.csv" % cnt, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s')
     results_file = rf"{results_path}\Results_{opt}{fold_index}.csv"     # [MR] Saved results path

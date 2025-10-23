@@ -55,8 +55,7 @@ lstm_join_layers  = 1
 number_inner_layers  = 3
 number_inner_neurons = 256
 number_epoch         = 12
-batch_length         = 256 # TODO: Temporarily - for faster training
-#batch_length         = 50 # NN 1 & 2 | Two or Multi-class
+batch_length         = 50 # NN 1 & 2 | Two or Multi-class
 #batch_length         = 32  # [MR] Increase for better performance
 show_inter_results   = 1
 
@@ -147,7 +146,7 @@ def process_fold(train, test, fold_index):
     ######  | [12 epoch] return=False  w class weights balance - denses
     ######  |                          - pooling  - dropout
     ## T10: 1_layer
-    ######  | [12 epoch]               w threads  w dropout
+    ######  | [12 epoch]                          w dropout
     ## T11: 1_layer
     ######  | [12 epoch] w normalisa.
     ## T12: 1_layer

@@ -25,6 +25,7 @@ from tensorflow.keras.models import Sequential      # [MR]
 #from tensorflow.keras.layers import Dense           # [MR]
 layers = tf.keras.layers                            # [MR]
 from sklearn.model_selection import StratifiedKFold
+from sklearn.utils import class_weight              # [MR] For balance
 import matplotlib.pyplot as plt                     # [MR] For analysis
 
 ############################## Functions ###############################
@@ -50,11 +51,12 @@ inner_activation_fun = 'relu'
 outer_activation_fun = 'sigmoid'
 optimizer_loss_fun   = 'categorical_crossentropy'
 optimizer_algorithm  = 'adam'
-lstm_pool_layers  = 1
+lstm_join_layers  = 1
 number_inner_layers  = 3
 number_inner_neurons = 256
-number_epoch         = 20
-batch_length         = 50 # NN 1 & 2 | Two or Multi-class
+number_epoch         = 12
+batch_length         = 128 # TODO: Temporarily - for faster training
+#batch_length         = 50 # NN 1 & 2 | Two or Multi-class
 #batch_length         = 32  # [MR] Increase for better performance
 show_inter_results   = 1
 
@@ -82,20 +84,16 @@ Label_opt = globals()[f'Label_{opt}']       # [MR]
 y = encode(Label_opt)                       # [MR]
 print("Prepared Data.\n")                                           # [MR]
 
-############################## Debugging #################################
-# [MR] Data sanity diagnostic checks
-print("\n[Debugging]\nData diagnostic checks:")
-print("| Unique labels and counts:\n| =", np.unique(decode(y), return_counts=True))
-print(f"| Data.shape: {Data.shape}")
-print(f"| x.shape: {x.shape}")
-print(f"| y.shape: {y.shape}")
-print("| x:")
-print(f"| - min  = {np.min(x):>8.6f}")
-print(f"| - max  = {np.max(x):>8.6f}")
-print(f"| - mean = {np.mean(x):>8.6f}")
-print(f"| - std  = {np.std(x):>8.6f}")
-print("| First few label values:\n| = ", decode(y)[:10].flatten())
-print("| Example of first row of x:\n| = ", x[0, :10])
+############################### Balance ##################################
+# [MR] Balancing dataset
+print("\Balancing Data ...")
+y_int = np.argmax(y, axis=1) # one-hot to int
+class_weights = class_weight.compute_class_weight(
+    class_weight='balanced',
+    classes=np.unique(y_int),
+    y=y_int)
+class_weights = dict(enumerate(class_weights))
+print("Balanced Data.\n")
 
 ################################ Main ####################################
 cvscores = np.array([])     # [MR]
@@ -111,66 +109,71 @@ def process_fold(train, test, fold_index):
     #print(f'\n| {cnt = }') # [MR]
     digits_K = math.floor(math.log10(abs(K))) + 1   # [MR]
     print(f'\n| Fold {fold_index:>{digits_K}} |')   # [MR]
-    x = x.reshape(x.shape[0], x.shape[1], 1)   # [MR] Reshape input (add channel dimension)
+    fold_x = x.reshape(x.shape[0], x.shape[1], 1)   # [MR] Reshape input
     
     ## [MR] Build model
     model = Sequential()
     ## Input layer
     model.add(layers.Input(
-        shape=(x.shape[1], 1)
+        shape=(fold_x.shape[1], fold_x.shape[2])
     ))
 
     ## TODO:
-    ########## Ideas yet to try ################################################################################
-    ## - batch size          | increase for faster training
-    ## - (?) reshape data    | check for error prevention (samples, timesteps, features)
-    ## - time steps          | check quantity needed - probably should reduce
-    ## - class weights       | due to class imbalance
-    ## - learning rate       | test diff values - tf.keras.optimizers.Adam(learning_rate=1e-3)
-    ## - pooling             | implement where?
-    ## - dropout             | increase amount - prevent overfitting + vanishing weights
-    ## - batch normalization | implement - for stable training + vanishing weights
-    ##############################################################################################################
+    ########## Ideas yet to try ##########################################################################################################################
+    ## - batch size       | increase for faster training
+    ## - class weights    | due to class imbalance
+    ## - dropout          | increase amount - prevent overfitting + vanishing weights
+    ## - recurrent layers | implement more LSTM layers (intermediate layers with return_sequence=True) - better results?
+    ## - normalisation    | implement - for stable training + vanishing weights [LayerNormalization() before dropout]
+    ######################################################################################################################################################
 
-    ## T1:  1-LSTM [10-epoch] return=True   w pooling  w dropout
-    ## T2:  1-LSTM [4-epoch]  return=True   w pooling  - dropout
-    ## T3:  1-LSTM [4-epoch]  return=False  - pooling  - dropout
-    ## T4:  1-LSTM [50-epoch] " "
-    ## T5:  1-LSTM [20-epoch] " "           - dense
-    ## T6:  1-LSTM [20-epoch] " "           + rnn[relu + units(80)] 
-    ## T7:  1-LSTM [20-epoch] " "           + rnn[tanh + units(64)] w dense    + flatten
-    ## T8:  1-LSTM [20-epoch] return=True   w pooling  w dropout    w FC[more] - flatten
-    ## T0:  1-LSTM [20-epoch] " "           w batch normalization   w FC[less]
+    ## T1:  1_layer
+    ######  | [10 epoch] return=True   w pooling  w dropout
+    ## T2:  1_layer
+    ######  | [ 4 epoch] return=True   w pooling  - dropout
+    ## T3:  1_layer
+    ######  | [ 4 epoch] return=False  - pooling  - dropout
+    ## T4:  1_layer
+    ######  | [50 epoch] " "
+    ## T5:  1_layer
+    ######  | [20 epoch] " "           - dense
+    ## T6:  1_layer
+    ######  | [20 epoch] " "           + rnn[relu + units(80)]
+    ## T7:  1_layer
+    ######  | [20 epoch] " "           + rnn[tanh + units(64)] w dense   + flatten
+    ## T8:  1_layer
+    ######  | [20 epoch] return=True   w pooling  w dropout    w denses  - flatten
+    ## T9:  1_layer
+    ######  | [12 epoch] return=False  w class weights balance - denses
+    ######  |                          - pooling  - dropout
+    ## T10: 1_layer
+    ######  | [12 epoch] (?)           - pooling  w dropout  w normalisation
 
-    ## F1: Execute 1-LSTM w/ 200 epoch
-    ## F2: Execute 2-LSTM w/ 200 epoch
+    ## F1: Execute 1_layer w/ 200 epoch
+    ## F2: Execute 2_layer w/ 200 epoch
 
     # RNN layers + Pooling layers
-    for i in range(lstm_pool_layers):
+    for i in range(lstm_join_layers):
         # RNN layers
         model.add(layers.LSTM(
             units=64, 
             activation='tanh', 
-            return_sequences=True
+            return_sequences=False if i == lstm_join_layers - 1 else True
         ))
         # Pooling layers
-        model.add(layers.GlobalAveragePooling1D())
+        #model.add(layers.GlobalAveragePooling1D())
         #model.add(layers.GlobalMaxPooling1D())
 
-    # Dropout to prevent overfitting
-    # TODO: (?) Implement more dropout layers
-    model.add(layers.Dropout(0.25))
-    
-    # Flatten before fully connected layers
-    #model.add(layers.Flatten())
+        # TODO: (?) Include normalization
+        #model.add(layers.LayerNormalization()) # Preferred for LSTM
+        #model.add(layers.BatchNormalization())
 
-    # TODO: (?) Include batch normalization
-    #model.add(layers.BatchNormalization())
+        # Dropout to prevent overfitting
+        # TODO: (?) Implement more dropout layers
+        #model.add(layers.Dropout(0.25))
 
     # Fully connected layers
-    model.add(layers.Dense(256, activation='relu'))
-    model.add(layers.Dense(128, activation='relu'))
-    model.add(layers.Dense(64,  activation='relu'))
+    #model.add(layers.Dense(128, activation='relu'))
     ## Output layer
     model.add(layers.Dense(y.shape[1], activation='sigmoid'))
     
@@ -189,24 +192,26 @@ def process_fold(train, test, fold_index):
     # TODO: Fix model training - test with prints
     print(f'\n| Fold {fold_index:>{digits_K}} | Training starting...') # [MR]
     history = model.fit(
-        x[train], y[train],
+        fold_x[train], y[train],
         epochs=number_epoch,
         batch_size=batch_length,
         verbose=show_inter_results,
-        validation_data=(x[test], y[test])  # [MR] For analysis
+        class_weight=class_weights,
+        validation_data=(fold_x[test], y[test])  # [MR] For analysis
     )
-    # history = train_step(model, x[train], y[train], x[test], y[test])
+    # history = train_step(model, fold_x[train], y[train], fold_x[test], y[test])
     print(f'\n| Fold {fold_index:>{digits_K}} | Training finished.') # [MR]
     histories[fold_index - 1] = history.history  # [MR] For analysis
-    scores = model.evaluate(x[test], y[test], verbose=show_inter_results)
+    scores = model.evaluate(fold_x[test], y[test], verbose=show_inter_results)
     print(f'\n| Fold {fold_index:>{digits_K}} | Scores = {scores[1] * 100}') # [MR]
     
     ## [MR] Save results
-    y_pred = model.predict(x[test])    # [MR]
+    y_pred = model.predict(fold_x[test])    # [MR]
     # [MR] Debugging
     print(f'\n| Fold {fold_index:>{digits_K}} | Mean | {np.mean(y_pred):.6f}') # [MR]
     print(f'\n| Fold {fold_index:>{digits_K}} | Min  |  {np.min(y_pred):.6f}') # [MR]
     print(f'\n| Fold {fold_index:>{digits_K}} | Max  |  {np.max(y_pred):.6f}') # [MR]
+    
     # [MR] (Results_{1,2,3} - Demo_4) - Only saving results for the 3rd NN (?)
     # np.savetxt("Results_3%s.csv" % cnt, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s')
     results_file = rf"{results_path}\Results_{opt}{fold_index}.csv"     # [MR] Saved results path

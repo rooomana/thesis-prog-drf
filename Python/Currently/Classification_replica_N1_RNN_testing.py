@@ -126,6 +126,7 @@ def process_fold(train, test, fold_index):
     ## - normalisation    | implement - for stable training + vanishing weights [LayerNormalization() before dropout]
     ######################################################################################################################################################
 
+    #################### Tests
     ## T1:  1_layer
     ######  | [10 epoch] return=True   w pooling  w dropout
     ## T2:  1_layer
@@ -154,6 +155,8 @@ def process_fold(train, test, fold_index):
     ## T13: 1_layer
     ######  | [12 epoch] (?) w normalisa.
 
+    #################### Final
+    # TODO: Review ideas
     ## F1: Execute 1_layer w/ 200 epoch
     ## F2: Execute 2_layer w/ 200 epoch
 

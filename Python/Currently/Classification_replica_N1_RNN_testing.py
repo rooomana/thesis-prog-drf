@@ -55,7 +55,7 @@ lstm_join_layers  = 1
 number_inner_layers  = 3
 number_inner_neurons = 256
 number_epoch         = 12
-batch_length         = 128 # TODO: Temporarily - for faster training
+batch_length         = 256 # TODO: Temporarily - for faster training
 #batch_length         = 50 # NN 1 & 2 | Two or Multi-class
 #batch_length         = 32  # [MR] Increase for better performance
 show_inter_results   = 1
@@ -229,29 +229,28 @@ def process_fold(train, test, fold_index):
     print(f'\n| Fold {fold_index:>{digits_K}} | Ended')
     # TODO: Test time records
     # TODO: Time calculations inside or outside lock?
-    with results_lock:
-        end_time_phase = time.time()
-        elapsed_time_phase = end_time_phase - start_time_phase
-        running_time[f'elapsed_time_{fold_index}'] = elapsed_time_phase
-        cvscores = np.append(cvscores, scores[1] * 100)
+    end_time_phase = time.time()
+    elapsed_time_phase = end_time_phase - start_time_phase
+    running_time[f'elapsed_time_{fold_index}'] = elapsed_time_phase
+    cvscores = np.append(cvscores, scores[1] * 100)
     print("\n| Fold %*d | Elapsed time: %.4f seconds\n" % (digits_K, fold_index, running_time[f'elapsed_time_{fold_index}']))
 
 #########################################################################
 ## [MR] Threading
 # Using ThreadPoolExecutor for efficient threading
-results_lock = threading.Lock()  # Protect shared resources
+#results_lock = threading.Lock()  # Protect shared resources
 kfold = StratifiedKFold(n_splits=K, shuffle=True, random_state=1)
-print("\n> K-fold training (w/ threading) \nStarting...\n")
-#print("\n> K-fold training (no threading) \nStarting...\n")
+#print("\n> K-fold training (w/ threading) \nStarting...\n")
+print("\n> K-fold training (no threading) \nStarting...\n")
 
 # TODO: Maybe replace threading with multiprocessing for thread-safe model
 # TODO: Implement ProcessPoolExecutor
-with ThreadPoolExecutor(max_workers=K) as executor:
-    for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1):
-        executor.submit(process_fold, train, test, fold_index, results_lock)
+#with ThreadPoolExecutor(max_workers=K) as executor:
+#    for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1):
+#        executor.submit(process_fold, train, test, fold_index, results_lock)
 
-#for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1):
-#    process_fold(train, test, fold_index)
+for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1):
+    process_fold(train, test, fold_index)
 
 #########################################################################
 ## [MR] Elapsed time

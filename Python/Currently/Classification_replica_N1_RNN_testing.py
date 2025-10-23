@@ -120,10 +120,9 @@ def process_fold(train, test, fold_index):
 
     ## TODO:
     ########## Ideas yet to try ##########################################################################################################################
-    ## - batch size       | increase for faster training
-    ## - class weights    | due to class imbalance
+    ## - batch size       | increase for faster training - return back for real training
     ## - dropout          | increase amount - prevent overfitting + vanishing weights
-    ## - recurrent layers | implement more LSTM layers (intermediate layers with return_sequence=True) - better results?
+    ## - recurrent layers | add LSTM layers (intermediate layers with return_sequence=True) - better results?
     ## - normalisation    | implement - for stable training + vanishing weights [LayerNormalization() before dropout]
     ######################################################################################################################################################
 
@@ -147,7 +146,13 @@ def process_fold(train, test, fold_index):
     ######  | [12 epoch] return=False  w class weights balance - denses
     ######  |                          - pooling  - dropout
     ## T10: 1_layer
-    ######  | [12 epoch] (?)           - pooling  w dropout  w normalisation
+    ######  | [12 epoch]               w threads  w dropout
+    ## T11: 1_layer
+    ######  | [12 epoch] w normalisa.
+    ## T12: 1_layer
+    ######  | [12 epoch] - normalisa.  w lay.(2)  w drop.(2)
+    ## T13: 1_layer
+    ######  | [12 epoch] (?) w normalisa.
 
     ## F1: Execute 1_layer w/ 200 epoch
     ## F2: Execute 2_layer w/ 200 epoch
@@ -170,7 +175,7 @@ def process_fold(train, test, fold_index):
 
         # Dropout to prevent overfitting
         # TODO: (?) Implement more dropout layers
-        #model.add(layers.Dropout(0.25))
+        model.add(layers.Dropout(0.25))
 
     # Fully connected layers
     #model.add(layers.Dense(128, activation='relu'))
@@ -221,28 +226,29 @@ def process_fold(train, test, fold_index):
     print(f'\n| Fold {fold_index:>{digits_K}} | Ended')
     # TODO: Test time records
     # TODO: Time calculations inside or outside lock?
-    end_time_phase = time.time()
-    elapsed_time_phase = end_time_phase - start_time_phase
-    running_time[f'elapsed_time_{fold_index}'] = elapsed_time_phase
-    cvscores = np.append(cvscores, scores[1] * 100)
+    with results_lock:
+        end_time_phase = time.time()
+        elapsed_time_phase = end_time_phase - start_time_phase
+        running_time[f'elapsed_time_{fold_index}'] = elapsed_time_phase
+        cvscores = np.append(cvscores, scores[1] * 100)
     print("\n| Fold %*d | Elapsed time: %.4f seconds\n" % (digits_K, fold_index, running_time[f'elapsed_time_{fold_index}']))
 
 #########################################################################
 ## [MR] Threading
 # Using ThreadPoolExecutor for efficient threading
-#results_lock = threading.Lock()  # Protect shared resources
+results_lock = threading.Lock()  # Protect shared resources
 kfold = StratifiedKFold(n_splits=K, shuffle=True, random_state=1)
-#print("\n> K-fold training (w/ threading) \nStarting...\n")
-print("\n> K-fold training (no threading) \nStarting...\n")
+print("\n> K-fold training (w/ threading) \nStarting...\n")
+#print("\n> K-fold training (no threading) \nStarting...\n")
 
 # TODO: Maybe replace threading with multiprocessing for thread-safe model
 # TODO: Implement ProcessPoolExecutor
-#with ThreadPoolExecutor(max_workers=K) as executor:
-#    for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1):
-#        executor.submit(process_fold, train, test, fold_index, results_lock)
+with ThreadPoolExecutor(max_workers=K) as executor:
+    for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1):
+        executor.submit(process_fold, train, test, fold_index, results_lock)
 
-for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1):
-    process_fold(train, test, fold_index)
+#for fold_index, (train, test) in enumerate(kfold.split(x, decode(y)), start=1):
+#    process_fold(train, test, fold_index)
 
 #########################################################################
 ## [MR] Elapsed time

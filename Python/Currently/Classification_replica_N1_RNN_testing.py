@@ -51,7 +51,7 @@ inner_activation_fun = 'relu'
 outer_activation_fun = 'sigmoid'
 optimizer_loss_fun   = 'categorical_crossentropy'
 optimizer_algorithm  = 'adam'
-lstm_join_layers  = 1
+lstm_join_layers  = 3
 number_inner_layers  = 3
 number_inner_neurons = 256
 number_epoch         = 12
@@ -85,7 +85,7 @@ print("Prepared Data.\n")                                           # [MR]
 
 ############################### Balance ##################################
 # [MR] Balancing dataset
-print("\Balancing Data ...")
+print("Balancing Data ...")
 y_int = np.argmax(y, axis=1) # one-hot to int
 class_weights = class_weight.compute_class_weight(
     class_weight='balanced',
@@ -119,9 +119,6 @@ def process_fold(train, test, fold_index):
 
     ## TODO:
     ########## Ideas yet to try ##########################################################################################################################
-    ## - batch size       | increase for faster training - return back for real training
-    ## - dropout          | increase amount - prevent overfitting + vanishing weights
-    ## - recurrent layers | add LSTM layers (intermediate layers with return_sequence=True) - better results?
     ## - normalisation    | implement - for stable training + vanishing weights [LayerNormalization() before dropout]
     ######################################################################################################################################################
 
@@ -150,14 +147,14 @@ def process_fold(train, test, fold_index):
     ## T11: 1_layer
     ######  | [12 epoch] w normalisa.
     ## T12: 1_layer
-    ######  | [12 epoch] - normalisa.  w lay.(2)  w drop.(2)
+    ######  | [12 epoch] ? normalisa.  w lay.(2)  w drop.(2)
     ## T13: 1_layer
     ######  | [12 epoch] (?) w normalisa.
 
     #################### Final
     # TODO: Review ideas
-    ## F1: Execute 1_layer w/ 200 epoch
-    ## F2: Execute 2_layer w/ 200 epoch
+    ## F1: Execute defined architecture w/ 12 epoch
+    ## F2: Execute defined architecture w/ 200 epoch
 
     # RNN layers + Pooling layers
     for i in range(lstm_join_layers):

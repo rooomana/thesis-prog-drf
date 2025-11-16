@@ -144,11 +144,16 @@ def process_fold(train, test, fold_index):
     ######  |                          - pooling  - dropout
     ## T10: 1_layer
     ######  | [12 epoch]                          w dropout
-    ## T11: 1_layer
+    ## T11: 3_layer
+    ######  | [12 epoch]               w lay.(3)  w drop.(3)
+    ## T12: 3_layer
+    ######  | [12 epoch]               + rnn[relu + units(80)]
+    
+    ## T1X: 1_layer
     ######  | [12 epoch] w normalisa.
-    ## T12: 1_layer
+    ## T1X: 1_layer
     ######  | [12 epoch] ? normalisa.  w lay.(2)  w drop.(2)
-    ## T13: 1_layer
+    ## T1X: 1_layer
     ######  | [12 epoch] (?) w normalisa.
 
     #################### Final
@@ -160,8 +165,8 @@ def process_fold(train, test, fold_index):
     for i in range(lstm_join_layers):
         # RNN layers
         model.add(layers.LSTM(
-            units=64, 
-            activation='tanh', 
+            units=80, 
+            activation='relu', 
             return_sequences=False if i == lstm_join_layers - 1 else True
         ))
         # Pooling layers

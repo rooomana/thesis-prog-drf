@@ -51,10 +51,10 @@ inner_activation_fun = 'relu'
 outer_activation_fun = 'sigmoid'
 optimizer_loss_fun   = 'categorical_crossentropy'
 optimizer_algorithm  = 'adam'
-lstm_join_layers  = 3
+lstm_join_layers  = 2
 number_inner_layers  = 3
 number_inner_neurons = 256
-number_epoch         = 12
+number_epoch         = 200
 batch_length         = 50 # NN 1 & 2 | Two or Multi-class
 #batch_length         = 32  # [MR] Increase for better performance
 show_inter_results   = 1
@@ -71,7 +71,7 @@ start_time = time.time()    # [MR] Start timer
 print("\nLoading Data ...")                                         # [MR]
 filepath = os.path.dirname(current_directory_working)               # [MR] Path for easier management
 Data = np.loadtxt(rf"{filepath}\Data\RF_Data.csv", delimiter=",")   # [MR]
-print("Loaded Data.\n")                                             # [MR]
+print("Loaded Data.")                                               # [MR]
 
 ############################## Splitting #################################
 print("\nPreparing Data ...")                                       # [MR]
@@ -81,18 +81,22 @@ Label_2 = np.transpose(Data[2049:2050,:]).astype(int)
 Label_3 = np.transpose(Data[2050:2051,:]).astype(int)
 Label_opt = globals()[f'Label_{opt}']       # [MR]
 y = encode(Label_opt)                       # [MR]
-print("Prepared Data.\n")                                           # [MR]
+print("Prepared Data.")                                             # [MR]
 
 ############################### Balance ##################################
 # [MR] Balancing dataset
-print("Balancing Data ...")
+print("\nBalancing Data ...")
 y_int = np.argmax(y, axis=1) # one-hot to int
 class_weights = class_weight.compute_class_weight(
     class_weight='balanced',
     classes=np.unique(y_int),
     y=y_int)
 class_weights = dict(enumerate(class_weights))
-print("Balanced Data.\n")
+print("Balanced Data.")
+
+print("\nClass weights:")
+for class_id, class_weight_impact in class_weights.items():
+    print(f"| Class {class_id:>{2}}: {class_weight_impact:<{10}.6f}")
 
 ################################ Main ####################################
 cvscores = np.array([])     # [MR]
@@ -110,16 +114,10 @@ def process_fold(train, test, fold_index):
     print(f'\n| Fold {fold_index:>{digits_K}} |')   # [MR]
     fold_x = x.reshape(x.shape[0], x.shape[1], 1)   # [MR] Reshape input
     
-    ## [MR] Build model
-    model = Sequential()
-    ## Input layer
-    model.add(layers.Input(
-        shape=(fold_x.shape[1], fold_x.shape[2])
-    ))
-
     ## TODO:
     ########## Ideas yet to try ##########################################################################################################################
     ## - normalisation    | implement - for stable training + vanishing weights [LayerNormalization() before dropout]
+    ## - class weights    | balance the dataset - improve
     ######################################################################################################################################################
 
     #################### Tests
@@ -144,40 +142,48 @@ def process_fold(train, test, fold_index):
     ######  |                          - pooling  - dropout
     ## T10: 1_layer
     ######  | [12 epoch]                          w dropout
-    ## T11: 1_layer
-    ######  | [12 epoch] w normalisa.
-    ## T12: 1_layer
-    ######  | [12 epoch] ? normalisa.  w lay.(2)  w drop.(2)
-    ## T13: 1_layer
-    ######  | [12 epoch] (?) w normalisa.
+    ## T11: 3_layer
+    ######  | [12 epoch]               w lay.(3)  w drop.(3)[follow]
+    ## T12: 2_layer
+    ######  | [12 epoch] w normali.(2) w lay.(2)  w drop.(1)[after]
+    ######  |                          + rnn[tanh + units(80)] w dense
+    
+    ## T1X: ?_layer
+    ######  | [12 epoch] w normali.(_) w lay.(_)  w drop.(_)
 
     #################### Final
     # TODO: Review ideas
-    ## F1: Execute defined architecture w/ 12 epoch
-    ## F2: Execute defined architecture w/ 200 epoch
+    ## F1: Execute defined architecture w/ 200 epoch
 
-    # RNN layers + Pooling layers
+    ## [MR] Build model
+    units = [80, 80]
+    model = Sequential()
+    ## Input layer
+    model.add(layers.Input(
+        shape=(fold_x.shape[1], fold_x.shape[2])
+    ))
+
+    # RNN layers + Extra layers
     for i in range(lstm_join_layers):
         # RNN layers
         model.add(layers.LSTM(
-            units=64, 
+            units=units[i], 
             activation='tanh', 
-            return_sequences=False if i == lstm_join_layers - 1 else True
+            return_sequences=(i < lstm_join_layers - 1)
         ))
+        if i < lstm_join_layers - 1:
+            # Normalisation for stabilisation
+            model.add(layers.LayerNormalization())
         # Pooling layers
         #model.add(layers.GlobalAveragePooling1D())
         #model.add(layers.GlobalMaxPooling1D())
 
-        # TODO: (?) Include normalization
-        #model.add(layers.LayerNormalization()) # Preferred for LSTM
-        #model.add(layers.BatchNormalization())
-
-        # Dropout to prevent overfitting
-        # TODO: (?) Implement more dropout layers
-        model.add(layers.Dropout(0.25))
+    # Dropout to prevent overfitting
+    # TODO: (?) Implement more dropout layers
+    model.add(layers.Dropout(0.25))
 
     # Fully connected layers
-    #model.add(layers.Dense(128, activation='relu'))
+    model.add(layers.Dense(80, activation='relu'))
     ## Output layer
     model.add(layers.Dense(y.shape[1], activation='sigmoid'))
     
@@ -201,6 +207,7 @@ def process_fold(train, test, fold_index):
         batch_size=batch_length,
         verbose=show_inter_results,
         class_weight=class_weights,
+#        class_weight={0: 3.0, 1: 1.0}, # [MR] Manual weights for binary
         validation_data=(fold_x[test], y[test])  # [MR] For analysis
     )
     # history = train_step(model, fold_x[train], y[train], fold_x[test], y[test])
@@ -212,9 +219,17 @@ def process_fold(train, test, fold_index):
     ## [MR] Save results
     y_pred = model.predict(fold_x[test])    # [MR]
     # [MR] Debugging
-    print(f'\n| Fold {fold_index:>{digits_K}} | Mean | {np.mean(y_pred):.6f}') # [MR]
-    print(f'\n| Fold {fold_index:>{digits_K}} | Min  |  {np.min(y_pred):.6f}') # [MR]
-    print(f'\n| Fold {fold_index:>{digits_K}} | Max  |  {np.max(y_pred):.6f}') # [MR]
+    # Statistics per-class
+    class0_scores = y_pred[:, 0]
+    class1_scores = y_pred[:, 1]
+
+    print(f'\n| Fold {fold_index:>{digits_K}} | Class 0 | Mean | {np.mean(class0_scores):.6f}') # [MR]
+    print(f'\n| Fold {fold_index:>{digits_K}} | Class 0 | Min  |  {np.min(class0_scores):.6f}') # [MR]
+    print(f'\n| Fold {fold_index:>{digits_K}} | Class 0 | Max  |  {np.max(class0_scores):.6f}') # [MR]
+
+    print(f'\n| Fold {fold_index:>{digits_K}} | Class 1 | Mean | {np.mean(class1_scores):.6f}') # [MR]
+    print(f'\n| Fold {fold_index:>{digits_K}} | Class 1 | Min  |  {np.min(class1_scores):.6f}') # [MR]
+    print(f'\n| Fold {fold_index:>{digits_K}} | Class 1 | Max  |  {np.max(class1_scores):.6f}') # [MR]
     
     # [MR] (Results_{1,2,3} - Demo_4) - Only saving results for the 3rd NN (?)
     # np.savetxt("Results_3%s.csv" % cnt, np.column_stack((y[test], y_pred)), delimiter=",", fmt='%s')
